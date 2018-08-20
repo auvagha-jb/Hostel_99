@@ -1,0 +1,100 @@
+/*.row{
+    float: left;
+    width: 50%;
+}
+
+Clear floats after the columns
+.row:after{
+    content:"";
+    display: table;
+    clear: both;
+}*/
+body.sign-in{
+    background-image: url('../img/students-reading.jpeg');
+    background-size: cover;
+}
+
+form.sign-in{
+    position: absolute;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid #000;
+    border-radius: 5px;
+    border-width: thin;
+    padding: 5% 5%;
+    background: #ddd;
+    
+}
+
+
+form.sign-up{
+    border: #000000;
+    position: absolute;
+    width: 90%;
+    height: 100%;
+/*    top: 30%;*/
+    left: 10%;
+    background: gray;
+    color: black;
+    padding: 10% 10%;
+}
+
+.sign-up-img{
+  height: 1000px;
+}
+
+button#s-u-submit{
+    
+}
+
+button#s-u-submit:hover{
+    
+}
+
+
+/*Form display on sm to xs screens*/
+@media (max-width: 768px) {
+    
+    .sign-up-img{
+        display: none;
+    }
+    
+    form.sign-up{
+/*        background: gray;*/
+        height: 1000px;
+        width: 100%;
+        margin: 0;
+        left: 0;
+    }
+
+}/*end of 768ppx settings*/
+
+
+.form-data{
+/*    background: gray*/
+}
+
+
+/*Image text*/
+.centered{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+/*    transform: translate(-50%, -50%);*/
+}   
+
+.btm-left{
+    position: absolute;
+    bottom: 10%;
+    left: 15%;
+}
+
+.img-text{
+    color: gray;
+}
+
+
+
+

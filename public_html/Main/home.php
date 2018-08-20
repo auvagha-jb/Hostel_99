@@ -4,6 +4,13 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Hostel 99</title>
+        
+        <link rel="stylesheet" href="../Web Dev Tools/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+        <script src="../Web Dev Tools/Jquery/jquery-3.3.1.js"></script>
+        <script src="../Web Dev Tools/popper.min.js"></script>
+        <script src="../Web Dev Tools/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+        <script src="../Web Dev Tools/all.js"></script>
+        
         <link rel='shortcut icon' type="image/png" href="img/hostel-logo.png">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -11,50 +18,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 	
-<!--<link rel="stylesheet" href="../Web Dev Tools/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-        <script src="../Web Dev Tools/Jquery/jquery-3.3.1.js"></script>
-        <script src="../Web Dev Tools/popper.min.js"></script>
-        <script src="../Web Dev Tools/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-        <script src="../Web Dev Tools/all.js"></script>-->
-        
+        <!--Generic-->
 	<link href="style.css" rel="stylesheet">
+        <script src="js/main.js"></script>
 </head>
 <body>
-
-<!-- Navigation -->
-<!--We're referencing md because that's the breakpoint-->
-<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
-    <div class="container-fluid"> <!--So it takes up 100% of the screen-->
-        <a class="navbar-brand" href="#"><img src="img/hostel-logo.png" style="height: 15%; width: 15%;" alt="">Hostel 99</a>
-        
-        <!--Navigation button The id is here is generic-->
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarResponsive">
-            <span class="navbar-toggler-icon"></span><!--The nav button icon-->
-        </button>
-        
-        <!--Class for collapsible nav bar-->
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <!--Pushes list items to the right as opposed to the middle at full width-->
-            <ul class="navbar-nav ml-auto"> 
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Hostel Owners</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact us</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary" href="#">Sign up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-dark" href="#">Sign in</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<!--Navigation-->
+<?php include './nav-bar.php';?>
 
 <!--- Image Slider -->
     <div id="slides" class="carousel slide" data-ride="carousel">
@@ -69,10 +39,10 @@
         <div class="carousel-inner">
            <!--Carousel Items-->
             <div class="carousel-item active">
-                <img src="img/brown-bg.jpg" alt="">
+                <img src="img/brown-bg.jpg" alt="" class="img-responsive">
                 <div class="intro-carousel">
                     <div class="carousel-caption">
-                        <h1 class="display-2">Welcome to Hostel 99!</h1>
+                        <h1 class="display-3">Welcome to Hostel 99!</h1>
                         <h3 class="display-4">The new way to find premium accommodation</h3>
                     <button type="button" class="btn btn-primary btn-lg">Get Started</button>
                     </div>
@@ -80,24 +50,24 @@
             </div>
             
             <div class="carousel-item">
-                <img src="img/students.jpg" alt="">
+                <img src="img/students.jpg" alt="" class="img-responsive">
                 <div class="carousel-caption">
-                    <h1 class="display-4">Made for students</h1>
+                    <h1 class="display-3">Made for students</h1>
                 </div>
             </div>
 
             <div class="carousel-item">
                 <img src="img/students-reading.jpeg" alt="">
                 <div class="carousel-caption">
-                    <h1 class="display-4">Ease your college experience</h1>
+                    <h1 class="display-3">Ease your college experience</h1>
                 </div>
             </div>
 
 <!--             Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-slide-to="prev">
+            <a class="carousel-control-prev" href="#demo" data-slide="prev">
               <span class="carousel-control-prev-icon"></span>
             </a>
-            <a class="carousel-control-next" href="#demo" data-slide-to="next">
+            <a class="carousel-control-next" href="#demo" data-slide="next">
               <span class="carousel-control-next-icon"></span>
             </a>
         </div>
@@ -135,16 +105,16 @@
         
         <!--Partner logos-->
     <div class="row text-center-padding">
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-6 col-sm-6 col-md-3">
                 <img src="img/partners/strathmore-university.jpg">
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-6 col-sm-6 col-md-3">
                 <img src="img/partners/uon-logo.png">
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-6 col-sm-6 col-md-3">
                 <img src="img/partners/jkuat.jpg">
             </div>
-            <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="col-xs-6 col-sm-6 col-md-3">
                 <img src="img/partners/kenyatta-university_Logo.png">
             </div>    
     </div>
@@ -234,42 +204,7 @@
 
 
 <!--- Footer -->
-    <footer>
-        <div class="container-fluid padding">
-            <div class="row text-center">
-                <div class="col-md-6">
-                    <img src="img/hostel-logo.png"><p>Hostel 99</p>
-                    <hr class="light">
-                    <p>+254 722309487</p>
-                    <p>+254 722309498</p>
-                    <p>hostel99@gmail.com</p>
-                </div>
-                
-                <div class="col-md-6">
-                    <hr class="light">
-                        <h5>Quick links</h5>
-                    <hr class="light">
-                        <p>Home</p>
-                        <p>Hostel Owners</p>
-                        <p>Sign up</p>
-                        <p>Sign in</p>
-                </div>
-            </div>
-            
-            
-            <div class="copyright">
-                <div class="row text-center">
-                    <div class="col-md-12">
-                        <p>
-                            © Some Young Devs Inc  
-                        </p>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
-    </footer>
+<?php include './footer.php';?>    
 
 </body>
 </html>
