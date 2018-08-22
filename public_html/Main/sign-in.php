@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-         <link rel='shortcut icon' type="image/png" href="img/hostel-logo.png">
+        <link rel='shortcut icon' type="image/png" href="img/hostel-logo.png">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
@@ -24,17 +24,17 @@
     
     <!--Form-->
     <div class="container-fluid padding">
-        <form class="sign-in">
+        <form method="post" action="php/sign-in-action.php" class="sign-in">
             
             <div class="lead">Sign in</div>
             <div class="form-group">
-                <label>Username or Email</label>
-                <input type="text" name="username" id="username" class="form-control" required="">
-                <div class="invalid-feedback">Invalid username or email</div>
+                <label>Email Address</label>
+                <input type="text" name="email" id="email" class="form-control" required="">
+                <div class="invalid-feedback">Invalid email address</div>
             </div>
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" id="password" class="form-control" required="">
+                <input type="password" name="pwd" id="pwd" class="form-control" required="">
                 <div class="invalid-feedback">Incorrect password</div>
             </div>
             <button class="btn btn-secondary">Sign in</button>

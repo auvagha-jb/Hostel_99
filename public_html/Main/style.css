@@ -9,6 +9,10 @@ html, body{
 
 /*Navigation bar*/
 
+.dropdown-content{
+    display: none;
+}
+
 /**Logo**/
 navbar-brand img{
     height: 15%; 

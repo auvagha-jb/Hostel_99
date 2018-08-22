@@ -29,13 +29,13 @@
         
         <div class="col-md-6 col-sm-12">
             <img src="img/team1.png" class="img-responsive sign-up-img" >
-            <div class="btm-left display-4"><p style="color: #ddd;">Join the H99 Community! <br>It's free for life</p></div>
+            <div class="btm-left display-4"><p>Join the H99 Community! <br>It's free for life</p></div>
         </div>
         
         <div class="col-md-6 col-sm-12">
             <div class="form-data">
                        
-                <form action="" class="sign-up">
+                <form action="php/sign-up-action.php" method="post" class="sign-up">
                      <h4 class="lead">Sign up</h4>
                     
                     <div class="row">
@@ -59,12 +59,6 @@
                         <input type="email" name="email" id="email" class="form-control" required>
                         <div class="invalid-feedback">Email address already exists</div>
                     </div>
-                     
-                    <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" name="username" id="username" class="form-control" required>
-                        <div class="invalid-feedback">Username already exists</div>
-                    </div>
                                           
                     <div class="form-group">
                         <label>Password</label>
@@ -80,7 +74,17 @@
                      
                     <div class="form-group">
                         <label>Phone Number</label>
-                        <input type="number" name="phone_no" id="phone_no" class="form-control" required>
+                        
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <?php include './php/country-codes.php';?>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <input type="number" name="no" id="no" class="form-control" required>
+                            </div>
+                        </div>
+                        <small class="form-small-text">e.g 0722 123 456 will be +254 722 123 456</small>    
                     </div>
                      
                      <div class="form-group">

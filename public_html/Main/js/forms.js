@@ -1,54 +1,92 @@
 $(document).ready(function(){
    
-   function validSignUp(){
+   //Default value for the country code list 
+   $("#country_code").val(254);
+   
+   var valid = false;
+   function validEmail(){
+       var email = $("#email").val();
+       
+       $.post("php/sign-up-action.php", {email: email}, function(data){
+            console.log(data);
+            if(data === "email-exists"){               
+                $("#email").addClass("is-invalid");
+                valid = false;
+            }else{
+                $("#email").removeClass("is-invalid");
+                valid = true;
+            }
+        });
+        
+        console.log("Email: "+valid);
+        return valid;
+   }
+   
+ 
+   function validPwd(){
        var pwd = $("#pwd").val();
        var confirm_pwd = $("#confirm_pwd").val();
-       var username = $("#username").val();
-       var email = $("#email").val();
+       var valid = false;
    
        if(pwd.length < 8){
            $("#password-feedback").text("Password is too short");
            $("#pwd").addClass("is-invalid");
-           return false;
+           valid=false;
        }
    
         else if(pwd !== confirm_pwd){
             $("#password-feedback").text("The passwords do not match");
             $("#pwd").addClass("is-invalid");
             $("#confirm_pwd").addClass("is-invalid");
-            return false;
-        }       
-        
-        return true;
+            valid=false;
+        }else{
+            valid = true;
+        }
+           
+        return valid;
    } 
    
    
+   var valid_sign_in = false;
    function validSignIn(){
-       var username = $("#username").val();
-       var pwd = $("#password").val();
+       var email = $(".sign-in #email").val();
+       var pwd = $(".sign-in #pwd").val();
+       console.log("Email:"+email);
        
-       console.log(username+" pwd: "+pwd);
+       $.post("php/sign-in-action.php", {email: email, pwd: pwd}, function(data){
+           console.log(data);
+           if(data ==="invalid-email"){
+               //Show error
+               $("#email").addClass("is-invalid");
+               valid_sign_in = false;
+           }else if(data === "invalid-pwd"){
+               //Show error
+               $("#email").removeClass("is-invalid");
+               $("#pwd").addClass("is-invalid");
+               valid_sign_in = false;
+           }else{
+               valid_sign_in = true;
+               window.location.replace("home.php");
+           }
+       });   
        
-       if(username !== "Jerry"){
-           $("#username").addClass('is-invalid');
-           return false;
-       }else{
-           $("#username").removeClass('is-invalid');
-       }
-       
-       if(pwd !== "JerryB123"){
-           $("#password").addClass('is-invalid');
-           return false;
-       }
-       
-       return true;    
+       console.log("Validity: "+valid_sign_in);
+        return  valid_sign_in;
    }
    
    
+   //On keyup; ensures that the email address does not exist  
+   $(".sign-up #email").keyup(function(){
+        validEmail();
+   });
+   
+   
    $(".sign-up").submit(function(event){
-        if(!validSignUp()){
+       //On submit...ensures that the passwords match and are long enough and the email address does not exist in DB  
+       if(!validPwd() || !validEmail()){
             event.preventDefault();
         }
+        
    });
     
     $(".sign-in").submit(function(event){

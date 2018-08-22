@@ -1,8 +1,61 @@
+<?php
+    session_start();
+
+    function toggleNav(){
+        //If the user is logged in
+        if(isset($_SESSION['user_id'])){
+            $first_name = $_SESSION['first_name'];
+            $occupation = $_SESSION['occupation'];
+            
+            if($occupation == "Student"){
+                echo '
+                    <li class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#">'.$first_name.'</a>
+                        <div class="dropdown-content">
+                            <a class="nav-link" href="#">My Details</a>
+                            <a class="btn btn-danger" href="php/logout.php">Sign out</a>
+                        </div>
+                    </li>
+                    ';
+            }else {
+                echo '
+                    
+                <li class="dropdown">
+                        <a class="btn btn-secondary dropdown-toggle" href="#">My Hostel</a>
+                        <div class="dropdown-content">
+                            <a class="nav-link" href="#">Bookings</a>
+                            <a class="nav-link" href="#">My Tenants</a>
+                        </div>
+                </li>
+                <li class="dropdown">
+                    <a class="btn btn-primary dropdown-toggle" href="#">'.$first_name.'</a>
+                    <div class="dropdown-content">
+                        <a class="btn btn-danger" href="php/logout.php">Sign out</a>
+                    </div>
+                </li>
+                ';
+            }
+            
+            
+        }else{
+            echo '
+            <li class="nav-item">
+                <a class="btn btn-outline-primary" href="sign-up.php">Sign up</a>
+            </li>
+            <li class="nav-item">
+                <a class="btn btn-dark" href="sign-in.php">Sign in</a>
+            </li>   
+            ';
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-         <link rel='shortcut icon' type="image/png" href="img/hostel-logo.png">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel='shortcut icon' type="image/png" href="img/hostel-logo.png">
+         
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -40,12 +93,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="contact-us.php">Contact us</a>
                 </li>
-                <li class="nav-item">
-                    <a class="btn btn-outline-primary" href="sign-up.php">Sign up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn btn-dark" href="sign-in.php">Sign in</a>
-                </li>
+                <?php toggleNav(); ?>
             </ul>
         </div>
     </div>

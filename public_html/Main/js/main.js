@@ -1,10 +1,20 @@
 $(document).ready(function(){
-    var width = $(window).width();   
-    var min_width = 820;
+   
+//   $(".dropdown-content").hide();
+   
+   $(".dropdown").click(function(){
+       $(".dropdown-content", this).slideToggle()();
+   });
+   
+    /****************Handle window resizing**************/
+    var default_width = $(window).width();
+    resizeText(default_width);
     
-    function resizeText(){
-         
-           if(width<=min_width){
+    var min_width = 820;
+   
+
+    function resizeText(width){
+        if(width<=min_width){
 
              $(".carousel-item h1").removeClass("display-3");
              $(".carousel-item h3").removeClass("display-4");
@@ -20,22 +30,20 @@ $(document).ready(function(){
              $(".carousel-item h3").removeClass("mobile-text");
         }
         
-        console.log(width);
+        
        }
     
     
-    
-    
-    resizeText();
-    
-    
     $("button#nav-btn").click(function(){
-        $(".navbar-nav").slideToggle('slow');
+        $(".navbar-nav").slideToggle()();
     });
     
     
     $(window).resize(function(){
-        resizeText();
+        var width = $(window).width();
+        resizeText(width);
+        console.log(width);
+        
         if(width>min_width){
             $(".navbar-nav").show();
         }
