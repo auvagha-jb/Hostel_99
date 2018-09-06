@@ -28,11 +28,12 @@ if(isset($_POST['email'])){
             $_SESSION['first_name'] = $row->first_name;
             $_SESSION['last_name'] = $row->last_name;
             $_SESSION['gender'] = $row->gender;
-            $_SESSION['occupation'] = $row->occupation;
+            $_SESSION['user_type'] = $row->user_type;
 
             //Redirect to certain page
             if(isset($_SESSION['user_id'])){
                 echo 'login-success'; 
+                header("home.php");
             }   
         
         }else{

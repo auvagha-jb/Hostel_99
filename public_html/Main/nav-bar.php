@@ -3,11 +3,11 @@
 
     function toggleNav(){
         //If the user is logged in
-        if(isset($_SESSION['user_id'])){
+        if(isset($_SESSION['user_id']) || isset($_SESSION['email'])){
             $first_name = $_SESSION['first_name'];
-            $occupation = $_SESSION['occupation'];
+            $user_type = $_SESSION['user_type'];
             
-            if($occupation == "Student"){
+            if($user_type == "Student"){
                 echo '
                     <li class="dropdown">
                         <a class="btn btn-primary dropdown-toggle" href="#">'.$first_name.'</a>
@@ -17,12 +17,12 @@
                         </div>
                     </li>
                     ';
-            }else {
+            }else if($user_type == "Hostel Owner"){
                 echo '
-                    
                 <li class="dropdown">
                         <a class="btn btn-secondary dropdown-toggle" href="#">My Hostel</a>
                         <div class="dropdown-content">
+                            <a class="nav-link" href="owner-add-hostel.php">Edit</a>
                             <a class="nav-link" href="#">Bookings</a>
                             <a class="nav-link" href="#">My Tenants</a>
                         </div>
@@ -40,10 +40,10 @@
         }else{
             echo '
             <li class="nav-item">
-                <a class="btn btn-outline-primary" href="sign-up.php">Sign up</a>
+                <a class="btn btn-dark" href="sign-up.php">Sign Up</a>
             </li>
             <li class="nav-item">
-                <a class="btn btn-dark" href="sign-in.php">Sign in</a>
+                <a class="btn btn-outline-primary" href="sign-in.php">Sign in</a>
             </li>   
             ';
         }

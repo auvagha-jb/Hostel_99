@@ -34,20 +34,32 @@ if(isset($_POST['s-u-submit'])){
     //***************
     $country_code = $_POST['country_code'];
     $no = $_POST['no'];
-    $phone_no = $country_code.$no;
+    $phone_no = "+".$country_code.$no;
     //***************
     $gender = $_POST['gender'];
-    $occupation = $_POST['occupation'];
+    $user_type = $_POST['user_type'];
 
      
         //Adding a user
-        $add_user = $con->prepare("INSERT INTO `users`(`first_name`, `last_name`, `email`, `pwd`, `phone_no`, `gender`, `occupation`) "
+        $add_user = $con->prepare("INSERT INTO `users`(`first_name`, `last_name`, `email`, `pwd`, `phone_no`, `gender`, `user_type`)"
                 . "VALUES (?,?,?,?,?,?,?)");
 
-        $add_user->bind_param("sssssss", $first_name, $last_name, $email, $pwd_hash, $phone_no, $gender, $occupation);
+        $add_user->bind_param("sssssss", $first_name, $last_name, $email, $pwd_hash, $phone_no, $gender, $user_type);
         $add_user->execute();
-
         
         
-
+        //Session variables        
+        $_SESSION['first_name'] = $first_name;        
+        $_SESSION['last_name'] = $last_name;  
+        $_SESSION['email'] = $email;
+        $_SESSION['phone_no'] = $phone_no;
+        $_SESSION['gender'] =  $gender;
+        $_SESSION['user_type'] = $user_type; 
+        
+        
+        //Determine where to redirect based on what user
+        if($user_type == "Student" || $user_type == "Hostel Owner"){
+            header("location:../home.php");
+        }
+        
 }

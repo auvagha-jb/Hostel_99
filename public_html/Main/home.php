@@ -17,8 +17,8 @@
         <script src="../Web Dev Tools/popper.min.js"></script>
         <script src="../Web Dev Tools/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
         <script src="../Web Dev Tools/all.js"></script>
+ 
         
-	
         <!--Generic-->
 	<link href="style.css" rel="stylesheet">
         <script src="js/main.js"></script>
@@ -45,7 +45,7 @@
                     <div class="carousel-caption">
                         <h1 class="display-3">Welcome to Hostel 99!</h1>
                         <h3 class="display-4">The new way to find premium accommodation</h3>
-                    <button type="button" class="btn btn-primary btn-lg">Get Started</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick='location.href="home.php#search-box"'>Get Started</button>
                     </div>
                 </div>
             </div>
@@ -63,31 +63,50 @@
                     <h1 class="display-3">Ease your college experience</h1>
                 </div>
             </div>
-
+          
 <!--             Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <a class="carousel-control-prev" href="#slides" data-slide="prev">
               <span class="carousel-control-prev-icon"></span>
             </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
+            <a class="carousel-control-next" href="#slides" data-slide="next">
               <span class="carousel-control-next-icon"></span>
             </a>
         </div>
     </div>
 
-
   <!--- Jumbotron -->
     <div class="container-fluid">
-        <div class="row jumbotron">
+        <div class="row jumbotron" id="search-box">
             <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
-                <p class="display-4"><!--Makes light weight text-->
+                <p class="jumbotron-text"><!--Makes light weight text-->
                     The perfect hostel for you is just a few clicks away.
                 </p>
             </div>
-<!--            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-xl-2">
-                <a><button class="btn btn-outline-secondary btn-lg">Get Started</button></a>
-            </div>-->
+            <div>
+            <form class="form-inline justify-content-center mx-2" method="post" action="#">
+                        <input class="form-control" name="location" id="location" placeholder="Where would you like to stay?" required="">
+                        <select class="form-control mx-2" name="hostel_type" id="hostel_type" required="">
+                            <option value="">What Type?</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="mixed">Mixed</option>
+                        </select>
+
+                        <div class="input-group mx-2">
+                            <input name="max_price" class="form-control" id="max_price" placeholder="Maximum Price?">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary form-control" name="search_submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                </form>
         </div>
+        </div>
+        
     </div>
+  
+            
 
 
 
@@ -147,7 +166,7 @@
                  <div class="display-4">Special Offers</div>
             </div>
         </div>
-        <div class="col-md-4"> <!--Since it's changing at the 768px mark-->
+        <div class="col-md-4 special-offers"> <!--Since it's changing at the 768px mark-->
             <div class="card">
                 <img class="card-img-top" src="img/travelers-oasis.jpg"> <!--Since the image is at the top-->
                 <div class="card-body">
@@ -164,7 +183,7 @@
             </div>
         </div>
         
-        <div class="col-md-4"> <!--Since it's changing at the 768px mark-->
+        <div class="col-md-4 special-offers"> <!--Since it's changing at the 768px mark-->
             <div class="card">
                 <img class="card-img-top" src="img/westlands-backpackers.jpg"> <!--Since the image is at the top-->
                 <div class="card-body">
@@ -179,7 +198,7 @@
             </div>
         </div>
         
-        <div class="col-md-4"> <!--Since it's changing at the 768px mark-->
+        <div class="col-md-4 special-offers"> <!--Since it's changing at the 768px mark-->
             <div class="card">
                 <img class="card-img-top" src="img/KG-ladies-hostel.jpg"> <!--Since the image is at the top-->
                 <div class="card-body">

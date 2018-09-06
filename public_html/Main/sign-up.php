@@ -97,8 +97,7 @@
                      </div>
                      
                      <div class="form-group">
-                         <label for="occupation">Occupation</label>
-                         <select name="occupation" id="occupation" class="form-control" required>
+                         <select name="user_type" id="user_type" class="form-control" required>
                              <option value="">I am a...</option>
                              <option value="Student">Student</option>
                              <option value="Hostel Owner">Hostel Owner</option>

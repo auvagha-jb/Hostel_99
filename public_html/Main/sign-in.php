@@ -39,6 +39,12 @@
             </div>
             <button class="btn btn-secondary">Sign in</button>
             
+            <br>
+            <small>
+                Don't have an account?<a href='sign-up.php'>Sign up</a>
+            </small>
+            
+            
         </form>
         
     </div>

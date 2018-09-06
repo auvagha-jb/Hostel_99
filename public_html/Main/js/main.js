@@ -1,6 +1,17 @@
 $(document).ready(function(){
    
 //   $(".dropdown-content").hide();
+
+   /*Ensure the cards are the same height**/
+   flex_cards();
+        
+    function flex_cards(){
+        $(".special-offers").addClass("d-flex");
+        $(".special-offers").addClass("p-2");
+
+        $(".card").addClass("align-items-stretch");
+    }
+   
    
    $(".dropdown").click(function(){
        $(".dropdown-content", this).slideToggle()();
