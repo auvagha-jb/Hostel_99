@@ -1,5 +1,4 @@
 <?php
-
 include './connection.php';
 session_start();
 
@@ -25,6 +24,7 @@ session_start();
 if(isset($_POST['s-u-submit'])){
     
         //Form data
+    
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
@@ -38,7 +38,7 @@ if(isset($_POST['s-u-submit'])){
     //***************
     $gender = $_POST['gender'];
     $user_type = $_POST['user_type'];
-
+    
      
         //Adding a user
         $add_user = $con->prepare("INSERT INTO `users`(`first_name`, `last_name`, `email`, `pwd`, `phone_no`, `gender`, `user_type`)"
@@ -46,7 +46,7 @@ if(isset($_POST['s-u-submit'])){
 
         $add_user->bind_param("sssssss", $first_name, $last_name, $email, $pwd_hash, $phone_no, $gender, $user_type);
         $add_user->execute();
-        
+
         
         //Session variables        
         $_SESSION['first_name'] = $first_name;        
@@ -56,10 +56,21 @@ if(isset($_POST['s-u-submit'])){
         $_SESSION['gender'] =  $gender;
         $_SESSION['user_type'] = $user_type; 
         
+        //Get the user's id 
+        $get_id = $con->prepare("SELECT * FROM users WHERE email = ?");
+        $get_id->bind_param("s", $email);
+        $get_id->execute();
+        
+        $result = $get_id->get_result();
+        $row = $result->fetch_array();
+        
+        $_SESSION['user_id'] = $row['user_id'];
         
         //Determine where to redirect based on what user
-        if($user_type == "Student" || $user_type == "Hostel Owner"){
+        if($user_type == "Student"){
             header("location:../home.php");
+        }else if($user_type == "Hostel Owner"){
+            header("location: ../owner-add-hostel.php");
         }
         
 }

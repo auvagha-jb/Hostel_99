@@ -1,5 +1,16 @@
 $(document).ready(function(){
-   
+
+    
+    //Preliminaries
+     //Prevent resubmission on refresh or back
+    if(window.history.replaceState){
+       window.history.replaceState(null, null, window.location.href); 
+    }
+    
+    //turn off auto-complete
+    $("#add-hostel-form").attr("autocomplete", "off");
+    
+    
    //Default value for the country code list 
    $("#country_code").val(254);
    

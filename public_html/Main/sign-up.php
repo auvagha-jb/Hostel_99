@@ -29,7 +29,7 @@
         
         <div class="col-md-6 col-sm-12">
             <img src="img/team1.png" class="img-responsive sign-up-img" >
-            <div class="btm-left display-4"><p>Join the H99 Community! <br>It's free for life</p></div>
+            <div class="top-left display-4"><p>Join the H99 Community! <br>It's free for life</p></div>
         </div>
         
         <div class="col-md-6 col-sm-12">
@@ -90,7 +90,7 @@
                      <div class="form-group">
                          <label for="gender">Gender</label>
                          <select name="gender" id="gender" class="form-control" required>
-                             <option value="">...</option>
+                             <option value="">Choose One</option>
                              <option value="Male">Male</option>
                              <option value="Female">Female</option>
                          </select>

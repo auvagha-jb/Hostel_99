@@ -30,10 +30,20 @@ if(isset($_POST['email'])){
             $_SESSION['gender'] = $row->gender;
             $_SESSION['user_type'] = $row->user_type;
 
+            $user_type = $row->user_type;
+            
             //Redirect to certain page
             if(isset($_SESSION['user_id'])){
                 echo 'login-success'; 
-                header("home.php");
+                include '';
+                if($user_type == "Student"){
+                    header("location: ../home.php");
+                }else if($user_type == "Hostel Owner"){
+                    header("location: ../sign-up.php");
+                }else if($user_type == "Admin"){
+                    header("location:../admin-home.php");
+                }
+               
             }   
         
         }else{

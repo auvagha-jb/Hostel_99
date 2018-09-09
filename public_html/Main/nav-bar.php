@@ -1,9 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <?php include_once './links.php'; ?>       
+	<link href="style.css" rel="stylesheet">
+        <script src="js/nav-bar.js"></script>
+        <script src="js/main.js"></script>
+</head>
+<body>
 <?php
-    session_start();
+    if(session_status()==PHP_SESSION_NONE){
+        session_start();
+    }
 
     function toggleNav(){
         //If the user is logged in
-        if(isset($_SESSION['user_id']) || isset($_SESSION['email'])){
+        if(isset($_SESSION['user_id'])){
+            $id= $_SESSION['user_id'];
             $first_name = $_SESSION['first_name'];
             $user_type = $_SESSION['user_type'];
             
@@ -20,22 +34,22 @@
             }else if($user_type == "Hostel Owner"){
                 echo '
                 <li class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle" href="#">My Hostel</a>
+                        <a class="btn btn-secondary dropdown-toggle mx-1 my-1" href="#">My Hostels</a>
                         <div class="dropdown-content">
-                            <a class="nav-link" href="owner-add-hostel.php">Edit</a>
-                            <a class="nav-link" href="#">Bookings</a>
-                            <a class="nav-link" href="#">My Tenants</a>
+                            <a class="nav-link" href="owner-add-hostel.php">Add</a>
+                            <a class="nav-link" href="owner-view-hostel.php">View</a>
+                            <a class="nav-link" href="owner-view-bookings.php">Bookings</a>
+                            <a class="nav-link" href="owner-view-tenants.php">My Tenants</a>
                         </div>
                 </li>
                 <li class="dropdown">
-                    <a class="btn btn-primary dropdown-toggle" href="#">'.$first_name.'</a>
+                    <a class="btn btn-primary dropdown-toggle mx-1 my-1" href="#">'.$first_name.'</a>
                     <div class="dropdown-content">
                         <a class="btn btn-danger" href="php/logout.php">Sign out</a>
                     </div>
                 </li>
                 ';
             }
-            
             
         }else{
             echo '
@@ -49,29 +63,6 @@
         }
     }
 ?>
-
-<!DOCTYPE html>
-<html>
-<head>
-        <link rel='shortcut icon' type="image/png" href="img/hostel-logo.png">
-         
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-        
-        <link rel="stylesheet" href="../Web Dev Tools/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-        <script src="../Web Dev Tools/Jquery/jquery-3.3.1.js"></script>
-        <script src="../Web Dev Tools/popper.min.js"></script>
-        <script src="../Web Dev Tools/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-        <script src="../Web Dev Tools/all.js"></script>
-        
-        <link rel="stylesheet" href="style.css">
-        <script src="js/main.js"></script>
-</head>
-<body>
-
     <!-- Navigation -->
 <!--We're referencing md because that's the breakpoint-->
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
@@ -98,6 +89,5 @@
         </div>
     </div>
 </nav>
-
 </body>
 </html>

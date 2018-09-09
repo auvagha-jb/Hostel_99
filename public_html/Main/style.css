@@ -118,19 +118,23 @@ li.nav-item a {
     font-weight: lighter;
     font-size: 300%;
     text-align: center;
+    padding-left: 20px;
 }
 
 /*The search box formatting*/
-
-    #search-box{
-        margin-left: auto;
-        margin-right: auto;
-        display: inline;
+@media(min-width:768px)
+    {
+        input#location_home{
+        width: 280px;
     }
 
-    .pad{
-        padding: 5px 10px;
-    } 
+    input#max_price{
+        width: 200px;
+    }
+}
+.pad{
+    padding: 5px 10px;
+} 
     
 
 

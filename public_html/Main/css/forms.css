@@ -25,7 +25,6 @@ form.sign-in{
     border-width: thin;
     padding: 5% 5%;
     background: #ddd;
-    
 }
 
 
@@ -61,6 +60,10 @@ button#s-u-submit:hover{
         display: none;
     }
     
+    div.top-left{
+        display: none;
+    }
+    
     form.sign-up{
 /*        background: gray;*/
         height: 1100px;
@@ -84,14 +87,14 @@ button#s-u-submit:hover{
 /*    transform: translate(-50%, -50%);*/
 }   
 
-.btm-left{
+.top-left{
     position: absolute;
-    bottom: 10%;
-    left: 15%;
+    top: 10%;
+    left: 10%;
 }
 
-.btm-left p{
-    color: #ddd;
+.top-left p{
+    color: #000;
 }
 
 

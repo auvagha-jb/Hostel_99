@@ -1,6 +1,4 @@
 $(document).ready(function(){
-   
-//   $(".dropdown-content").hide();
 
    /*Ensure the cards are the same height**/
    flex_cards();
@@ -12,10 +10,6 @@ $(document).ready(function(){
         $(".card").addClass("align-items-stretch");
     }
    
-   
-   $(".dropdown").click(function(){
-       $(".dropdown-content", this).slideToggle()();
-   });
    
     /****************Handle window resizing**************/
     var default_width = $(window).width();
@@ -43,12 +37,7 @@ $(document).ready(function(){
         
         
        }
-    
-    
-    $("button#nav-btn").click(function(){
-        $(".navbar-nav").slideToggle()();
-    });
-    
+   
     
     $(window).resize(function(){
         var width = $(window).width();
@@ -59,6 +48,5 @@ $(document).ready(function(){
             $(".navbar-nav").show();
         }
     });
-    
     
 });

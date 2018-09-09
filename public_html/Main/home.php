@@ -4,21 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Hostel 99</title>
-        <link rel='shortcut icon' type="image/png" href="img/hostel-logo.png">
-        
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-        
-        <link rel="stylesheet" href="../Web Dev Tools/bootstrap-4.0.0-dist/css/bootstrap.min.css">
-        <script src="../Web Dev Tools/Jquery/jquery-3.3.1.js"></script>
-        <script src="../Web Dev Tools/popper.min.js"></script>
-        <script src="../Web Dev Tools/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-        <script src="../Web Dev Tools/all.js"></script>
- 
-        
+        <?php include './links.php'; ?>       
         <!--Generic-->
 	<link href="style.css" rel="stylesheet">
         <script src="js/main.js"></script>
@@ -77,23 +63,23 @@
   <!--- Jumbotron -->
     <div class="container-fluid">
         <div class="row jumbotron" id="search-box">
-            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9 col-xl-10">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-10">
                 <p class="jumbotron-text"><!--Makes light weight text-->
                     The perfect hostel for you is just a few clicks away.
                 </p>
             </div>
-            <div>
-            <form class="form-inline justify-content-center mx-2" method="post" action="#">
-                        <input class="form-control" name="location" id="location" placeholder="Where would you like to stay?" required="">
+            <div class="m-auto">
+            <form class="form-inline justify-content-center" method="post" id="search-form" action="#">
+                        <input class="form-control mx-2" name="location" id="location_home" placeholder="Where would you like to stay?" required="">
                         <select class="form-control mx-2" name="hostel_type" id="hostel_type" required="">
                             <option value="">What Type?</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="mixed">Mixed</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Mixed">Mixed</option>
                         </select>
 
                         <div class="input-group mx-2">
-                            <input name="max_price" class="form-control" id="max_price" placeholder="Maximum Price?">
+                            <input class="form-control" name="max_price" id="max_price" placeholder="Maximum Price?">
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary form-control" name="search_submit">
                                     <i class="fa fa-search"></i>
@@ -103,7 +89,6 @@
                 </form>
         </div>
         </div>
-        
     </div>
   
             
