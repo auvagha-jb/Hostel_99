@@ -10,7 +10,6 @@ $(document).ready(function(){
         $(".card").addClass("align-items-stretch");
     }
    
-   
     /****************Handle window resizing**************/
     var default_width = $(window).width();
     resizeText(default_width);
