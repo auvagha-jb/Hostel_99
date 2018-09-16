@@ -22,7 +22,7 @@ if(isset($_POST['hostel_name'])){
    } 
 
 if(isset($_POST['description'])){
-    //Generate a hostel_no randomly
+    //Generate a hostel_no randomly -->Then store it in a session variable
     $hostel_no = get_hostel_no($con);
     $_SESSION['hostel_no'] = $hostel_no;
     

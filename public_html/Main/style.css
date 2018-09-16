@@ -7,6 +7,9 @@ html, body{
    color: #222;
 }
 
+.dropdown a{
+    margin: 1px 3px;
+}
 
 /*Navigation bar*/
 

@@ -11,8 +11,7 @@ if(isset($_POST['amenities'])){
         //Find the number of items to insert
         $array_size= count($_POST['amenities']);
         
-//        $hostel_no = $_SESSION['hostel_no'];
-        $hostel_no = "1";
+        $hostel_no = $_SESSION['hostel_no'];
         
         for($count = 0; $count<$array_size; $count++){
             
@@ -42,8 +41,7 @@ if(isset($_POST['amenities'])){
         //Find the number of items to insert
         $array_size= count($_POST['rules']);
         
-//        $hostel_no = $_SESSION['hostel_no'];
-        $hostel_no = "1";
+        $hostel_no = $_SESSION['hostel_no'];
         
         for($count = 0; $count<$array_size; $count++){
             

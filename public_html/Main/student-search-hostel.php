@@ -4,6 +4,7 @@
         <title>Search</title>
         <?php include './links.php';?>
         <script src="js/main.js"></script>
+        <link rel="stylesheet" href="css/forms.css">
     </head>
 <body>
     
@@ -27,7 +28,7 @@
             $query = 'SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no '
                     . 'WHERE location = ? AND monthly_rent <= ? AND type = ? '
                     . 'OR county = ? AND monthly_rent <= ? AND type = ? '
-                    . 'OR road = ? AND monthly_rent <= ? AND type = ? GROUP BY hostels.hostel_no';
+                    . 'OR road = ? AND monthly_rent <= ? AND type = ? GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent';
             
             $stmt = $con->prepare($query);
             $stmt->bind_param("sssssssss", $location_home, $max_price, $hostel_type,$location_home, $max_price, $hostel_type,$location_home, $max_price, $hostel_type);
@@ -43,6 +44,8 @@
                 showCards($result);
                 
             //If no result is found, and the user had selected Male or Female, try mixed
+            }else{
+                noResults();
             }
             
         }
@@ -66,6 +69,9 @@
                 $folder = "uploads/";
                 $image = $row['image'];
                 $description = $row['description'];
+                $location = $row['location']; 
+                $road = $row['road'];
+                $monthly_rent = $row['monthly_rent'];
                 
                 echo '
                 <div class="col-md-4 special-offers"> 
@@ -73,9 +79,8 @@
                         <img class="card-img-top" src="'.$folder.$image.'"> <!--Since the image is at the top-->
                         <div class="card-body">
                             <h4 class="card-title">'.$hostel_name.'</h4>
-                            <p class="card-text">
-                                '.$description.'
-                            </p>
+                            <p class="card-text">'.$road.', '.$location.'</p>
+                            <p class="card-text">Rent from: Kshs '.$monthly_rent.' Per Month</p>
                             <a href="student-booking-page.php?id='.$id.'" class="btn btn-outline-primary">Book Now</a>
                         </div>
                     </div>
@@ -83,6 +88,13 @@
                 ';
                 
             }
+        }
+        
+        function noResults(){
+            echo '
+                <div class="lead m-auto pb-3">No results found! Try more general searches like counties(on Location) or Mixed(on Type)</div>
+            ';
+            include './search-form.php';
         }
     ?>
             

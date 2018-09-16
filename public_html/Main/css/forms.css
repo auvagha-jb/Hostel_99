@@ -103,5 +103,9 @@ button#s-u-submit:hover{
 }
 
 
-
+.hostel_location{
+    margin-bottom: 5px;
+    font-size: 15px;
+    float: right;
+}
 

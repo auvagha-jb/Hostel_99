@@ -5,9 +5,28 @@ $(document).ready(function(){
        $(".dropdown-content", this).slideToggle();
    });
    
+   var state = false;
+   
+   function down(){
+       var value;
+       
+       if(state === false){
+           value = false;
+           state = true;
+       }else{
+           value = true;
+           state = false;
+       }
+       return value;
+   }
+   
    //Collapse and expand navigation bar on small screens 
     $("button#nav-btn").click(function(){
-        $(".navbar-nav").slideToggle();
+        if(!down()){
+            $(".navbar-nav").slideDown();
+        }else{
+            $(".navbar-nav").slideDown();
+        }
     });   
     
 });

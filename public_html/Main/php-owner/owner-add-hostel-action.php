@@ -27,6 +27,5 @@
     
     if(isset($result)){
         echo 'ok';
-        header("location:../owner-view-hostel.php");
+        header("location:../owner-view-hostels.php");
     }
-    

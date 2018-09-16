@@ -28,13 +28,15 @@ $(document).ready(function(){
     //Add room table
     $(document).on("click", ".add-room", function(){
        var html = "";
+       //Hide the warning message if it had been displayed
+       $("#rooms-feedback").hide();
        
        html+="<tr>";
        html+='<td><input type="number" name="no_sharing[]" id="no_sharing" class="form-control" required></td>';
        html+='<td><input type="number" name="monthly_rent[]" id="monthly_rent" class="form-control" required></td>';
        html+='<td><input type="number" name="room_limit[]" id="room_limit" class="form-control" required></td>';
-       html+='<td><input type="number" name="total_occupants[]" id="total_occupants" class="form-control" required></td>';
-       html+='<td><input type="number" name="no_rooms_occupied[]" id="no_rooms_occupied" class="form-control" required></td>';
+//       html+='<td><input type="number" name="total_occupants[]" id="total_occupants" class="form-control" required></td>';
+//       html+='<td><input type="number" name="no_rooms_occupied[]" id="no_rooms_occupied" class="form-control" required></td>';
        html+='<td><button type="button" class="btn btn-success btn-sm add-room"><i class="fa fa-plus"></i></button></td>';
        html+='<td><button type="button" class="btn btn-danger btn-sm remove-room"><i class="fa fa-minus"></i></button></td>';
        html+='</tr>';
@@ -42,8 +44,19 @@ $(document).ready(function(){
        $("#add-room-tbl").append(html);
     });
     
-    $(document).on('click', '.remove-room:not(#first_row)',function(){
-       $(this).closest("tr").remove(); 
+    $(document).on('click', '.remove-room',function(){
+        var rows = $("#add-room-tbl >tbody >tr").length;
+          
+        var feedback = "<div class='alert alert-warning'>At least one row is needed</div>";
+        
+        if(rows>1){
+            $("#rooms-feedback").hide();
+            $(this).closest("tr").remove(); 
+            
+        }else{
+            $("#rooms-feedback").html(feedback);
+            $("#rooms-feedback").show();
+        }
     });
     
     
@@ -149,7 +162,6 @@ $(document).ready(function(){
            
         });
     }
-    
     
    
 //    $("#add-hostel-form").submit(function(e){

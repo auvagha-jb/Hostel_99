@@ -24,7 +24,7 @@
             if($user_type == "Student"){
                 echo '
                     <li class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle" href="#">'.$first_name.'</a>
+                        <a class="btn btn-secondary dropdown-toggle" href="#">'.$first_name.'</a>
                         <div class="dropdown-content">
                             <a class="nav-link" href="#">My Details</a>
                             <a class="btn btn-danger" href="php/logout.php">Sign out</a>
@@ -34,16 +34,14 @@
             }else if($user_type == "Hostel Owner"){
                 echo '
                 <li class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle mx-1 my-1" href="#">My Hostels</a>
+                        <a class="btn btn-secondary dropdown-toggle dropdown-toggle" href="#">My Hostels</a>
                         <div class="dropdown-content">
                             <a class="nav-link" href="owner-add-hostel.php">Add</a>
-                            <a class="nav-link" href="owner-view-hostel.php">View</a>
-                            <a class="nav-link" href="owner-view-bookings.php">Bookings</a>
-                            <a class="nav-link" href="owner-view-tenants.php">My Tenants</a>
+                            <a class="nav-link" href="owner-view-hostels.php">View</a>
                         </div>
-                </li>
+                    </li>
                 <li class="dropdown">
-                    <a class="btn btn-primary dropdown-toggle mx-1 my-1" href="#">'.$first_name.'</a>
+                    <a class="btn btn-primary dropdown-toggle" href="#">'.$first_name.'</a>
                     <div class="dropdown-content">
                         <a class="btn btn-danger" href="php/logout.php">Sign out</a>
                     </div>

@@ -1,6 +1,6 @@
     <div>
         <!--Gives user feedback on form submit-->
-        <div id="feedback">
+        <div id="rooms-feedback">
             
         </div>
         
@@ -11,8 +11,8 @@
                         <tr>
                         <th>Number Sharing</th>
                         <th>Monthly Rent</th>
-                        <th>Number of Occupants</th>
-                        <th>Rooms occupied</th>
+<!--                        <th>Number of Occupants</th>-->
+<!--                        <th>Rooms occupied</th>-->
                         <th>Limit</th>
                         <td>Add</td>
                         <td>Delete</td>
@@ -21,14 +21,13 @@
                     <tr>                        
                         <td><input type="number" name="no_sharing[]" id="no_sharing" class="form-control" required></td>
                         <td><input type="number" name="monthly_rent[]" id="monthly_rent" class="form-control" required></td>
-                        <td><input type="number" name="total_occupants[]" id="total_occupants" class="form-control" required></td>
-                        <td><input type="number" name="no_rooms_occupied[]" id="no_rooms_occupied" class="form-control" required></td>
                         <td><input type="number" name="room_limit[]" id="room_limit" class="form-control" required></td>
                         <td><button type="button" class="btn btn-success btn-sm add-room"><i class="fa fa-plus"></i></button></td>
                         <td><button type="button" class="btn btn-danger btn-sm remove-room" id="first_row"><i class="fa fa-minus"></i></button></td>
                     </tr>
                 </table>
             </div>
-           <!--Submit-->
-<!--            <input type="submit" name="room_details" id="room_details" class="btn btn-primary">-->
+
+<!--                <td><input type="number" name="total_occupants[]" id="total_occupants" class="form-control" required></td>
+                        <td><input type="number" name="no_rooms_occupied[]" id="no_rooms_occupied" class="form-control" required></td>-->
     </div>

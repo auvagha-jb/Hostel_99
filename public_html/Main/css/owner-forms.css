@@ -1,6 +1,6 @@
 .display_size{
-    height: 250px;
-    width: 250px;
+    height: 350px;
+    width: 450px;
 }
 
 label{
@@ -13,7 +13,7 @@ form.add-hostel-form{
 /*    margin: auto;*/
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -25%);
+    transform: translate(-50%, -18%);
     border: solid #000;
     border-radius: 5px;
     border-width: thin;
