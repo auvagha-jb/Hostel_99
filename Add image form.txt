@@ -1,0 +1,23 @@
+    <div id="add-image-feedback">
+        
+    </div>
+    <form>      
+    <table id="add-image-tbl">
+        <thead>
+            <tr>
+                <th>Images</th>
+                <th>Add</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tr>
+        <td>
+            <input type="file" name="image" id="image" onchange="readURL(this);" class="form-control"/>
+            <img src="#" alt="Choose an image to see the preview" id="image_display">
+        </td>
+            <td><button type="button" class="btn btn-success btn-sm add-image"><i class="fa fa-plus"></i></button></td>
+            <td><button type="button" class="btn btn-danger btn-sm remove-image"><i class="fa fa-minus"></i></button></td>
+        </tr>
+    </table>
+                
+    </form>

@@ -1,15 +1,15 @@
 function readURL(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    var image = document.getElementById("image_display");
-                    image.src = e.target.result;
-                    image.style.display = "block";  
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
+        reader.onload = function (e) {
+            var image = document.getElementById("image_display");
+            image.src = e.target.result;
+            image.style.display = "block";  
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 
 $(document).ready(function(){
     
@@ -106,6 +106,12 @@ $(document).ready(function(){
         }
         console.log(rows);
     });
+
+    
+    //images 
+    $(document).on("click", ".add-image", function(){
+       addImage(); 
+    });
     
     function addAmenity(){
        //Hide warning message if it had been displayed
@@ -140,6 +146,26 @@ $(document).ready(function(){
         $("#add-rules-tbl").append(html);
         
         var rows = $("#add-rules-tbl >tbody >tr").length;
+        console.log(rows);  
+   }
+   
+    function addImage(){
+       //Hide warning message if it had been displayed
+        $("#add-image-feedback").hide();
+        
+        var html="";
+        
+        html+="<tr>";
+        html+='<td><input type="file" name="image" id="image" onchange="readURL(this);" class="form-control"/>';
+        html+='<img src="#" alt="Choose an image to see the preview" id="image_display">';
+        html+='</td>';
+        html+='<td><button type="button" class="btn btn-success btn-sm add-image"><i class="fa fa-plus"></i></button></td>';
+        html+='<td><button type="button" class="btn btn-danger btn-sm remove-image"><i class="fa fa-minus"></i></button></td>';
+        html+="</tr>";
+       
+        $("#add-image-tbl").append(html);
+        
+        var rows = $("#add-image-tbl >tbody >tr").length;
         console.log(rows);  
    }
     

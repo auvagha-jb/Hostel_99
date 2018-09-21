@@ -1,0 +1,5 @@
+DELETE FROM user_hostel_bridge WHERE hostel_no = ?
+DELETE FROM rules WHERE hostel_no = ? 
+DELETE FROM rooms WHERE hostel_no = ? 
+DELETE FROM image WHERE hostel_no = ? 
+DELETE FROM amenities WHERE hostel_no = ?

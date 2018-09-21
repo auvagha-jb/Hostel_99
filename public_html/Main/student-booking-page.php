@@ -197,6 +197,7 @@
               <br>
               <!--Select list for rooms-->
               <?php include 'php/populate-room-select.php';?>
+              <?php include '';?>
             </form>
           </div>
 

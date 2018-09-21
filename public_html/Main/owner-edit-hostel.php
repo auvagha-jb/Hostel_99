@@ -15,6 +15,10 @@
     <?php include_once './php-owner/owner-get-hostel-details.php' ?>
     <div class="container-fluid">
         <div>
+            
+            <?php 
+            echo '<a class="btn btn-primary btn-sm" href="owner-add-images.php?hostel_name='.$hostel_name.'">My Photos</a>';
+            ?>
             <form method="post" class="add-hostel-form" action="php-owner/owner-add-hostel-action.php" 
                   enctype="multipart/form-data">
                 <center>

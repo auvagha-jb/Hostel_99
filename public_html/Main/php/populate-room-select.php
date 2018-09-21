@@ -2,7 +2,7 @@
 include './connection.php';
 
   $hostel_no = $_GET['id'];
-  $sql = "SELECT * FROM rooms WHERE hostel_no = ?";
+  $sql = "SELECT * FROM rooms WHERE hostel_no = ? ORDER BY no_sharing";
 
   $stmt = $con->prepare($sql);
   $stmt->bind_param("s", $hostel_no);
