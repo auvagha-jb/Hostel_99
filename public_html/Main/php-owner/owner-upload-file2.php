@@ -11,8 +11,12 @@
 </head>
 <body>
 <?php
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
 include_once '../php/connection.php';
-$hostel_no = $_GET['id'];
+$hostel_name = $_SESSION['hostel_name'];
 
 //Folder where we are posting our uploads
 $folder_name = '../uploads/';
@@ -24,7 +28,7 @@ if(!empty($_FILES))
  move_uploaded_file($temp_file, $location);
  
  //INSERT file name into the images table 
- $insert_query = "INSERT INTO images (hostel_no, image_name) "
+ $insert_query = "INSERT INTO images (hostel_no, image_name)";
  
 }
 

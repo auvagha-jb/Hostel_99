@@ -37,9 +37,13 @@ if(isset($_POST['description'])){
     //Image Upload
     $folder = "../uploads/";
     $file_name = $_FILES['image']['name'];
+    $path = $folder.$hostel_name."/".$file_name;
     
-    //The path to store the uploaded file
-    $target = $folder.basename($file_name);
+    //Create a folder for that hoostel
+    if(!file_exists($path)){
+        mkdir($path);
+    }
+    
     
     //Get all submitted data from the form
     $image = $_FILES['image']['name'];
@@ -56,7 +60,7 @@ if(isset($_POST['description'])){
     $file_tmp = $_FILES['image']['tmp_name'];
     
     $msg = "";
-    if(move_uploaded_file($file_tmp, $target)){
+    if(move_uploaded_file($file_tmp, $path)){
         $msg = "Image uploaded";
     }else{
         $msg = "Problem uploading image";

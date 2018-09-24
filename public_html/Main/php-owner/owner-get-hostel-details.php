@@ -26,3 +26,4 @@ $road = $row['road'];
 $type = $row['type'];
 $folder = "uploads/";
 $image = $row['image'];
+$total_rooms = $row['total_rooms'];

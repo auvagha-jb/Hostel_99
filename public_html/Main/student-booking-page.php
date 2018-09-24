@@ -7,8 +7,8 @@
     <link rel='shortcut icon' type="image/png" href="src/img/hostel-logo.png">
     <?php include './links.php';?>
     <!--Generic-->
-    <link href="src/css/style.css" rel="stylesheet">
-    <script src="src/js/main.js"></script>
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/forms.js"></script>
 </head>
 <body>
     
@@ -26,30 +26,53 @@
 <!--Image Slider-->
 <div id="slides" class="carousel slide" data-ride="carousel">
 
-  <!-- Indicators -->
-  <ul class="carousel-indicators">
-    <li data-target="#slides" data-slide-to="0" class="active"></li>
-    <li data-target="#slides" data-slide-to="1"></li>
-    <li data-target="#slides" data-slide-to="2"></li>
-    <li data-target="#slides" data-slide-to="3"></li>
-  </ul>
 
   <!-- The slideshow -->
   <div class="carousel-inner">
-    <div class="carousel-item active">
-        <img src="uploads/travelers-oasis.jpg">
-    </div>
-    <div class="carousel-item">
-      <img src="uploads/travelers-oasis-two.jpg">
-    </div>
-    <div class="carousel-item">
-      <img src="uploads/travelers-oasis-three.jpg">
-    </div>
-    <div class="carousel-item">
-        <img src="uploads/travelers-oasis-four.jpg">
-    </div>
-  </div>
+      <?php //Set hostel_name session variable
+    $_SESSION['hostel_name'] = $_GET['hostel_name'];
 
+    if(session_status()==PHP_SESSION_NONE){
+        session_start();
+    }
+
+
+      $folder = "uploads/";
+      $hostel_name = $_SESSION['hostel_name']."/";
+      
+      $path = $folder.$hostel_name;
+      
+      if(file_exists($path)){
+          
+          $handle = opendir($path);
+          $first = true;
+          $counter = 0;
+
+          while($file = readdir($handle)){
+              if($file !=='.' && $file !== ".."){
+
+              if($first){
+                echo '
+                 <div class="carousel-item active">
+                    <img src="'.$folder.$hostel_name.$file.'">
+                </div>
+               ';
+
+                $first = false;
+              }  else {
+                      echo '
+                     <div class="carousel-item">
+                        <img src="'.$folder.$hostel_name.$file.'">
+                    </div>
+                   ';
+              }
+              $counter++;
+          }
+          }
+    }
+      ?>
+  </div>
+  
   <!-- Left and right controls -->
   <a class="carousel-control-prev" href="#slides" data-slide="prev">
     <span class="carousel-control-prev-icon"></span>
@@ -167,26 +190,21 @@
           <!--Modal Body-->
           <div class="modal-body">
             <form class="form-control">
-              <label>
-                Name:<br>
+              <label>Name:</label><br>
                 <input class="form-control" type="text" required><br>
-              </label>
               <br>
               <br>
-              <label>
-                Email Address:<br>
+              <label>Email Address:</label><br>
                 <input class="form-control" type="text" required>
-              </label>
               <br>
               <br>
               <label>
-                Gender:<br>
+                Gender:</label><br>
                 <select class="form-control">
                   <option value="female">Female</option>
                   <option value="male">Male</option>
                   <option value="other">Other</option>
                 </select>
-              </label>
               <br>
               <br>
               <label>
@@ -197,7 +215,10 @@
               <br>
               <!--Select list for rooms-->
               <?php include 'php/populate-room-select.php';?>
-              <?php include '';?>
+              <br>
+              <label>Email Address:</label><br>
+                <input class="form-control" type="text" required>
+              <br>
             </form>
           </div>
 

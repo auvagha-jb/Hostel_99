@@ -12,7 +12,7 @@ include './connection.php';
 
     echo " <label>Room-type: </label>";
     echo "<br>";
-    echo "<select class='form-control' id='hostel_room_type'>";
+    echo "<select class='form-control' id='no_sharing'>";
     while ($row = $result->fetch_array()) { 
         echo "<option>".$row['no_sharing']." Sharing </option>" ;
     }

@@ -12,14 +12,32 @@
     <?php include './nav-bar.php';?>
     
     <!--Get the details about the hostel to populate the values with-->
-    <?php include_once './php-owner/owner-get-hostel-details.php' ?>
+    <?php include_once './php-owner/owner-get-hostel-details.php'; ?>
+    
+    <?php
+        //Store the hostel_name in a session -->It will be needed on the file upload platform
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        //values obtained from owner-get-hostel-details.php
+        $_SESSION['hostel_name'] = $hostel_name;
+        $_SESSION['hostel_no'] = $hostel_no;
+        if(isset($image)){
+            $_SESSION['prev_image_name'] = $image;
+        }else{
+            $_SESSION['prev_image_name'] = "";
+        }
+        
+        echo "File: ".$image;
+    ?>
+    
     <div class="container-fluid">
         <div>
             
             <?php 
             echo '<a class="btn btn-primary btn-sm" href="owner-add-images.php?hostel_name='.$hostel_name.'">My Photos</a>';
             ?>
-            <form method="post" class="add-hostel-form" action="php-owner/owner-add-hostel-action.php" 
+            <form method="post" class="add-hostel-form" action="php-owner/owner-edit-hostel-action.php" 
                   enctype="multipart/form-data">
                 <center>
                     <i class="fa fa-hotel"></i>
@@ -63,11 +81,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label>Image</label>
-                    <input type='file' name="image" id="image" onchange="readURL(this);" class="form-control" />
-                    <img src="<?php echo $folder.$image;?>" alt="Choose an image to see the preview" id="image_display">
+                    <label>Main Image</label>
+                    <input type="file" name="image" id="image" onchange="readURL(this);" class="form-control" />
+                    <img src="<?php echo $folder.$hostel_name.'/'.$image;?>" alt="Choose an image to see the preview" id="image_display">
                 </div>
                 
+                <div class="col-md-6">
+                    <label>Total number of rooms</label>
+                    <input type="text" name="total_rooms" id="total_rooms" class="form-control" value="<?php echo $total_rooms;?>" required="">
+                </div>
                 <?php // include './owner-add-room.php'; ?>
                 <?php // include './owner-add-amenities-and-rules.php';?>
                 
