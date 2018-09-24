@@ -2,6 +2,13 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/student-search-hostel.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-add-room.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-edit-hostel.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-edit-hostel-action.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-get-hostel-details.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-upload.php</file>
+        </group>
     </open-files>
 </project-private>

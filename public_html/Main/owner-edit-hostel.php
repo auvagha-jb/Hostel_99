@@ -27,8 +27,6 @@
         }else{
             $_SESSION['prev_image_name'] = "";
         }
-        
-        echo "File: ".$image;
     ?>
     
     <div class="container-fluid">

@@ -77,7 +77,7 @@ if(isset($_POST['submit'])){
         rename($old_name, $new_name);
     }
     
-//    header("location:../owner-edit-hostel.php?id=".$hostel_no."");
+    header("location:../owner-edit-hostel.php?id=".$hostel_no."");
 }
 
 function queryWithImage($con){

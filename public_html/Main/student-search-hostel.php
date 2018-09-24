@@ -76,7 +76,7 @@
                 echo '
                 <div class="col-md-4 special-offers"> 
                     <div class="card">
-                        <img class="card-img-top" src="'.$folder.$image.'"> <!--Since the image is at the top-->
+                        <img class="card-img-top" src="'.$folder.$hostel_name."/".$image.'"> <!--Since the image is at the top-->
                         <div class="card-body">
                             <h4 class="card-title">'.$hostel_name.'</h4>
                             <p class="card-text">'.$road.', '.$location.'</p>
