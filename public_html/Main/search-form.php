@@ -9,7 +9,7 @@
             </select>
 
             <div class="input-group mx-2">
-                <input class="form-control" name="max_price" id="max_price" placeholder="Maximum Price?">
+                <input class="form-control" type="number" name="max_price" id="max_price" placeholder="Maximum Price?">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary form-control" name="search_submit" id="search_submit">
                         <i class="fa fa-search"></i>

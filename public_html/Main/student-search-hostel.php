@@ -4,7 +4,7 @@
         <title>Search</title>
         <?php include './links.php';?>
         <script src="js/main.js"></script>
-        <link rel="stylesheet" href="css/forms.css">
+        <link rel="stylesheet" href="style.css">
     </head>
 <body>
     
@@ -24,8 +24,15 @@
             $max_price = $_POST['max_price'];
             $mixed = "Mixed";
             
+//            SELECT hostels.hostel_no, hostels.hostel_name, hostels.image, hostels.description, hostels.location, hostels.road, 
+//            MIN(rooms.monthly_rent) AS monthly_rent, MAX(rooms.no_sharing) AS no_sharing FROM hostels JOIN rooms 
+//            ON hostels.hostel_no = rooms.hostel_no WHERE location = "Nairobi" AND monthly_rent <= 10000 AND type = "Mixed" 
+//            OR county = "Nairobi" AND monthly_rent <= 10000 AND type = "Mixed" OR road = "Nairobi" AND monthly_rent <= 10000 AND type = "Mixed" GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent 
+
             //First query
-            $query = 'SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no '
+            $query = 'SELECT hostels.hostel_no, hostels.hostel_name, hostels.image, hostels.description, hostels.location, '
+                    . 'hostels.road, MIN(rooms.monthly_rent)AS monthly_rent, MAX(rooms.no_sharing) AS no_sharing '
+                    . 'FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no '
                     . 'WHERE location = ? AND monthly_rent <= ? AND type = ? '
                     . 'OR county = ? AND monthly_rent <= ? AND type = ? '
                     . 'OR road = ? AND monthly_rent <= ? AND type = ? GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent';
@@ -72,6 +79,7 @@
                 $location = $row['location']; 
                 $road = $row['road'];
                 $monthly_rent = $row['monthly_rent'];
+                $no_sharing = $row['no_sharing'];
                 
                 echo '
                 <div class="col-md-4 special-offers"> 
@@ -80,7 +88,7 @@
                         <div class="card-body">
                             <h4 class="card-title">'.$hostel_name.'</h4>
                             <p class="card-text">'.$road.', '.$location.'</p>
-                            <p class="card-text">Rent from: Kshs '.$monthly_rent.' Per Month</p>
+                            <p class="card-text">Rent from: Kshs '.$monthly_rent.' Per Month - For '.$no_sharing.' Sharing</p>
                             <a href="student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name.'" class="btn btn-outline-primary">Book Now</a>
                         </div>
                     </div>

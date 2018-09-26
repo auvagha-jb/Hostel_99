@@ -148,8 +148,10 @@ li.nav-item a {
     width: 50%;
 }
 
-/*The special offers*/
-
+/*The Cards*/
+.card img{
+    height: 275px;
+}
 
 
 /**Footers**/

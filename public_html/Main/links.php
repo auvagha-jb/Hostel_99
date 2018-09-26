@@ -18,13 +18,12 @@
         <link rel="stylesheet" href="../Web Dev Tools/bootstrap-4.0.0-dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="../Web Dev Tools/jquery-ui-1.12.1/jquery-ui.min.css">
         <link rel="stylesheet" href="../Web Dev Tools/dropzone/dropzone.css">
-        <script src="../Web Dev Tools/Jquery/jquery-3.3.1.js"></script>
-        <script src="../Web Dev Tools/popper.min.js"></script>
+        <script src="../Web Dev Tools/jquery/jquery-3.3.1.js"></script>
+        <script src="../Web Dev Tools/popper/"></script>
         <script src="../Web Dev Tools/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
-        <script src="../Web Dev Tools/all.js"></script>
-        <script src="../Web Dev Tools/angular.min.js"></script>
-        <script src="../Web Dev Tools/angular-animate.min.js"></script>
-        <script src="../Web Dev Tools/angular-route.min.js"></script>
-        <script src="../Web Dev Tools/all.js"></script>
+        <script src="../Web Dev Tools/font-awesome/all.js"></script>
+        <script src="../Web Dev Tools/angular-js/angular.min.js"></script>
+        <script src="../Web Dev Tools/angular-js/angular-animate.min.js"></script>
+        <script src="../Web Dev Tools/angular-js/angular-route.min.js"></script>
         <script src="../Web Dev Tools/jquery-ui-1.12.1/jquery-ui.js"></script>
         <script src="../Web Dev Tools/dropzone/dropzone.js"></script>

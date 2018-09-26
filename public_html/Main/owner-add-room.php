@@ -14,8 +14,8 @@
 <!--                        <th>Number of Occupants</th>-->
 <!--                        <th>Rooms occupied</th>-->
                         <th>Limit</th>
-                        <td>Add</td>
-                        <td>Delete</td>
+                        <th>Add</th>
+                        <th>Delete</th>
                         </tr>
                     </thead>    
                     <tr>                        
