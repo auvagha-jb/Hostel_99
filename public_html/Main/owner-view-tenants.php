@@ -7,7 +7,14 @@
         <script src="js/add-tenants.js"></script>
     </head>
 <body>
-
+    
+    <?php
+        //Get the hostel_no 
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        $_SESSION['hostel_no'] = $_GET['id'];
+    ?>
     <div class="m-auto">
         <center class="lead title">Add Tenants</center>
     <form class="form-inline justify-content-center" method="post" id="search-form">
@@ -29,9 +36,14 @@
         <table class="table-bordered">
             <thead>
                 <tr>
-                    <th></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
+                    <th>Room Assigned</th>
                 </tr>
             </thead>
+            
         </table>
     </div>
         

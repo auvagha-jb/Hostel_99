@@ -79,7 +79,7 @@
                 $location = $row['location']; 
                 $road = $row['road'];
                 $monthly_rent = $row['monthly_rent'];
-                $no_sharing = $row['no_sharing'];
+//                $no_sharing = $row['no_sharing'];
                 
                 echo '
                 <div class="col-md-4 special-offers"> 
@@ -88,7 +88,7 @@
                         <div class="card-body">
                             <h4 class="card-title">'.$hostel_name.'</h4>
                             <p class="card-text">'.$road.', '.$location.'</p>
-                            <p class="card-text">Rent from: Kshs '.$monthly_rent.' Per Month - For '.$no_sharing.' Sharing</p>
+                            <p class="card-text">Rent from: Kshs '.$monthly_rent.' Per Month</p>
                             <a href="student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name.'" class="btn btn-outline-primary">Book Now</a>
                         </div>
                     </div>

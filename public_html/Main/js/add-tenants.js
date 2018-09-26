@@ -11,7 +11,7 @@ $(document).ready(function(){
    
    function updateTable(email){
        $.post("php-owner/owner-add-tenants.php", {email: email}, function(data, status){
-          
+          $("#test").html(data);
        });
    }
    
