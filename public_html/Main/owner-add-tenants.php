@@ -1,16 +1,19 @@
 <?php
 
-include_once './connection.php';
+include './php/connection.php';
+
 if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
 
+$hostel_no = $_SESSION['hostel_no'];
+
 if(isset($_POST['email'])){
     
     $email = $_POST['email'];
-    
+    $room_assigned = $_POST['room_assigned'];
     /*
-     * TABLES AFFECTED: users and user_hostel_bridge 
+     * TABLES AFFECTED: users table, tenant_history table and user_hostel_bridge table 
      */
     
     
@@ -23,35 +26,44 @@ if(isset($_POST['email'])){
     
     $check_stmt = $con->prepare($check_query); 
     $check_stmt->bind_param("s", $email);
-    $check_stmt->execute();
+    
+    if($check_stmt->execute()==false){
+        echo 'check_query failed';
+    }
     
     $check_rst  = $check_stmt->get_result();
     
     if(mysqli_num_rows($check_rst)>0){
-        echo 'Tenant found';
+        //echo 'Tenant found';
         
         $row  = $check_rst->fetch_array();
         
         $status = $row['user_status'];
         $user_id = $row['user_id'];
+        $name = $row['first_name']." ".$row['last_name'];
+        $user_type = $row['user_type'];
         
         if($status == "Tenant"){
-            echo 'Already a tenant';#
-            EXIT();
+            echo $name." is still is registered as a tenant in another hostel";
+            exit();
+        }else if($user_type !="Student"){
+            echo $name." is is not a student. User type: ".$user_type;
+            exit();    
         }else{
             //Change user_status from NULL to Tenant
-            changeStatus($con, $status);
+            //changeStatus($con, $status, $room_assigned);
+            exit();
         }
         
     }else{
-        echo "Invalid tenant";
+        echo "User email does not exist";
+        exit();
     }
     
 
     /*
      * TENANT_HISTORY 
      */
-    $hostel_no = $_SESSION['hostel_no'];
     $record_id = get_id($con);
     date_default_timezone_set('Africa/Nairobi');
     $date_checked_in = date('Y-m-d H:i:s');
@@ -69,26 +81,19 @@ if(isset($_POST['email'])){
     $stmt_2 = $con->prepare($insert_2);
     $stmt_2->bind_param("sss", $user_id, $hostel_no, $record_id);
     $stmt_2->execute();
-    
-    
-    /*SELECT ->To display the tenants
-     * 
-     * Sample Query: 
-     * SELECT * FROM users join user_hostel_bridge ON users.user_id = user_hostel_bridge.user_id WHERE 
-     * user_hostel_bridge.hostel_no = 1 AND users.user_status = "Tenant" AND users.user_type = "Student"   
-     */
-    
-    echo 'Done';
+   
+    header("location:owner-view-tenants.php?id=".$hostel_no." ");
 }
-
-
-function changeStatus($con, $email){
     
-    $query  = 'UPDATE users SET user_status = "Tenant" WHERE email = ?';
+
+function changeStatus($con, $email, $room_assigned){
+    
+    $query  = 'UPDATE users SET user_status = "Tenant", room_assigned = ? WHERE email = ?';
     
     $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();    
+    $stmt->bind_param("s", $room_assigned, $email);
+    $stmt->execute();  
+    
 }
 
 function get_id($con){
@@ -109,4 +114,3 @@ function get_id($con){
     
     return $record_id;
 }
-

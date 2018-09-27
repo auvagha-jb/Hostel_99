@@ -41,7 +41,7 @@ $result = $stmt->get_result();
 
 $output = '<div class="row">';
     
- while($row = $result->fetxh_array())
+ while($row = $result->fetch_array())
  {
      $file = $row['image_name'];
      

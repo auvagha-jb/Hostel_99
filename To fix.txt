@@ -1,0 +1,6 @@
+
+owner-add-tenants.php -->uncomment header
+owner-add-tenants.php -->uncomment changeStatus()
+
+owner-view-tenants.php-->if(data == "")...
+owner-view-tenants.php-->line 47

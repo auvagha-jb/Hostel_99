@@ -23,4 +23,10 @@ form.add-hostel-form{
 
 .title{
     font-size: 150%;
+    padding-bottom: 10px;
+}
+
+.add-tenant-form{
+    margin: auto;
+    padding-top: 10px;
 }

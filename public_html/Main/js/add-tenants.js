@@ -1,17 +1,30 @@
 $(document).ready(function(){   
    
-   $("#add_tenant").click(function(e){
-       
-       //IMPORTANT to prevent form submission
-       e.preventDefault();
-       
-       var email = $("#email").val();
-       updateTable(email);
+   
+   if(window.history.replaceState()){
+       window.history.replaceState(null, null, window.location.href); 
+    }
+    
+   
+   $("#add-tenant-form").submit(function(e){
+      e.preventDefault();
+      
+      var email = $("#email").val();
+      updateTable(email);
+      
+
    });
    
    function updateTable(email){
-       $.post("php-owner/owner-add-tenants.php", {email: email}, function(data, status){
-          $("#test").html(data);
+       
+       $.post("owner-add-tenants.php", {email:email}, function(data, status){
+//          $("#feedback").html(data);
+//          if(data !== ""){
+//              
+//          }else{
+////             $("#add-tenant-form").ajaxSubmit({url: 'fixfile.php', type: 'post'});
+//          }
+           alert(status);
        });
    }
    
