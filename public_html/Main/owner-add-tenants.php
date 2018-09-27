@@ -8,6 +8,11 @@ if(session_status() == PHP_SESSION_NONE){
 
 $hostel_no = $_SESSION['hostel_no'];
 
+/*
+ * Turn off autocommit
+ */
+$con->autocommit(false);
+
 if(isset($_POST['email'])){
     
     $email = $_POST['email'];
@@ -21,38 +26,61 @@ if(isset($_POST['email'])){
     * USERS table 
     */
     
-    //Check status to ensure they are not already a tenant
-    $check_query = "SELECT * FROM users WHERE email = ?";
+    $select = "SELECT * FROM users WHERE email = ?";
     
-    $check_stmt = $con->prepare($check_query); 
-    $check_stmt->bind_param("s", $email);
+    $select_stmt = $con->prepare($select); 
+    $select_stmt->bind_param("s", $email);
+    $select_stmt->execute();
     
-    if($check_stmt->execute()==false){
-        echo 'check_query failed';
-    }
+    $select_rst  = $select_stmt->get_result();
     
-    $check_rst  = $check_stmt->get_result();
+    //If the user is found ...
+    if(mysqli_num_rows($select_rst)>0){
     
-    if(mysqli_num_rows($check_rst)>0){
-        //echo 'Tenant found';
+        $get = $select_rst->fetch_array();
+           
+        $status = $get['user_status'];
+        $user_id = $get['user_id'];
+        $name = $get['first_name']." ".$get['last_name'];
+        $user_type = $get['user_type'];
+
         
-        $row  = $check_rst->fetch_array();
+        /*Check status and user_hostel_bridge table to ensure they are not already a tenant in the current  
+        nor in another hostel and that they are of "student" type */
+       
+        $result = checkIfTenant($con, $user_id); 
+        $row = $result->fetch_array();
         
-        $status = $row['user_status'];
-        $user_id = $row['user_id'];
-        $name = $row['first_name']." ".$row['last_name'];
-        $user_type = $row['user_type'];
+        $hostel_reg = $row['hostel_no'];
+        $hostel_name = $row['hostel_name'];        
         
         if($status == "Tenant"){
-            echo $name." is still is registered as a tenant in another hostel";
-            exit();
+            if($hostel_no != $hostel_reg && $hostel_reg !=""){
+                echo $name." is still registered as a tenant in ".$hostel_name;
+                exit();
+            }else{
+                echo $name." is already registered as a tenant in your hostel";
+                exit();
+            }
         }else if($user_type !="Student"){
             echo $name." is is not a student. User type: ".$user_type;
             exit();    
         }else{
+            
+            $error = array();
+            
             //Change user_status from NULL to Tenant
-            //changeStatus($con, $status, $room_assigned);
-            exit();
+            changeStatus($con, $email, $room_assigned, $error);
+            
+            //Insert data into respective tables: tenants_history and 
+            insertQueries($con, $user_id, $hostel_no, $error);
+            
+            //Commit the queries if there were no errors encountered
+            if(isset($error)){
+                echo var_dump($error);
+                $con->commit();
+            }
+            
         }
         
     }else{
@@ -61,6 +89,10 @@ if(isset($_POST['email'])){
     }
     
 
+}
+    
+function insertQueries($con, $user_id, $hostel_no, $error){
+    
     /*
      * TENANT_HISTORY 
      */
@@ -71,7 +103,11 @@ if(isset($_POST['email'])){
     $insert_1 = "INSERT INTO `tenant_history`(`record_id`, `date_checked_in`) VALUES (?,?)";
     $stmt_1 = $con->prepare($insert_1);
     $stmt_1->bind_param("ss", $record_id, $date_checked_in);
-    $stmt_1->execute();
+    $bool = $stmt_1->execute();
+    
+    if($bool){
+        array_push($error, "Works");
+    }
     /*
      * USER_HOSTEL_BRIDGE table
      * INSERT user_id and hostel_no 
@@ -79,21 +115,23 @@ if(isset($_POST['email'])){
     
     $insert_2 = "INSERT INTO user_hostel_bridge (hostel_no, user_id, record_id) VALUES(?,?,?)";
     $stmt_2 = $con->prepare($insert_2);
-    $stmt_2->bind_param("sss", $user_id, $hostel_no, $record_id);
+    $stmt_2->bind_param("sss", $hostel_no, $user_id, $record_id);
     $stmt_2->execute();
    
-    header("location:owner-view-tenants.php?id=".$hostel_no." ");
+    //header("location:owner-view-tenants.php?id=".$hostel_no." ");
 }
-    
 
-function changeStatus($con, $email, $room_assigned){
+function changeStatus($con, $email, $room_assigned, $error){
     
     $query  = 'UPDATE users SET user_status = "Tenant", room_assigned = ? WHERE email = ?';
     
     $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $room_assigned, $email);
-    $stmt->execute();  
+    $stmt->bind_param("ss", $room_assigned, $email);
+    $bool = $stmt->execute();
     
+    if($bool){
+        array_push($error, "Works");
+    }
 }
 
 function get_id($con){
@@ -114,3 +152,18 @@ function get_id($con){
     
     return $record_id;
 }
+
+function checkIfTenant($con, $user_id){
+    
+    $query = 'SELECT * FROM user_hostel_bridge JOIN hostels ON user_hostel_bridge.hostel_no = hostels.hostel_no '
+            . 'WHERE user_hostel_bridge.user_id = ?';
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("s", $user_id);
+    $stmt->execute();
+    
+    $result = $stmt->get_result();
+    
+    return $result;
+}
+
+

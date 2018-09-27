@@ -8,7 +8,7 @@
         <script>
  $(document).ready(function(){   
    
-   $("#add-tenant-form").submit(function(e){
+   $("#add_tenant").click(function(e){
       e.preventDefault();
       
       var email = $("#email").val();
@@ -23,9 +23,13 @@
           
           if(data != ""){
               //Display error message
+              $("#feedback").addClass("alert alert-danger");
               $("#feedback").html(data);
-          }
-           alert(data);
+          }else{
+              //Submit form
+//              $("#add-tenant-form").ajaxSubmit({url:"owner-add-tenants.php", type:"post"})
+             location.reload();
+         }
        });
    }
 });
@@ -42,21 +46,20 @@
     ?>
     
     <div class="add-tenant-form">
-        <center class="lead title">Add Tenants</center>
+        
     <form class="form-inline justify-content-center" method="post" id="add-tenant-form">
-        <center class="#" id="feedback">Nada</center>
         <input class="form-control mx-2" name="email" id="email" placeholder="Email address" required="">
         <div class="input-group mx-2">
             <input class="form-control" name="room_assigned" id="room_assigned" placeholder="Room assigned" required="">
             <div class="input-group-append">
-                <button type="submit" class="btn btn-success form-control" name="search_submit" id="add_tenant">
+                <button type="button" class="btn btn-success form-control" name="search_submit" id="add_tenant">
                     <i class="fa fa-plus-circle"></i>
                 </button>
             </div>
         </div>
     </form>
     
-        
+        <center id="feedback"></center>
         <?php include './owner-get-tenants-table.php'; ?>  
 </div>
     

@@ -73,7 +73,7 @@ function showTableRows($con){
 <body>
     
     <div class="table-responsive">
-        <table class="table table-bordered">
+        <table class="table table-bordered my-4">
             <thead>
                 <tr>
                     <th>Name</th>
