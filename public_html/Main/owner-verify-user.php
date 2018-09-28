@@ -8,9 +8,7 @@ if(session_status() == PHP_SESSION_NONE){
 
 $hostel_no = $_SESSION['hostel_no'];
 
-/*
- * Turn off autocommit
- */
+//!Muy importante!
 $con->autocommit(false);
 
 if(isset($_POST['email'])){
@@ -67,20 +65,8 @@ if(isset($_POST['email'])){
             exit();    
         }else{
             
-            $error = array();
-            
-            //Change user_status from NULL to Tenant
-            changeStatus($con, $email, $room_assigned, $error);
-            
-            //Insert data into respective tables: tenants_history and 
-            insertQueries($con, $user_id, $hostel_no, $error);
-            
-            //Commit the queries if there were no errors encountered
-            if(isset($error)){
-                echo var_dump($error);
-                $con->commit();
-            }
-            
+            //Cleared for insert into database
+            echo '';       
         }
         
     }else{
@@ -88,69 +74,6 @@ if(isset($_POST['email'])){
         exit();
     }
     
-
-}
-    
-function insertQueries($con, $user_id, $hostel_no, $error){
-    
-    /*
-     * TENANT_HISTORY 
-     */
-    $record_id = get_id($con);
-    date_default_timezone_set('Africa/Nairobi');
-    $date_checked_in = date('Y-m-d H:i:s');
-    
-    $insert_1 = "INSERT INTO `tenant_history`(`record_id`, `date_checked_in`) VALUES (?,?)";
-    $stmt_1 = $con->prepare($insert_1);
-    $stmt_1->bind_param("ss", $record_id, $date_checked_in);
-    $bool = $stmt_1->execute();
-    
-    if($bool){
-        array_push($error, "Works");
-    }
-    /*
-     * USER_HOSTEL_BRIDGE table
-     * INSERT user_id and hostel_no 
-     */
-    
-    $insert_2 = "INSERT INTO user_hostel_bridge (hostel_no, user_id, record_id) VALUES(?,?,?)";
-    $stmt_2 = $con->prepare($insert_2);
-    $stmt_2->bind_param("sss", $hostel_no, $user_id, $record_id);
-    $stmt_2->execute();
-   
-    //header("location:owner-view-tenants.php?id=".$hostel_no." ");
-}
-
-function changeStatus($con, $email, $room_assigned, $error){
-    
-    $query  = 'UPDATE users SET user_status = "Tenant", room_assigned = ? WHERE email = ?';
-    
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("ss", $room_assigned, $email);
-    $bool = $stmt->execute();
-    
-    if($bool){
-        array_push($error, "Works");
-    }
-}
-
-function get_id($con){
-     $record_id = mt_rand();
-    
-    do{
-        
-        $select = "SELECT * FROM `tenant_history` WHERE record_id = ?";
-        $stmt = $con->prepare($select);
-        $stmt->bind_param("s", $record_id);
-        $stmt->execute();
-        
-        $result = $stmt->get_result();
-       
-        $row_count = mysqli_num_rows($result);
-        
-    }while($row_count>0);
-    
-    return $record_id;
 }
 
 function checkIfTenant($con, $user_id){

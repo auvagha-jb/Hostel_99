@@ -4,7 +4,7 @@
         <title>My tenants</title>
         <?php include_once './links.php';?>
         <link rel="stylesheet" href="css/owner-forms.css">
-<!--        <script src="js/add-tenants.js"></script>-->
+        <script src="js/manage-tenants.js"></script>
         <script>
  $(document).ready(function(){   
    
@@ -13,25 +13,44 @@
       
       var email = $("#email").val();
       var room_assigned = $("#room_assigned").val();
-      updateTable(email,room_assigned);
+      verifyUser(email,room_assigned);
 
    });
 
-    function updateTable(email, room_assigned){
+    function verifyUser(email, room_assigned){
        
-       $.post("owner-add-tenants.php", {email:email, room_assigned:room_assigned}, function(data, status){
+       $.post("owner-verify-user.php", {email:email, room_assigned:room_assigned}, function(data, status){
           
           if(data != ""){
               //Display error message
               $("#feedback").addClass("alert alert-danger");
               $("#feedback").html(data);
           }else{
-              //Submit form
-//              $("#add-tenant-form").ajaxSubmit({url:"owner-add-tenants.php", type:"post"})
-             location.reload();
+              alert("verified");
          }
        });
-   }
+   }//End of function
+   
+   
+   function addTenant(){
+       
+      var email = $("#email").val();
+      var room_assigned = $("#room_assigned").val();
+      
+      $.post("owner-add-tenant.php", {email:email, room_assigned:room_assigned}, function(data, status){
+          
+          if(data != ""){
+              //Display error message
+              $("#feedback").removeClass("alert alert-danger");
+              $("#feedback").addClass("alert alert-success");
+              $("#feedback").html(data);
+          }else{
+              alert("Not executed");
+         }
+       });
+       
+   }//End of function
+   
 });
         </script>
     </head>

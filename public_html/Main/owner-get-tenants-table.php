@@ -31,6 +31,7 @@ function showTableRows($con){
         
         while($row = $result_3->fetch_array()){
             
+            $user_id = $row['user_id'];
             $name = $row['first_name']." ".$row['last_name'];
             $email = $row['email'];
             $phone_no = $row['phone_no'];
@@ -44,7 +45,7 @@ function showTableRows($con){
                 <td>'.$phone_no.'</td>
                 <td>'.$gender.'</td>
                 <td>'.$room_assigned.'</td>
-                <td><button type="button" class="btn btn-danger btn-sm remove-room" id="first_row"><i class="fa fa-minus-circle"></i></button></td>
+                <td><a href="owner-remove-tenant.php?user_id='.$user_id.'" class="btn btn-danger btn-sm remove-room" id="remove_tenant"><i class="fa fa-minus-circle"></i></a></td>
             </tr>  
             ';
         }
@@ -68,7 +69,7 @@ function showTableRows($con){
         <title>My tenants</title>
         <?php include_once './links.php';?>
         <link rel="stylesheet" href="css/owner-forms.css">
-        <script src="js/add-tenants.js"></script>
+        <script src="js/manage-tenants.js"></script>
     </head>
 <body>
     

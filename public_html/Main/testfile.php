@@ -5,9 +5,16 @@ $bool = true;
 
 if($bool){
     
-    $email = "jerry.auvagha@strathmore.edu";
-    $room_assigned = "1";
-    changeStatus($con, $email, $room_assigned);
+    $arr = array();
+    echo "Before: ".var_dump($arr)."<br>";
+    
+    if(count($arr)==0){
+        echo 'NOTHING AT ALL';
+    }
+}
+
+function changeArray(&$arr){
+    array_push($arr, "Value");
 }
 
 
