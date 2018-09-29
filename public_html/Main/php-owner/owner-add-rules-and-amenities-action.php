@@ -22,7 +22,11 @@ if(isset($_POST['amenities'])){
             
             $stmt = $con->prepare($query);
             $stmt->bind_param("ss", $hostel_no, $amenities);
-            $stmt->execute();
+            $bool = $stmt->execute();
+            
+            if(!$bool){
+                array_push($error, $con->error);
+            }
             
         }
         
@@ -51,14 +55,11 @@ if(isset($_POST['amenities'])){
             
             $stmt = $con->prepare($query);
             $stmt->bind_param("ss", $hostel_no, $rules);
-            $stmt->execute();
+            $bool = $stmt->execute();
             
-        }
-        
-        $result = $stmt->get_result();
-            
-            if(isset($result)){
-                echo 'ok';
+            if(!$bool){
+                array_push($error, $con->error);
             }
+        }
         
     }

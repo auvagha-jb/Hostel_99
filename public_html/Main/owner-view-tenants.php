@@ -1,3 +1,10 @@
+<?php    
+        include_once './php/connection.php';
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        $_SESSION['hostel_no'] = $_GET['id'];
+    ?>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -5,66 +12,18 @@
         <?php include_once './links.php';?>
         <link rel="stylesheet" href="css/owner-forms.css">
         <script src="js/manage-tenants.js"></script>
-        <script>
- $(document).ready(function(){   
-   
-   $("#add_tenant").click(function(e){
-      e.preventDefault();
-      
-      var email = $("#email").val();
-      var room_assigned = $("#room_assigned").val();
-      verifyUser(email,room_assigned);
-
-   });
-
-    function verifyUser(email, room_assigned){
-       
-       $.post("owner-verify-user.php", {email:email, room_assigned:room_assigned}, function(data, status){
-          
-          if(data != ""){
-              //Display error message
-              $("#feedback").addClass("alert alert-danger");
-              $("#feedback").html(data);
-          }else{
-              alert("verified");
-         }
-       });
-   }//End of function
-   
-   
-   function addTenant(){
-       
-      var email = $("#email").val();
-      var room_assigned = $("#room_assigned").val();
-      
-      $.post("owner-add-tenant.php", {email:email, room_assigned:room_assigned}, function(data, status){
-          
-          if(data != ""){
-              //Display error message
-              $("#feedback").removeClass("alert alert-danger");
-              $("#feedback").addClass("alert alert-success");
-              $("#feedback").html(data);
-          }else{
-              alert("Not executed");
-         }
-       });
-       
-   }//End of function
-   
-});
-        </script>
     </head>
 <body>
+
+    <!--Navigation bar-->
+    <?php include './nav-bar.php'; ?>
     
-    <?php    
-        include_once './php/connection.php';
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        $_SESSION['hostel_no'] = $_GET['id'];
-    ?>
-    
+    <!--The session was started at the very start-->
     <div class="add-tenant-form">
+        
+    <center class="lead my-3" id="no-tenants-msg">
+        No tenants added yet! Add them below.
+    </center>
         
     <form class="form-inline justify-content-center" method="post" id="add-tenant-form">
         <input class="form-control mx-2" name="email" id="email" placeholder="Email address" required="">
@@ -79,7 +38,27 @@
     </form>
     
         <center id="feedback"></center>
-        <?php include './owner-get-tenants-table.php'; ?>  
+        
+       <!--User show tenants table-->
+       <div class="table-responsive mx-3 my-3">
+        <table class="table table-bordered" id="tenants-table">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
+                    <th>Room Assigned</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+    </div> 
+        
 </div>
     
 </body>

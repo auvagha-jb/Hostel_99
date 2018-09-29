@@ -26,7 +26,21 @@ form.add-hostel-form{
     padding-bottom: 10px;
 }
 
+.title-centered{
+    font-size: 170%;
+    font-weight: lighter;
+    text-align: center;
+}
+
 .add-tenant-form{
     margin: auto;
     padding-top: 10px;
+}
+
+#no-tenants-msg{
+    display: none;
+}
+
+#hostel_name_feedback{
+    color: #5cb85c;
 }

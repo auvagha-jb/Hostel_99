@@ -43,8 +43,9 @@
                 </center>
                 <div class="form-group">
                     <label>Hostel Name</label>
-                    <input type="text" name="hostel_name" id="hostel_name" class="form-control" value="<?php echo $hostel_name;?>" required="">
+                    <input type="text" name="hostel_name" id="hostel_name" class="form-control" value="<?php echo $hostel_name;?>" required="" readonly="">
                     <div class="invalid-feedback">Hostel name already exists</div>
+                    <small id="hostel_name_feedback" class="hide">Contact the administrator to change the hostel name</small>
                 </div>
                 
                 <div class="form-group">
@@ -74,7 +75,7 @@
                             <option value="">Choose One</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
-                            <option value="Mixed">Mixed</option>
+                            <option value="Mixed">Unspecified</option>
                         </select>
                     </div>
                 </div>
@@ -84,10 +85,6 @@
                     <img src="<?php echo $folder.$hostel_name.'/'.$image;?>" alt="Choose an image to see the preview" id="image_display">
                 </div>
                 
-                <div class="col-md-6">
-                    <label>Total number of rooms</label>
-                    <input type="text" name="total_rooms" id="total_rooms" class="form-control" value="<?php echo $total_rooms;?>" required="">
-                </div>
                 <?php // include './owner-add-room.php'; ?>
                 <?php // include './owner-add-amenities-and-rules.php';?>
                 

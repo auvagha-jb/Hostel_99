@@ -109,3 +109,6 @@ button#s-u-submit:hover{
     float: right;
 }
 
+.card-btn{
+    width: 135px;
+}

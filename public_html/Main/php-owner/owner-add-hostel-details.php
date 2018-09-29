@@ -11,7 +11,12 @@ if(isset($_POST['hostel_name'])){
        
         $check_email = $con->prepare("SELECT * FROM hostels WHERE hostel_name = ?");
         $check_email->bind_param("s", $hostel_name);
-        $check_email->execute();
+        $bool = $check_email->execute();
+        
+        if(!$bool){
+            array_push($error, $con->error);
+        }
+        
         $result1 = $check_email->get_result();
 
         if(mysqli_num_rows($result1)>=1){
@@ -23,7 +28,7 @@ if(isset($_POST['hostel_name'])){
 
 if(isset($_POST['description'])){
     //Generate a hostel_no randomly -->Then store it in a session variable
-    $hostel_no = get_hostel_no($con);
+    $hostel_no = get_hostel_no($con, $error);
     $_SESSION['hostel_no'] = $hostel_no;
     
     //Get form data
@@ -34,14 +39,17 @@ if(isset($_POST['description'])){
     $county = $_POST['county'];
     $hostel_type = $_POST['hostel_type'];
     
+    
     //Image Upload
-    $folder = "../uploads/";
+    $folder = "./../uploads/".$hostel_name."/";
     $file_name = $_FILES['image']['name'];
-    $path = $folder.$hostel_name."/".$file_name;
+    $path = $folder.$file_name;
     
     //Create a folder for that hoostel
-    if(!file_exists($path)){
-        mkdir($path);
+    if(!file_exists($folder)){
+        if(!mkdir($folder)){//Verify the mkdir works
+            array_push($error, $con->error);
+        }
     }
     
     
@@ -54,7 +62,11 @@ if(isset($_POST['description'])){
             . "`image`) VALUES(?,?,?,?,?,?,?,?)";
     $stmt = $con->prepare($add_hostel);
     $stmt->bind_param("ssssssss",$hostel_no, $hostel_name, $description,$location, $road, $county, $hostel_type, $image);
-    $stmt->execute();
+    $bool = $stmt->execute();
+    
+    if(!$bool){
+        array_push($error, $con->error);
+    }
     
     //Move the uploaded image into folder images
     $file_tmp = $_FILES['image']['tmp_name'];
@@ -70,7 +82,7 @@ if(isset($_POST['description'])){
 }
 
 
-function get_hostel_no($con){
+function get_hostel_no($con, &$error){
     
     $hostel_no = mt_rand();
     
@@ -79,7 +91,11 @@ function get_hostel_no($con){
         $select = "SELECT * FROM hostels WHERE hostel_no = ?";
         $stmt = $con->prepare($select);
         $stmt->bind_param("s", $hostel_no);
-        $stmt->execute();
+        $bool = $stmt->execute();
+        
+        if(!$bool){
+            array_push($error, $con->error);
+        }
         
         $result = $stmt->get_result();
        

@@ -4,14 +4,19 @@ if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
 
+//kill autocommit
+$con->autocommit(false);
 
 if(isset($_POST['submit'])){
+
     
     //Previous form data
     $prev_name = $_SESSION['hostel_name'];
     $hostel_no = $_SESSION['hostel_no'];
     $prev_image_name = $_SESSION['prev_image_name'];
+    $error = array();
     
+    echo $prev_name."<br>";
     
     //Get form data
     $hostel_name = $_POST['hostel_name'];
@@ -23,20 +28,24 @@ if(isset($_POST['submit'])){
     $total_rooms = $_POST['total_rooms'];
     
     //Image Upload
-    $folder = "../uploads/";
+    $folder = './../uploads/'.$hostel_name.'/';
     $file_name = $_FILES['image']['name'];
     $file_tmp = $_FILES['image']['tmp_name'];
-    $path = $folder.$hostel_name."/".$file_name;
-    $prev_path = $folder.$hostel_name."/".$prev_image_name;
+    $path = $folder.$file_name;
+    $prev_path = $folder.$prev_image_name;
     
-    echo "File: ".$file_name."<br>".$hostel_no."<br>".$prev_path."<br>Current: ".$path;
+    if(!file_exists($folder)){
+        mkdir($folder);
+    }
+    
+    echo "File: ".$file_name."<br>".$hostel_no."<br>".$prev_path."<br>Current: ".$path."<br>";
     
     //Update the image uploaded -->if an image is chosen
     if(!empty($file_name)){
         
         //UNLINK previous image-->If it was present
-        if(!empty($prev_image_name)){
-            echo 'in unlink';
+        if(!empty($prev_image_name)&& file_exists($prev_path)){
+            
             unlink($prev_path);
         }
         
@@ -46,54 +55,61 @@ if(isset($_POST['submit'])){
             $msg = "Image uploaded";
             //Execute this query-->With image
             echo 'Updating...';
-             $query ='UPDATE `hostels` SET `hostel_name`= ?,`description`= ?,`location`= ?,`road`= ?,`county`= ?,`type`= ?,`image`= ?,'
-            . '`total_rooms`= ? WHERE hostel_no = ?';
+             $query ='UPDATE `hostels` SET `hostel_name`= ?,`description`= ?,`location`= ?,`road`= ?,`county`= ?,'
+                     . '`type`= ?,`image`= ? WHERE hostel_no = ?';
             $stmt= $con->prepare($query);
-            $stmt->bind_param("sssssssss", $hostel_name, $description, $location, $road, $county, $type, 
-                    $file_name, $total_rooms, $hostel_no);
-            $stmt->execute();
+            $stmt->bind_param("ssssssss", $hostel_name, $description, $location, $road, $county, $type, $file_name, $hostel_no);
+            $bool = $stmt->execute();
+            
+            if(!$bool){
+                array_push($error, $con->error);
+            }
+            
         }else{
             $msg = "Problem uploading image";
-            echo $msg;
+            array_push($error, $con->error);
         }
     
     }else{
-        //Query to execute-->When a new image hasn't been chosen
-         $query ='UPDATE `hostels` SET `hostel_name`= ?,`description`= ?,`location`= ?,`road`= ?,`county`= ?,`type`= ?, '
-            . '`total_rooms`= ? WHERE hostel_no = ?';
+        /*
+         * HAS ONE LESS PARAMETER
+         * Query to execute-->When a new image hasn't been chosen
+         */
+         $query ='UPDATE `hostels` SET `hostel_name`= ?,`description`= ?,`location`= ?,`road`= ?,`county`= ?,`type`= ? '
+            . 'WHERE hostel_no = ?';
         $stmt= $con->prepare($query);
-        $stmt->bind_param("ssssssss", $hostel_name, $description, $location, $road, $county, $type, 
-                $total_rooms, $hostel_no);
-        $stmt->execute();
+        $stmt->bind_param("sssssss", $hostel_name, $description, $location, $road, $county, $type, $hostel_no);
+        $bool = $stmt->execute();
+        
+        if(!$bool){
+                array_push($error, $con->error);
+            }
     }
     
     
     
-    $folder = "uploads";
-    $old_name = "../".$folder."/".$prev_name;
-    $new_name = "../".$folder."/".$hostel_name;
-    //If the hostel_name has changed, rename the folder
-    if($hostel_name != $prev_name){         
-        rename($old_name, $new_name);
+    //Rename folder in case the hostel name changes
+    $folder_name = "uploads";
+    $old_path = "../".$folder_name."/".$prev_name;
+    $new_path = "../".$folder_name."/".$hostel_name;
+    
+    $old_name = realpath(dirname($old_path))."\\".$prev_name;
+    $new_name = realpath(dirname($old_path))."\\".$hostel_name;
+    
+    
+    
+    echo '<br>Old name: '.$old_name.'<br> New name: '.$new_name.'<br>';
+    
+
+    /*NOT FUNCTIONAL AT THE MOMENT
+     * If the hostel_name has changed, rename the folder
+     */
+    if($hostel_name != $prev_name && file_exists($old_path)){         
+        //rename($old_name, $new_name);
     }
     
-    header("location:../owner-edit-hostel.php?id=".$hostel_no."");
-}
-
-function queryWithImage($con){
-    $query ='UPDATE `hostels` SET `hostel_name`= ?,`description`= ?,`location`= ?,`road`= ?,`county`= ?,`type`= ?,`image`= ?,'
-            . '`total_rooms`= ? WHERE hostel_no = ?';
-    $stmt= $con->prepare($query);
-    $stmt->bind_param("sssssssss", $hostel_name, $description, $location, $road, $county, $type, 
-            $file_name, $total_rooms, $hostel_no);
-    $stmt->execute();
-}
-
-function queryWithoutImage($con){
-    $query ='UPDATE `hostels` SET `hostel_name`= ?,`description`= ?,`location`= ?,`road`= ?,`county`= ?,`type`= ?,'
-            . '`total_rooms`=? WHERE hostel_no = ?';
-    $stmt= $con->prepare($query);
-    $stmt->bind_param("ssssssss", $hostel_name, $description, $location, $road, $county, $type, 
-            $total_rooms, $hostel_no);
-    $stmt->execute();
+    if(count($error)==0){
+        $con->commit();
+        header("location:../owner-edit-hostel.php?id=".$hostel_no."");   
+    }
 }

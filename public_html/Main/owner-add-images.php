@@ -18,6 +18,8 @@
         $hostel_name = $_GET['hostel_name'];
         $_SESSION['hostel_name'] = $hostel_name;
     ?>
+    <p class="title-centered">My photos</p>
+    
     <form action="owner-upload.php" class="dropzone" id="dropzoneFrom">
     </form>
 <!--    <center>

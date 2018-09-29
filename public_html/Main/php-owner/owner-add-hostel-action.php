@@ -4,6 +4,10 @@
         session_start();
     }
     
+    //What is common among the files  
+    $con->autocommit(false);
+    $error = array();//Array to store any errors that may be encountered
+    
     //General details
     include './owner-add-hostel-details.php';
     
@@ -13,7 +17,7 @@
     //Rules and amenties
     include './owner-add-rules-and-amenities-action.php';
     
-    //Update the junction table
+    //Update the junction table: user_hostel_bridge
     $user_id = $_SESSION['user_id'];
     $hostel_no = $_SESSION['hostel_no'];
     
@@ -21,11 +25,16 @@
     
     $stmt= $con->prepare($query);
     $stmt->bind_param("ss", $user_id, $hostel_no);
-    $stmt->execute();
+    $bool = $stmt->execute();
     
-    $result= $stmt->get_result();
+    if(!$bool){
+        array_push($error, $con->error);
+    }
     
-    if(isset($result)){
-        echo 'ok';
+    if(count($error)==0){
+        //commit changes to database
+        $con->commit();
         header("location:../owner-add-images.php?hostel_name=".$hostel_name."");
+    }else{
+        echo var_dump($error);
     }

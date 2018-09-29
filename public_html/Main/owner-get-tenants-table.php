@@ -6,6 +6,10 @@ if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
 
+if(isset($_SESSION['hostel_no'])){
+    showTableRows($con);
+}
+
 /*SELECT ->To display the tenants
      * 
      * Sample Query: 
@@ -16,9 +20,11 @@ if(session_status() == PHP_SESSION_NONE){
 function showTableRows($con){
     
     $hostel_no = $_SESSION['hostel_no'];
+    $data="";
     
     $select = 'SELECT * FROM users JOIN user_hostel_bridge ON users.user_id = user_hostel_bridge.user_id '
-            . 'WHERE user_hostel_bridge.hostel_no = ? AND users.user_status = "Tenant" AND users.user_type = "Student" ';
+            . 'WHERE user_hostel_bridge.hostel_no = ? AND users.user_status = "Tenant" AND users.user_type = "Student" '
+            . 'ORDER BY room_assigned';
     
     $stmt_3 = $con->prepare($select);
     $stmt_3->bind_param("s",$hostel_no);
@@ -26,7 +32,7 @@ function showTableRows($con){
     
     $result_3 = $stmt_3->get_result();
     if(mysqli_num_rows($result_3)<1){
-        noTenantsMsg();
+        echo '';
     }else{
         
         while($row = $result_3->fetch_array()){
@@ -38,56 +44,22 @@ function showTableRows($con){
             $gender = $row['gender'];
             $room_assigned =$row['room_assigned'];  
             
-            echo '
+            $data.='
             <tr>
+                <td>'.$user_id.'</td>
                 <td>'.$name.'</td>
                 <td>'.$email.'</td>
                 <td>'.$phone_no.'</td>
                 <td>'.$gender.'</td>
                 <td>'.$room_assigned.'</td>
-                <td><a href="owner-remove-tenant.php?user_id='.$user_id.'" class="btn btn-danger btn-sm remove-room" id="remove_tenant"><i class="fa fa-minus-circle"></i></a></td>
+                <td><a href="#" class="btn btn-danger btn-sm remove-room" id="remove_tenant"><i class="fa fa-minus-circle"></i></a></td>
             </tr>  
             ';
+            
         }
         
-//        header("location: owner-view-tenants.php?id=".$hostel_no." ");
+        echo $data;
     }
+    
 }
-    
-    
-    function noTenantsMsg(){
-        echo '
-            <center class="lead my-3">
-                No tenants added yet! Add them above.
-            </center>
-        ';
-    }
 ?>
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>My tenants</title>
-        <?php include_once './links.php';?>
-        <link rel="stylesheet" href="css/owner-forms.css">
-        <script src="js/manage-tenants.js"></script>
-    </head>
-<body>
-    
-    <div class="table-responsive">
-        <table class="table table-bordered my-4">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone Number</th>
-                    <th>Gender</th>
-                    <th>Room Assigned</th>
-                    <th>Remove</th>
-                </tr>
-            </thead>
-            <?php showTableRows($con);?>
-        </table>
-    </div>
-    
-</body>
-</html>

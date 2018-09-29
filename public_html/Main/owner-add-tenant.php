@@ -15,7 +15,6 @@ if(isset($_POST['email'])){
      */
     $con->autocommit(false);
     
-    
     //Form data
     $email = $_POST['email'];
     $room_assigned = $_POST['room_assigned'];
@@ -62,21 +61,37 @@ function insertQueries($con, $user_id, $hostel_no, &$error){
     $bool_1 = $stmt_1->execute();
     
     if($bool_1 == false){
-        array_push($error, "Error in insert_1");
+        array_push($error, $con->error);
     }
+    
     /*
-     * USER_HOSTEL_BRIDGE table
-     * INSERT user_id and hostel_no 
+     * TENANT_HISTORY_BRIDGE table
+     * INSERT user_id, hostel_no AND record_id  
      */
     
-    $insert_2 = "INSERT INTO user_hostel_bridge (hostel_no, user_id, record_id) VALUES(?,?,?)";
+    $insert_2 = "INSERT INTO tenant_history_bridge (hostel_no, user_id, record_id) VALUES(?,?,?)";
     $stmt_2 = $con->prepare($insert_2);
     $stmt_2->bind_param("sss", $hostel_no, $user_id, $record_id);
     $bool_2 = $stmt_2->execute();
    
     if($bool_2 == false){
-        array_push($error, "Error in insert_2");
+        array_push($error, $con->error);
     }
+    
+    /*
+     * USER_HOSTEL_BRIDGE table
+     * INSERT user_id, hostel_no AND record_id  
+     */
+    
+    $insert_3 = "INSERT INTO user_hostel_bridge (hostel_no, user_id,record_id) VALUES(?,?)";
+    $stmt_3 = $con->prepare($insert_3);
+    $stmt_3->bind_param("sss", $hostel_no, $user_id, $record_id);
+    $bool_3 = $stmt_3->execute();
+   
+    if($bool_3 == false){
+        array_push($error, $con->error);
+    }
+    
     
 }
 
@@ -89,7 +104,7 @@ function changeStatus($con, $email, $room_assigned, &$error){
     $bool = $stmt->execute();
     
     if($bool == false){
-        array_push($error, "Error in changeStatus query");
+        array_push($error, $con->error);
     }
 }
 
@@ -111,6 +126,8 @@ function get_id($con){
     
     return $record_id;
 }
+
+
 function getUser_id($con, $email){
     $select = "SELECT * FROM users WHERE email = ?";
     

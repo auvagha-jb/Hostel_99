@@ -5,7 +5,7 @@
                 <option value="">What Type?</option>
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
-                <option value="Mixed">Mixed</option>
+                <option value="Mixed">Unspecified</option>
             </select>
 
             <div class="input-group mx-2">

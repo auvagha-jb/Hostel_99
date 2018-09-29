@@ -13,6 +13,9 @@ function readURL(input) {
 
 $(document).ready(function(){
     
+    //Onload...
+    $("#hostel_name_feedback").hide();
+    
     //Preliminaries
      //Prevent resubmission on refresh or back
     if(window.history.replaceState){
@@ -22,7 +25,9 @@ $(document).ready(function(){
     //turn off auto-complete
     $(".add-hostel-form").attr("autocomplete", "off");
     
-    
+    $("#hostel_name").click(function(){
+       $("#hostel_name_feedback").show(); 
+    });
     
     //Dynamic input fields
     //Add room table
@@ -75,7 +80,6 @@ $(document).ready(function(){
         if(rows>1){
             $("#amenities-feedback").hide();
             $(this).closest("tr").remove(); 
-            
             
         }else{
             
@@ -144,7 +148,6 @@ $(document).ready(function(){
         html+="</tr>";
        
         $("#add-rules-tbl").append(html);
-        
         var rows = $("#add-rules-tbl >tbody >tr").length;
         console.log(rows);  
    }

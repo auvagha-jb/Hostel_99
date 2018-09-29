@@ -1,16 +1,13 @@
 <?php
 include './php/connection.php';
 
-$bool = true;
 
-if($bool){
-    
-    $arr = array();
-    echo "Before: ".var_dump($arr)."<br>";
-    
-    if(count($arr)==0){
-        echo 'NOTHING AT ALL';
-    }
+$bool = array();
+
+include './testfile2.php';
+
+if(count($bool)!=0){
+    var_dump($bool);
 }
 
 function changeArray(&$arr){
