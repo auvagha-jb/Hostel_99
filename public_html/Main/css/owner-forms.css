@@ -44,3 +44,7 @@ form.add-hostel-form{
 #hostel_name_feedback{
     color: #5cb85c;
 }
+
+#no-bookings-msg{
+    display:none;
+}
