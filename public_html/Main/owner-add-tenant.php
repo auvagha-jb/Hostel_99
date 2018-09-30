@@ -18,7 +18,8 @@ if(isset($_POST['email'])){
     //Form data
     $email = $_POST['email'];
     $room_assigned = $_POST['room_assigned'];
-  
+    $no_sharing = $_POST['no_sharing'];
+    
     //Get the user data from the db
     $get = getUser_id($con, $email); 
     $user_id = $get['user_id'];
@@ -27,7 +28,7 @@ if(isset($_POST['email'])){
     $error = array();
 
     //Change user_status from NULL to Tenant
-    changeStatus($con, $email, $room_assigned, $error);
+    changeStatus($con, $email, $room_assigned, $no_sharing,$error);
 
     //Insert data into respective tables: tenants_history and 
     insertQueries($con, $user_id, $hostel_no, $error);
@@ -41,9 +42,6 @@ if(isset($_POST['email'])){
         exit();
         //$con->rollback();
     }
-    
-    //header("location:owner-view-tenants.php?id=".$hostel_no." ");
-    
 }
 
 function insertQueries($con, $user_id, $hostel_no, &$error){
@@ -83,7 +81,7 @@ function insertQueries($con, $user_id, $hostel_no, &$error){
      * INSERT user_id, hostel_no AND record_id  
      */
     
-    $insert_3 = "INSERT INTO user_hostel_bridge (hostel_no, user_id,record_id) VALUES(?,?)";
+    $insert_3 = "INSERT INTO user_hostel_bridge (hostel_no, user_id, record_id) VALUES(?,?,?)";
     $stmt_3 = $con->prepare($insert_3);
     $stmt_3->bind_param("sss", $hostel_no, $user_id, $record_id);
     $bool_3 = $stmt_3->execute();
@@ -95,12 +93,12 @@ function insertQueries($con, $user_id, $hostel_no, &$error){
     
 }
 
-function changeStatus($con, $email, $room_assigned, &$error){
+function changeStatus($con, $email, $room_assigned, $no_sharing,&$error){
     
-    $query  = 'UPDATE users SET user_status = "Tenant", room_assigned = ? WHERE email = ?';
+    $query  = 'UPDATE users SET user_status = "Tenant", room_assigned = ?, no_sharing = ? WHERE email = ?';
     
     $stmt = $con->prepare($query);
-    $stmt->bind_param("ss", $room_assigned, $email);
+    $stmt->bind_param("sss", $room_assigned,$no_sharing,$email);
     $bool = $stmt->execute();
     
     if($bool == false){
@@ -111,8 +109,7 @@ function changeStatus($con, $email, $room_assigned, &$error){
 function get_id($con){
      $record_id = mt_rand();
     
-    do{
-        
+    do{        
         $select = "SELECT * FROM `tenant_history` WHERE record_id = ?";
         $stmt = $con->prepare($select);
         $stmt->bind_param("s", $record_id);

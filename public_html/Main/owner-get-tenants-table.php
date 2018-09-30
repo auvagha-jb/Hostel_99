@@ -36,13 +36,13 @@ function showTableRows($con){
     }else{
         
         while($row = $result_3->fetch_array()){
-            
             $user_id = $row['user_id'];
             $name = $row['first_name']." ".$row['last_name'];
             $email = $row['email'];
             $phone_no = $row['phone_no'];
             $gender = $row['gender'];
             $room_assigned =$row['room_assigned'];  
+            $no_sharing =$row['no_sharing'];  
             
             $data.='
             <tr>
@@ -52,6 +52,7 @@ function showTableRows($con){
                 <td>'.$phone_no.'</td>
                 <td>'.$gender.'</td>
                 <td>'.$room_assigned.'</td>
+                <td>'.$no_sharing.'</td>
                 <td><a href="#" class="btn btn-danger btn-sm remove-room" id="remove_tenant"><i class="fa fa-minus-circle"></i></a></td>
             </tr>  
             ';

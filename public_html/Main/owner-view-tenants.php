@@ -27,6 +27,10 @@
         
     <form class="form-inline justify-content-center" method="post" id="add-tenant-form">
         <input class="form-control mx-2" name="email" id="email" placeholder="Email address" required="">
+        <select class="form-control mx-2" name="no_sharing" id="no_sharing" required="">
+            <option value="">No. sharing</option>
+        </select>
+        <input class="form-control mx-2" id="monthly_rent" placeholder="Monthly rent" required="" readonly="">
         <div class="input-group mx-2">
             <input class="form-control" name="room_assigned" id="room_assigned" placeholder="Room assigned" required="">
             <div class="input-group-append">
@@ -35,9 +39,15 @@
                 </button>
             </div>
         </div>
+        
     </form>
     
         <center id="feedback"></center>
+        
+        <p class="lead">
+            Vacancies:
+            <span class="border" id="vacancies"></span>
+        </p>
         
        <!--User show tenants table-->
        <div class="table-responsive mx-3 my-3">
@@ -50,6 +60,7 @@
                     <th>Phone Number</th>
                     <th>Gender</th>
                     <th>Room Assigned</th>
+                    <th>No sharing</th>
                     <th>Remove</th>
                 </tr>
             </thead>
