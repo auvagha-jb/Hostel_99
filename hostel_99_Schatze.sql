@@ -1,0 +1,687 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.2
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost
+-- Generation Time: Sep 30, 2018 at 11:25 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 7.2.8
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `hostel_99`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `amenities`
+--
+
+CREATE TABLE `amenities` (
+  `amenity_no` int(255) NOT NULL,
+  `hostel_no` int(255) NOT NULL,
+  `amenity` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `amenities`
+--
+
+INSERT INTO `amenities` (`amenity_no`, `hostel_no`, `amenity`) VALUES
+(1, 1, 'Wifi'),
+(2, 1, 'Hot Shower'),
+(3, 1505066674, 'Wifi'),
+(4, 1505066674, 'Pool Table'),
+(5, 1719975542, 'Wifi'),
+(6, 1719975542, 'Play Room'),
+(7, 1349612707, 'Free Parking'),
+(8, 1349612707, 'Free Wifi'),
+(9, 1349612707, 'Breakfast and Dinner'),
+(10, 1349612707, 'Lunch on Weekends'),
+(11, 1229930077, 'Wifi'),
+(12, 1229930077, 'Hot shower'),
+(13, 1781712626, 'test'),
+(14, 1763611811, 'test');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bookings`
+--
+
+CREATE TABLE `bookings` (
+  `booking_no` int(255) NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `hostel_no` int(255) NOT NULL,
+  `room_type` varchar(255) NOT NULL,
+  `expected_checkin_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `categoryid` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `parent` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`categoryid`, `name`, `parent`) VALUES
+(1, '1-room', 0),
+(2, '2-rooms', 0),
+(3, '3-rooms', 0),
+(4, '4-rooms', 0),
+(5, '5-rooms', 0),
+(6, '1 sharing', 1),
+(7, '2 sharing', 2),
+(8, '3 sharing', 3),
+(9, '4 sharing', 4),
+(10, '5 sharing', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customers`
+--
+
+CREATE TABLE `customers` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `phone` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
+  `address` text COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `status` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `customers`
+--
+
+INSERT INTO `customers` (`id`, `name`, `email`, `phone`, `address`, `created`, `modified`, `status`) VALUES
+(1, 'Test User', 'testuser@gmail.com', '9999999999', 'New York, NY, USA', '2016-08-17 08:21:25', '2016-08-17 08:21:25', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hostel`
+--
+
+CREATE TABLE `hostel` (
+  `hostel_id` int(11) NOT NULL,
+  `hostel_cat` varchar(50) NOT NULL,
+  `hostel_name` varchar(50) NOT NULL,
+  `unitprice` float NOT NULL,
+  `status` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hostel`
+--
+
+INSERT INTO `hostel` (`hostel_id`, `hostel_cat`, `hostel_name`, `unitprice`, `status`) VALUES
+(1, '6', '1 sharing', 8500, 1),
+(2, '7', '2 sharing', 7500, 1),
+(3, '8', '3 sharing', 7000, 1),
+(4, '9', '4 sharing', 6500, 1),
+(5, '10', '5 sharing', 6000, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hostels`
+--
+
+CREATE TABLE `hostels` (
+  `hostel_no` int(255) NOT NULL,
+  `hostel_name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `location` varchar(255) NOT NULL,
+  `road` varchar(255) NOT NULL,
+  `county` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `total_available` int(11) DEFAULT NULL,
+  `total_occupied` int(11) DEFAULT NULL,
+  `vacancies` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hostels`
+--
+
+INSERT INTO `hostels` (`hostel_no`, `hostel_name`, `description`, `location`, `road`, `county`, `type`, `image`, `total_available`, `total_occupied`, `vacancies`) VALUES
+(1, 'Mock Hostel', 'Test Hostel', 'Madaraka', 'Ole Sangale Road', 'Nairobi', 'Mixed', 'mock-hostel-two.jpg', 3, NULL, NULL),
+(1229930077, 'Yale Kids', 'A quiet serene environment for college going students', 'Nairobi West', 'Lang\'ata Road', 'Nairobi', 'Mixed', 'rc-one.jpg', 34, 0, 34),
+(1349612707, 'Travelers Oasis', 'Located in Nairobi, within 8 km of Kenyatta International Conference Centre and 10 km of Nairobi National Museum, Travelers oasis offers accommodation with a shared lounge. Located around 1.8 km from Century Cinemax Junction, the hostel is also 1.8 km awa', 'Westlands ', 'Westlands Rd.', 'Nairobi', 'Mixed', 'travelers-oasis.jpg', 16, NULL, NULL),
+(1505066674, 'John\'s Hostel', 'A quiet riverside hostel dedicated to giving premium accommodation to students.', 'Eastleigh', 'First Avenue', 'Nairobi', 'Mixed', 'john\'s-hostel-two.jpg', 18, NULL, NULL),
+(1719975542, 'Rich Kids and Co', 'Comfortable living made cheaper.\r\n', 'Westlands', 'Waiyaki Way', 'Nairobi', 'Mixed', 'rc-three.jpg', 18, NULL, NULL),
+(1763611811, 'test', 'test', 'test', 'test', 't', 'Female', 'rc-two.jpg', 1, 0, 1),
+(1781712626, 'Test Hostel', 'Test', 'Test', 'test', 'Test', 'Mixed', 'rc-two.jpg', 6, 0, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `total_price` float(10,2) NOT NULL,
+  `created` datetime NOT NULL,
+  `modified` datetime NOT NULL,
+  `status` enum('1','0') COLLATE utf8_unicode_ci NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `customer_id`, `total_price`, `created`, `modified`, `status`) VALUES
+(16, 1, 14500.00, '2018-09-16 13:50:42', '2018-09-16 13:50:42', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` int(11) NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `quantity`) VALUES
+(21, 16, 5, 1),
+(22, 16, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `payment_no` int(255) NOT NULL,
+  `user_id` int(255) NOT NULL,
+  `hostel_no` int(255) NOT NULL,
+  `amount` int(255) NOT NULL,
+  `datetime` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rooms`
+--
+
+CREATE TABLE `rooms` (
+  `hostel_no` int(255) NOT NULL,
+  `no_sharing` int(255) NOT NULL,
+  `monthly_rent` int(255) NOT NULL,
+  `room_limit` int(11) NOT NULL,
+  `current_capacity` int(11) NOT NULL,
+  `total_capacity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rooms`
+--
+
+INSERT INTO `rooms` (`hostel_no`, `no_sharing`, `monthly_rent`, `room_limit`, `current_capacity`, `total_capacity`) VALUES
+(1, 1, 10000, 2, 0, 0),
+(1, 2, 8000, 4, 0, 0),
+(1, 4, 7000, 4, 0, 0),
+(1, 8, 2000, 2, 0, 0),
+(1229930077, 3, 11500, 3, 0, 9),
+(1229930077, 5, 10000, 5, 0, 25),
+(1349612707, 1, 15000, 10, 0, 0),
+(1349612707, 2, 12500, 10, 0, 0),
+(1505066674, 2, 10000, 5, 0, 0),
+(1505066674, 4, 6000, 10, 0, 0),
+(1719975542, 1, 6000, 5, 0, 0),
+(1719975542, 4, 4000, 5, 0, 0),
+(1719975542, 8, 2000, 5, 0, 0),
+(1763611811, 1, 2000, 1, 0, 1),
+(1781712626, 1, 2500, 2, 0, 2),
+(1781712626, 2, 3500, 2, 0, 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rules`
+--
+
+CREATE TABLE `rules` (
+  `rule_no` int(255) NOT NULL,
+  `hostel_no` int(255) NOT NULL,
+  `rule` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `rules`
+--
+
+INSERT INTO `rules` (`rule_no`, `hostel_no`, `rule`) VALUES
+(1, 1, 'No drugs'),
+(2, 1, 'No alcohol'),
+(3, 1505066674, 'No drugs'),
+(4, 1505066674, 'No visitors after 6 pm'),
+(5, 1719975542, 'No drugs'),
+(7, 1719975542, 'No alcohol'),
+(8, 1349612707, 'No drugs'),
+(9, 1349612707, 'No guests past 7pm'),
+(10, 1229930077, 'No drugs'),
+(11, 1229930077, 'No alcohol'),
+(12, 1781712626, 'Test'),
+(13, 1763611811, 'tset');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tenant_history`
+--
+
+CREATE TABLE `tenant_history` (
+  `record_id` int(255) NOT NULL,
+  `date_checked_in` datetime NOT NULL,
+  `date_checked_out` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tenant_history`
+--
+
+INSERT INTO `tenant_history` (`record_id`, `date_checked_in`, `date_checked_out`) VALUES
+(1, '2018-09-26 17:23:28', NULL),
+(187766512, '2018-09-27 23:37:10', NULL),
+(208773575, '2018-09-29 10:26:06', NULL),
+(266698867, '2018-09-27 13:38:24', NULL),
+(268900153, '2018-09-27 22:33:05', NULL),
+(438110659, '2018-09-29 11:35:11', NULL),
+(484999262, '2018-09-27 23:29:06', NULL),
+(582997242, '2018-09-28 17:42:13', NULL),
+(597923601, '2018-09-27 17:00:21', NULL),
+(730965579, '2018-09-27 22:35:42', NULL),
+(804120260, '2018-09-29 09:00:06', NULL),
+(857594706, '2018-09-27 22:38:30', NULL),
+(863297174, '2018-09-27 23:40:56', NULL),
+(870244375, '2018-09-27 22:37:00', NULL),
+(1059311267, '2018-09-28 22:56:05', NULL),
+(1083994886, '2018-09-28 17:16:47', NULL),
+(1156523424, '2018-09-27 23:36:09', NULL),
+(1460160311, '2018-09-27 16:19:14', NULL),
+(1463526430, '2018-09-27 22:02:56', NULL),
+(1694503176, '2018-09-27 22:36:38', NULL),
+(2053066018, '2018-09-27 23:37:43', NULL),
+(2135142079, '2018-09-27 16:47:52', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tenant_history_bridge`
+--
+
+CREATE TABLE `tenant_history_bridge` (
+  `user_id` int(255) NOT NULL,
+  `hostel_no` int(255) NOT NULL,
+  `record_id` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tenant_history_bridge`
+--
+
+INSERT INTO `tenant_history_bridge` (`user_id`, `hostel_no`, `record_id`) VALUES
+(5, 1, 582997242),
+(7, 1, 1083994886),
+(9, 1349612707, 266698867),
+(10, 1, 208773575),
+(10, 1, 438110659),
+(10, 1, 804120260);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `pwd` varchar(255) NOT NULL,
+  `phone_no` varchar(255) NOT NULL,
+  `gender` varchar(255) NOT NULL,
+  `user_type` varchar(255) NOT NULL,
+  `user_status` varchar(255) DEFAULT NULL,
+  `room_assigned` varchar(255) DEFAULT NULL,
+  `total_paid` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `pwd`, `phone_no`, `gender`, `user_type`, `user_status`, `room_assigned`, `total_paid`) VALUES
+(2, 'Jerry', 'Auvagha', 'jerrybenjamin007@gmail.com', '$2y$10$xkyZ0K2sjoHeljV3qVu9hOCA9FBXO5v9hDNTNhHRqXdUrkW3OLeme', '254722309497', 'Male', 'Student', NULL, '', NULL),
+(3, 'Jerry', 'Auvagha', 'jerry.auvagha@strathmore.edu', '$2y$10$uSjIcP2.1ueDeWLu3OJmN.GCxgRAS6xOsDI7FftI9CPxXTxuqXP92', '+254722309497', 'Male', 'Hostel Owner', 'NULL', '', NULL),
+(4, 'John ', 'Doe', 'john.doe@strathmore.edu', '$2y$10$o1x0Fh561Cckc/lu5sSGFeCrhillF9RqFi.V4uMnjCAb8GnGq4R2C', '+254722319498', 'Male', 'Hostel Owner', NULL, '', NULL),
+(5, 'Jane', 'Doe', 'jane.doe@strathmore.edu', '$2y$10$jSF8k.4raXnCOZeagqD/rOlhLUrk1ZSR8pXZR9QX55308WcFWpySu', '+254722319498', 'Female', 'Hostel Owner', 'NULL', 'NULL', NULL),
+(6, 'Jane', 'Does', 'jane.does@strathmore.edu', '$2y$10$3Cf4lM4z66fDDwsSD5IiY.1wo9Uahs0pnBgBTWfgpUfy9PrtfHNJq', '+254722319498', 'Female', 'Hostel Owner', NULL, '', NULL),
+(7, 'Jane', 'Does', 'jane.does2@strathmore.edu', '$2y$10$ejmRYOyNqg1lGnhubYdSAuOhDsTcUOjBkQx.ZlXiUvQF27exjtSpG', '+254722319898', 'Female', 'Student', NULL, NULL, NULL),
+(9, 'Rose', 'Njeri', 'rnjeri@kenindia.com', '$2y$10$iNJ5dyYb4dGFKYsWStxFQ.AsySRo/9d.3R6LoYLa0cwXAcMVSXuD2', '+254721266332', 'Female', 'Student', 'Tenant', '1', NULL),
+(10, 'Mizzy', 'Bee', 'mizzy.bee@gmail.com', '$2y$10$j9CGxquS266NcA/oG/vKe.8/16WkBCaOug.8cXWosbCUhpYWMlmga', '+254722319490', 'Female', 'Student', NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_hostel_bridge`
+--
+
+CREATE TABLE `user_hostel_bridge` (
+  `user_id` int(255) NOT NULL,
+  `hostel_no` int(255) NOT NULL,
+  `record_id` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `user_hostel_bridge`
+--
+
+INSERT INTO `user_hostel_bridge` (`user_id`, `hostel_no`, `record_id`) VALUES
+(3, 1, NULL),
+(3, 1229930077, NULL),
+(3, 1719975542, NULL),
+(3, 1763611811, NULL),
+(3, 1781712626, NULL),
+(4, 1349612707, NULL),
+(4, 1505066674, NULL),
+(5, 1, NULL),
+(9, 1349612707, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_payment_bridge`
+--
+
+CREATE TABLE `user_payment_bridge` (
+  `user_id` int(255) NOT NULL,
+  `payment_no` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `amenities`
+--
+ALTER TABLE `amenities`
+  ADD PRIMARY KEY (`amenity_no`),
+  ADD KEY `hostel_no` (`hostel_no`);
+
+--
+-- Indexes for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD PRIMARY KEY (`booking_no`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `hostel_no` (`hostel_no`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`categoryid`);
+
+--
+-- Indexes for table `customers`
+--
+ALTER TABLE `customers`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hostel`
+--
+ALTER TABLE `hostel`
+  ADD PRIMARY KEY (`hostel_id`);
+
+--
+-- Indexes for table `hostels`
+--
+ALTER TABLE `hostels`
+  ADD PRIMARY KEY (`hostel_no`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer_id` (`customer_id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `order_id` (`order_id`);
+
+--
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`payment_no`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `hostel_no` (`hostel_no`);
+
+--
+-- Indexes for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD UNIQUE KEY `hostel_no_2` (`hostel_no`,`no_sharing`),
+  ADD KEY `hostel_no` (`hostel_no`) USING BTREE;
+
+--
+-- Indexes for table `rules`
+--
+ALTER TABLE `rules`
+  ADD PRIMARY KEY (`rule_no`),
+  ADD KEY `hostel_no` (`hostel_no`);
+
+--
+-- Indexes for table `tenant_history`
+--
+ALTER TABLE `tenant_history`
+  ADD PRIMARY KEY (`record_id`);
+
+--
+-- Indexes for table `tenant_history_bridge`
+--
+ALTER TABLE `tenant_history_bridge`
+  ADD UNIQUE KEY `user_id_2` (`user_id`,`hostel_no`,`record_id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `hostel_no` (`hostel_no`),
+  ADD KEY `record_id` (`record_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `user_hostel_bridge`
+--
+ALTER TABLE `user_hostel_bridge`
+  ADD UNIQUE KEY `user_id_2` (`user_id`,`hostel_no`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `hostel_no` (`hostel_no`);
+
+--
+-- Indexes for table `user_payment_bridge`
+--
+ALTER TABLE `user_payment_bridge`
+  ADD UNIQUE KEY `user_id_2` (`user_id`,`payment_no`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `payment_no` (`payment_no`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `amenities`
+--
+ALTER TABLE `amenities`
+  MODIFY `amenity_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `bookings`
+--
+ALTER TABLE `bookings`
+  MODIFY `booking_no` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `categoryid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `customers`
+--
+ALTER TABLE `customers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `hostel`
+--
+ALTER TABLE `hostel`
+  MODIFY `hostel_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `hostels`
+--
+ALTER TABLE `hostels`
+  MODIFY `hostel_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1781712627;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `payment_no` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rules`
+--
+ALTER TABLE `rules`
+  MODIFY `rule_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `tenant_history`
+--
+ALTER TABLE `tenant_history`
+  MODIFY `record_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2135142080;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `amenities`
+--
+ALTER TABLE `amenities`
+  ADD CONSTRAINT `amenities_ibfk_1` FOREIGN KEY (`hostel_no`) REFERENCES `hostels` (`hostel_no`);
+
+--
+-- Constraints for table `bookings`
+--
+ALTER TABLE `bookings`
+  ADD CONSTRAINT `bookings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `bookings_ibfk_2` FOREIGN KEY (`hostel_no`) REFERENCES `hostels` (`hostel_no`);
+
+--
+-- Constraints for table `rooms`
+--
+ALTER TABLE `rooms`
+  ADD CONSTRAINT `rooms_ibfk_1` FOREIGN KEY (`hostel_no`) REFERENCES `hostels` (`hostel_no`);
+
+--
+-- Constraints for table `rules`
+--
+ALTER TABLE `rules`
+  ADD CONSTRAINT `rules_ibfk_1` FOREIGN KEY (`hostel_no`) REFERENCES `hostels` (`hostel_no`);
+
+--
+-- Constraints for table `tenant_history_bridge`
+--
+ALTER TABLE `tenant_history_bridge`
+  ADD CONSTRAINT `tenant_history_bridge_ibfk_1` FOREIGN KEY (`record_id`) REFERENCES `tenant_history` (`record_id`),
+  ADD CONSTRAINT `tenant_history_bridge_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `tenant_history_bridge_ibfk_3` FOREIGN KEY (`hostel_no`) REFERENCES `hostels` (`hostel_no`);
+
+--
+-- Constraints for table `user_hostel_bridge`
+--
+ALTER TABLE `user_hostel_bridge`
+  ADD CONSTRAINT `user_hostel_bridge_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `user_hostel_bridge_ibfk_2` FOREIGN KEY (`hostel_no`) REFERENCES `hostels` (`hostel_no`);
+
+--
+-- Constraints for table `user_payment_bridge`
+--
+ALTER TABLE `user_payment_bridge`
+  ADD CONSTRAINT `user_payment_bridge_ibfk_1` FOREIGN KEY (`payment_no`) REFERENCES `payments` (`payment_no`),
+  ADD CONSTRAINT `user_payment_bridge_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
