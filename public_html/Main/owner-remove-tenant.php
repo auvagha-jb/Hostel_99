@@ -1,6 +1,7 @@
 <?php 
 include './php-owner/connection.php';
-require './php-owner/Classes/Hostel_details.php';//My generic class
+require './php-owner/Classes/Hostels.php';//My generic class
+require './php-owner/Classes/Rooms.php';//My generic class
 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
@@ -108,10 +109,11 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
      * Get the current hostel details -->methods from class: owner_get_vacancy_details()
      */
     
-    $get = new Hostel_details();
+    $hostels = new Hostels();
+    $rooms = new Rooms();
     
-    $hostel = $get->getHostelDetails($con, $hostel_no, $error);
-    $room = $get->getRoomDetails($con, $hostel_no, $no_sharing, $error);
+    $hostel = $hostels->getHostelDetails($con, $hostel_no, $error);
+    $room = $rooms->getRoomDetails($con, $hostel_no, $no_sharing, $error);
     
     //Hostels table
     $total_occupied = $hostel['total_occupied'];

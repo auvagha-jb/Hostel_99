@@ -5,10 +5,15 @@
         <group>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/testfile2.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-remove-tenant.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-view-bookings.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/js/bookings.js</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/js/manage-tenants.js</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/Classes/Bookings.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-update-vacancies.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-get-no-booked.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-view-tenants.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-verify-user.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/testfile.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/css/owner-forms.css</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-get-bookings-table.php</file>
         </group>
     </open-files>

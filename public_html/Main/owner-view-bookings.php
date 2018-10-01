@@ -8,7 +8,7 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>My tenants</title>
+        <title>Bookings</title>
         <?php include_once './links.php';?>
         <link rel="stylesheet" href="css/owner-forms.css">
         <script src="js/bookings.js"></script>
@@ -46,8 +46,6 @@
             </tbody>
         </table>
     </div> 
-        
-</div>
     
 </body>
 </html>

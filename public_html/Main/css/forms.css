@@ -13,9 +13,15 @@ form.sign-in{
     border: solid #000;
     border-radius: 5px;
     border-width: thin;
+    border-color: darkgrey;
     padding: 4%;
     padding-bottom: 6%;
-    background: #ddd;
+    background: darkgray;
+    opacity: 0.85;    
+}
+
+form.sign-in label, .form-text{
+/*    color: white;*/
 }
 
 form.sign-in input{
