@@ -34,9 +34,9 @@
                     <th>User ID</th>
                     <th>Name</th>
                     <th>Gender</th>
-                    <th>Room type</th>
                     <th>Phone number</th>
                     <th>Email</th>
+                    <th>No sharing</th>
                     <th>Check-in date</th>
                     <th>Remove</th>
                 </tr>

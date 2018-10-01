@@ -1,5 +1,9 @@
 $(document).ready(function(){   
-   
+
+    //Styling
+    $(".inline-text").addClass("mr-3");
+    $(".inline-text").addClass("my-3");
+    
    /*
     * On load...
     */
@@ -7,6 +11,7 @@ $(document).ready(function(){
    showTable();
    getNoSharing();
    getVacancies();
+   getBookings();
    
    $("#add_tenant").click(function(e){
       e.preventDefault();
@@ -67,6 +72,7 @@ $(document).ready(function(){
               clearTable();//To avoid duplicate rows
               showTable();//Display the updated table
               getVacancies();//Update vacancies
+              getBookings();//Update no-booked
           }else{
               alert("Not executed");
           }
@@ -111,6 +117,7 @@ $(document).ready(function(){
             clearTable();
             showTable();
             getVacancies();//Update vacancies
+            getBookings();//Update no-booked
        });
        
     }//End of function
@@ -135,5 +142,13 @@ $(document).ready(function(){
             $("#vacancies").html(data);
        }); 
    }
+   
+   function getBookings(){
+      $.post("php-owner/owner-get-no-booked.php",function(data){
+            $("#bookings").html(data);
+       }); 
+   }
+   
+   
    
 });

@@ -1,13 +1,16 @@
 <?php
 
 include './connection.php';
+require './Classes/Bookings.php';
 if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
 
 if(isset($_SESSION['hostel_no'])){
    $hostel_no = $_SESSION['hostel_no'];
-   $result = getBookings($con, $hostel_no);  
+   
+   $get = new Bookings();
+   $result = $get->getBookingsTable($con, $hostel_no);  
    
    $data=""; 
    
@@ -37,18 +40,4 @@ if(isset($_SESSION['hostel_no'])){
     
     echo $data;
    
-}
-
-function getBookings($con, $hostel_no){
-    $query = "SELECT * FROM users JOIN bookings ON users.user_id = bookings.user_id WHERE hostel_no = ?";
-
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $hostel_no);
-    $stmt->execute();
-
-    //Fetch results array and create a lookup object
-    $result = $stmt->get_result();
-    
-    return $result;
-        
 }

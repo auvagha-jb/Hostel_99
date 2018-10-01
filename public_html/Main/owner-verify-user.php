@@ -2,6 +2,7 @@
 
 include './php/connection.php';
 require './php-owner/Classes/Hostel_details.php';//My generic class
+require './php-owner/Classes/Bookings.php';//My generic class
 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
@@ -73,8 +74,10 @@ if(isset($_POST['email'])){
         
         //If they had made a booking -->remove them
         if(userBooked($con, $user_id, $error)){
-            delBooking($con, $user_id, $error);
-            echo 'Deleted from booking table';
+            
+            $get = new Bookings();
+            $get->delBooking($con, $user_id, $error);
+            //echo 'Deleted from booking table';
         }else{
             //check whether vacncy is present
             $vacant = vacancyPresent($con, $hostel_no, $no_sharing, $error);
@@ -136,17 +139,6 @@ function userBooked($con, $user_id, &$error){
     
     return false;
     
-}
-
-function delBooking($con, $user_id, &$error){
-    $query = 'DELETE FROM `bookings` WHERE user_id = ?';
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $user_id);
-    $bool = $stmt->execute();
-    
-    if(!$bool){
-        array_push($error, $con->error);
-    }
 }
 
 function vacancyPresent($con, $hostel_no, $no_sharing, &$error){

@@ -44,10 +44,16 @@
     
         <center id="feedback"></center>
         
-        <p class="lead">
+        <!--Margin styling added in manage-tenants.js-->
+        <span class="lead inline-text">
             Vacancies:
             <span class="border" id="vacancies"></span>
-        </p>
+        </span>
+        <span class="lead inline-text">
+            Bookings:
+            <span class="border" id="bookings"></span>
+        </span>
+        
         
        <!--User show tenants table-->
        <div class="table-responsive mx-3 my-3">
