@@ -186,7 +186,7 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
     $current_capacity = $room['current_capacity'];
     
     /*
-     * Do the decrement
+     * Do the increment on total occupied and current capacity
      */
     
     //Hostels table
@@ -195,6 +195,8 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
     
     //Rooms table
     $current_capacity += 1;
+//    echo $total_available." ".$total_occupied." ".$vacancies;
+//    array_push($error, "Stop");
     
     /*
      * UPDATE tables

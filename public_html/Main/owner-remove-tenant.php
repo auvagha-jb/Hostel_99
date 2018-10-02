@@ -143,6 +143,7 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
     $stmt_1->bind_param("sss", $total_occupied, $vacancies,$hostel_no);
     $bool_1 = $stmt_1->execute();
 
+    
     if($bool_1 == false){
         array_push($error, $con->error);
     }

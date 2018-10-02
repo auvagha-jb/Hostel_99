@@ -1,12 +1,12 @@
 <?php
-require 'php-owner/Classes/Hostel_details.php';
+require 'php-owner/Classes/Hostels.php';
 //The connection file is in  ../owner-add-hostel.php 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
 } 
     $hostel_no = $_GET['id'];
     
-    $get = new Hostel_details();
+    $get = new Hostels();
 
     $row = $get->getHostelInfo($con,$hostel_no);
 
