@@ -26,7 +26,7 @@
                     <li class="dropdown">
                         <a class="btn btn-secondary dropdown-toggle" href="#">'.$first_name.'</a>
                         <div class="dropdown-content">
-                            <a class="nav-link" href="#">My Details</a>
+                            <a class="nav-link" href="student-view-details.php">My Details</a>
                             <a class="btn btn-danger" href="php/logout.php">Sign out</a>
                         </div>
                     </li>

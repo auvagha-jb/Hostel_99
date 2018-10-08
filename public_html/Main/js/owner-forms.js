@@ -12,7 +12,6 @@ function readURL(input) {
 }
 
 $(document).ready(function(){
-    
     //Onload...
     $("#hostel_name_feedback").hide();
     
@@ -26,103 +25,143 @@ $(document).ready(function(){
     $(".add-hostel-form").attr("autocomplete", "off");
     
     $("#hostel_name").click(function(){
-       $("#hostel_name_feedback").show(); 
+       $("#hostel_name_feedback").show(); //To inform them that the hostel owner to contact admin to change name 
+    });
+ 
+    
+    $("#hostel_type").change(function(){
+        var type = $("#hostel_type").val();
+        var feedback = "Mixed hostel type can only have one type of no sharing. Enter the maximimum number that can be in a room";
+        
+        if(type === "Mixed"){
+            clearRows();
+            showWarning("#rooms-feedback",feedback);
+        }
+        
     });
     
     //Dynamic input fields
+    
     //Add room table
     $(document).on("click", ".add-room", function(){
-       var html = "";
-       //Hide the warning message if it had been displayed
-       $("#rooms-feedback").hide();
-       
-       html+="<tr>";
-       html+='<td><input type="number" name="no_sharing[]" id="no_sharing" class="form-control" required></td>';
-       html+='<td><input type="number" name="monthly_rent[]" id="monthly_rent" class="form-control" required></td>';
-       html+='<td><input type="number" name="room_limit[]" id="room_limit" class="form-control" required></td>';
-//       html+='<td><input type="number" name="total_occupants[]" id="total_occupants" class="form-control" required></td>';
-//       html+='<td><input type="number" name="no_rooms_occupied[]" id="no_rooms_occupied" class="form-control" required></td>';
-       html+='<td><button type="button" class="btn btn-success btn-sm add-room"><i class="fa fa-plus"></i></button></td>';
-       html+='<td><button type="button" class="btn btn-danger btn-sm remove-room"><i class="fa fa-minus"></i></button></td>';
-       html+='</tr>';
-       
-       $("#add-room-tbl").append(html);
+        addRoom();
     });
     
-    $(document).on('click', '.remove-room',function(){
-        var rows = $("#add-room-tbl >tbody >tr").length;
-          
-        var feedback = "<div class='alert alert-warning'>At least one row is needed</div>";
-        
-        if(rows>1){
-            $("#rooms-feedback").hide();
-            $(this).closest("tr").remove(); 
-            
-        }else{
-            $("#rooms-feedback").html(feedback);
-            $("#rooms-feedback").show();
-        }
-    });
-    
-    
-    //Amenities table
     //Add amenities 
     $(document).on("click", ".add-amenity", function(){
          addAmenity();
     });
     
+    //Add rules
+    $(document).on("click", ".add-rule", function(){
+         addRule();
+    });
+    
+    //Remove room
+    $(document).on('click', '.remove-room',function(){
+        var rows = $("#add-room-tbl >tbody >tr").length;
+          
+        var feedback = "At least one row is needed";
+        
+        if(rows>1){
+            hideWarning("#rooms-feedback");
+            $(this).closest("tr").remove(); 
+        }else{
+            showWarning("#rooms-feedback",feedback);
+        }
+    });
+    
+    
     //Remove amenities
     $(document).on('click', '.remove-amenity',function(){
         var rows = $("#add-amenities-tbl >tbody >tr").length;
           
-        var feedback = "<div class='alert alert-warning'>At least one row is needed</div>";
+        var feedback = "At least one row is needed";
         
         if(rows>1){
             $("#amenities-feedback").hide();
             $(this).closest("tr").remove(); 
             
         }else{
-            
-            $("#amenities-feedback").html(feedback);
-            $("#amenities-feedback").show();
+            showWarning("#amenities-feedback",feedback);
         }
         console.log(rows);
     });
     
-    //Rules table
-    //Add rules
-    $(document).on("click", ".add-rule", function(){
-         addRule();
-    });
     
     //Remove rule
     $(document).on('click', '.remove-rule',function(){
         var rows = $("#add-rules-tbl >tbody >tr").length;
           
-        var feedback = "<div class='alert alert-warning'>At least one row is needed</div>";
+        var feedback = "At least one row is needed";
         
         if(rows>1){
             $("#rules-feedback").hide();
             $(this).closest("tr").remove(); 
         }else{
-            $("#rules-feedback").html(feedback);
-            $("#rules-feedback").show();
+            showWarning("#rules-feedback",feedback);
         }
         console.log(rows);
     });
 
     
-    //images 
-    $(document).on("click", ".add-image", function(){
-       addImage(); 
+    /*
+     * Add hostel-details form
+     */
+    //Resize the image preview
+    $("#image").change(function(){
+       $("#image_display").addClass("display_size"); 
     });
+    
+    function validName(){
+       var hostel_name = $("#hostel_name").val();
+       
+       $.post("php-owner/owner-add-hostel-details.php", {hostel_name: hostel_name}, function(data){
+            console.log(data);
+            if(data === "name-exists"){               
+                $("#hostel_name").addClass("is-invalid");
+                valid = false;
+            }else{
+                $("#hostel_name").removeClass("is-invalid");
+                valid = true;
+            }
+        });
+        
+        console.log("Name: "+valid);
+        return valid;
+   }
+    
+   function showWarning(selector,msg){
+        $(selector).addClass("alert alert-warning");
+        $(selector).html(msg);
+        $(selector).show();
+   }
+   
+   function hideWarning(selector){
+       $(selector).hide();
+   }
+   
+   function hostelTypeOK(){
+        var hostel_type = $("#hostel_type").val();
+        var msg="";
+        
+        if(hostel_type ==="Mixed"){
+            msg = "This feature is only available for single gender hostels at the moment";
+        }else if(hostel_type === ""){
+            msg = "Choose a hostel type first";
+        }
+        return msg;
+    }
+    
+    function clearRows(){
+        $("#add-room-tbl tr.body").remove();
+    }
     
     function addAmenity(){
        //Hide warning message if it had been displayed
         $("#amenities-feedback").hide();
         
         var html="";
-        
         html+="<tr>";
         html+='<td><input type="text" name="amenities[]" id="amenities" class="form-control" required></td>';
         html+='<td><button type="button" class="btn btn-success btn-sm add-amenity"><i class="fa fa-plus"></i></button></td>';
@@ -152,82 +191,27 @@ $(document).ready(function(){
         console.log(rows);  
    }
    
-    function addImage(){
-       //Hide warning message if it had been displayed
-        $("#add-image-feedback").hide();
-        
-        var html="";
-        
-        html+="<tr>";
-        html+='<td><input type="file" name="image" id="image" onchange="readURL(this);" class="form-control"/>';
-        html+='<img src="#" alt="Choose an image to see the preview" id="image_display">';
-        html+='</td>';
-        html+='<td><button type="button" class="btn btn-success btn-sm add-image"><i class="fa fa-plus"></i></button></td>';
-        html+='<td><button type="button" class="btn btn-danger btn-sm remove-image"><i class="fa fa-minus"></i></button></td>';
-        html+="</tr>";
+   function addRoom(){
+        var html = "";
+       //Hide the warning message if it had been displayed
+       $("#rooms-feedback").hide();
        
-        $("#add-image-tbl").append(html);
-        
-        var rows = $("#add-image-tbl >tbody >tr").length;
-        console.log(rows);  
-   }
-    
-    function insert_td(form_data){
-        
-        $.ajax({
-           url: "php-owner/owner-add-hostel-action.php",
-           method: "post",
-           data: form_data,
-           success:function(data){
-               if(data === 'ok'){
-                   $("#item_table").find("thead").remove(); 
-               
-                    //Display success message
-                    var feedback = '<div class="alert alert-success">Room details saved</div>';
-
-                    $("#feedback").html(feedback);
-               }
-           }
-           
-        });
-    }
-    
-   
-//    $("#add-hostel-form").submit(function(e){
-//       
-//       //prevent the default action which in this case is sending the form data  
-//        e.preventDefault();
-//        
-//        var form_data = $(this).serialize();
-//        insert_td(form_data);
-//    });
-    
-    
-    //Add hostel-details form
-    
-    //Resize the image preview
-    $("#image").change(function(){
-       $("#image_display").addClass("display_size"); 
-    });
-    
-    function validName(){
-       var hostel_name = $("#hostel_name").val();
+       html+='<tr class="body">';
+       html+='<td><input type="number" name="no_sharing[]" id="no_sharing" class="form-control" required></td>';
+       html+='<td><input type="number" name="monthly_rent[]" id="monthly_rent" class="form-control" required></td>';
+       html+='<td><input type="number" name="room_limit[]" id="room_limit" class="form-control" required></td>';
+       html+='<td><button type="button" class="btn btn-success btn-sm add-room"><i class="fa fa-plus"></i></button></td>';
+       html+='<td><button type="button" class="btn btn-danger btn-sm remove-room"><i class="fa fa-minus"></i></button></td>';
+       html+='</tr>';
        
-       $.post("php-owner/owner-add-hostel-details.php", {hostel_name: hostel_name}, function(data){
-            console.log(data);
-            if(data === "name-exists"){               
-                $("#hostel_name").addClass("is-invalid");
-                valid = false;
-            }else{
-                $("#hostel_name").removeClass("is-invalid");
-                valid = true;
-            }
-        });
-        
-        console.log("Name: "+valid);
-        return valid;
+       var msg = hostelTypeOK();
+        if(msg!==""){
+            showWarning("#rooms-feedback",msg);
+        }else{
+            hideWarning("#rooms-feedback");
+            $("#add-room-tbl").append(html);
+        }
    }
-    
     
     $("#hostel_name").keyup(function(){
         validName();

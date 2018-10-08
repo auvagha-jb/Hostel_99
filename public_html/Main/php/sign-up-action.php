@@ -23,8 +23,7 @@ session_start();
 //Insert 
 if(isset($_POST['s-u-submit'])){
     
-        //Form data
-    
+    //Form data
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
@@ -34,17 +33,16 @@ if(isset($_POST['s-u-submit'])){
     //***************
     $country_code = $_POST['country_code'];
     $no = $_POST['no'];
-    $phone_no = "+".$country_code.$no;
     //***************
     $gender = $_POST['gender'];
     $user_type = $_POST['user_type'];
     
      
         //Adding a user
-        $add_user = $con->prepare("INSERT INTO `users`(`first_name`, `last_name`, `email`, `pwd`, `phone_no`, `gender`, `user_type`)"
-                . "VALUES (?,?,?,?,?,?,?)");
+        $add_user = $con->prepare("INSERT INTO `users`(`first_name`, `last_name`, `email`, `pwd`,`country_code` ,`phone_no`, `gender`, `user_type`)"
+                . "VALUES (?,?,?,?,?,?,?,?)");
 
-        $add_user->bind_param("sssssss", $first_name, $last_name, $email, $pwd_hash, $phone_no, $gender, $user_type);
+        $add_user->bind_param("ssssssss", $first_name, $last_name, $email, $pwd_hash, $country_code,$phone_no, $gender, $user_type);
         $add_user->execute();
 
         
@@ -57,13 +55,7 @@ if(isset($_POST['s-u-submit'])){
         $_SESSION['user_type'] = $user_type; 
         
         //Get the user's id 
-        $get_id = $con->prepare("SELECT * FROM users WHERE email = ?");
-        $get_id->bind_param("s", $email);
-        $get_id->execute();
-        
-        $result = $get_id->get_result();
-        $row = $result->fetch_array();
-        
+        $row = getId($con,$email);
         $_SESSION['user_id'] = $row['user_id'];
         
         //Determine where to redirect based on what user
@@ -73,4 +65,16 @@ if(isset($_POST['s-u-submit'])){
             header("location: ../owner-add-hostel.php");
         }
         
+}
+
+
+function getId($con,$email){
+    $get_id = $con->prepare("SELECT * FROM users WHERE email = ?");
+    $get_id->bind_param("s", $email);
+    $get_id->execute();
+
+    $result = $get_id->get_result();
+    $row = $result->fetch_array();
+
+    return $row;
 }

@@ -4,6 +4,7 @@
             session_start();
         }
         $_SESSION['hostel_no'] = $_GET['id'];
+        $_SESSION['type'] = $_GET['type'];
     ?>
 <!DOCTYPE HTML>
 <html>

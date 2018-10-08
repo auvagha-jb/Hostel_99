@@ -17,7 +17,7 @@
     <div class="row">
         
         <div class="col-md-6 col-sm-12">
-            <img src="img/team1.png" class="img-responsive sign-up-img" >
+            <img src="img/students.jpg" class="img-responsive sign-up-img" >
             <div class="top-left display-4"><p>Join the H99 Community! <br>It's free for life</p></div>
         </div>
         
@@ -62,17 +62,13 @@
                     </div>
                      
                     <div class="form-group">
-                        <label>Phone Number</label>
-                        
-                        <div class="row">
-                            <div class="col-sm-6">
+                        <label>Phone Number</label>          
+                            <div class="input-group">
                                 <?php include './php/country-codes.php';?>
+                                <div class="input-group-append">
+                                    <input type="number" name="no" id="no" class="form-control" required>
+                                </div>
                             </div>
-
-                            <div class="col-sm-6">
-                                <input type="number" name="no" id="no" class="form-control" required>
-                            </div>
-                        </div>
                         <small class="form-small-text">e.g 0722 123 456 will be +254 722 123 456</small>    
                     </div>
                      
@@ -98,10 +94,7 @@
             </div>
             
         </div>
-        
     </div>
-    
     </div>
-    
 </body>
 </html>

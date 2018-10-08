@@ -8,7 +8,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered" id="add-room-tbl">
                     <thead>
-                        <tr>
+                        <tr class="first">
                         <th>Number Sharing</th>
                         <th>Monthly Rent</th>
 <!--                        <th>Number of Occupants</th>-->
@@ -18,7 +18,7 @@
                         <th>Delete</th>
                         </tr>
                     </thead>    
-                    <tr>                        
+                    <tr class="first">                        
                         <td><input type="number" name="no_sharing[]" id="no_sharing" class="form-control" required></td>
                         <td><input type="number" name="monthly_rent[]" id="monthly_rent" class="form-control" required></td>
                         <td><input type="number" name="room_limit[]" id="room_limit" class="form-control" required></td>

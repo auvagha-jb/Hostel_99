@@ -3,18 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/testfile2.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-remove-tenant.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-view-bookings.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/js/bookings.js</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/js/manage-tenants.js</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/Classes/Bookings.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-update-vacancies.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-get-no-booked.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-view-tenants.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-verify-user.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/testfile.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/owner-get-bookings-table.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-add-hostel.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/js/owner-forms.js</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-view-hostels.php</file>
         </group>
     </open-files>
 </project-private>

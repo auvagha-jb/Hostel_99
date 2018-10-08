@@ -10,6 +10,7 @@ if(session_status() == PHP_SESSION_NONE){
 }
 
 $hostel_no = $_SESSION['hostel_no'];
+$type = $_SESSION['type'];
 
 //!Muy importante!-->Kill autommit
 $con->autocommit(false);
@@ -48,6 +49,7 @@ if(isset($_POST['email'])){
         $user_id = $get['user_id'];
         $name = $get['first_name']." ".$get['last_name'];
         $user_type = $get['user_type'];
+        $gender = $get['gender'];
 
         
         /*Check status and user_hostel_bridge table to ensure they are not already a tenant in the current  
@@ -71,6 +73,10 @@ if(isset($_POST['email'])){
         }else if($user_type !="Student"){
             echo $name." is is not a student. User type: ".$user_type;
             exit();    
+        //To ensure the person is of the right gender
+        }else if($type != $gender && $type != "Mixed"){
+            echo $name." is ".$gender.". If you admit both genders change hostel type to mixed";
+            exit();
         }
         
         //If they had made a booking -->remove them

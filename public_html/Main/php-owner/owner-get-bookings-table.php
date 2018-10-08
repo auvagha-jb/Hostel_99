@@ -18,7 +18,7 @@ if(isset($_SESSION['hostel_no'])){
         $user_id = $row['user_id'];
         $name = $row['first_name']." ".$row['last_name'];
         $gender = $row['gender']; 
-        $phone_no = $row['phone_no'];
+        $phone_no = $row['country_code'].$row['phone_no'];
         $email = $row['email'];
         $no_sharing = $row['no_sharing'];  
         $check_in_date = $row['check_in_date'];

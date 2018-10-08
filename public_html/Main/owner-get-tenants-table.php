@@ -39,7 +39,7 @@ function showTableRows($con){
             $user_id = $row['user_id'];
             $name = $row['first_name']." ".$row['last_name'];
             $email = $row['email'];
-            $phone_no = $row['phone_no'];
+            $phone_no = "+".$row['country_code'].$row['phone_no'];
             $gender = $row['gender'];
             $room_assigned =$row['room_assigned'];  
             $no_sharing =$row['no_sharing'];  
