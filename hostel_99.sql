@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 30, 2018 at 09:42 PM
+-- Generation Time: Oct 08, 2018 at 09:24 PM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -52,7 +52,8 @@ INSERT INTO `amenities` (`amenity_no`, `hostel_no`, `amenity`) VALUES
 (11, 1229930077, 'Wifi'),
 (12, 1229930077, 'Hot shower'),
 (13, 1781712626, 'test'),
-(14, 1763611811, 'test');
+(14, 1763611811, 'test'),
+(15, 781554491, 'Wifi');
 
 -- --------------------------------------------------------
 
@@ -64,8 +65,8 @@ CREATE TABLE `bookings` (
   `booking_no` int(255) NOT NULL,
   `user_id` int(255) NOT NULL,
   `hostel_no` int(255) NOT NULL,
-  `room_type` varchar(255) NOT NULL,
-  `expected_checkin_date` date NOT NULL
+  `no_sharing` varchar(255) NOT NULL,
+  `check_in_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -93,7 +94,8 @@ CREATE TABLE `hostels` (
 --
 
 INSERT INTO `hostels` (`hostel_no`, `hostel_name`, `description`, `location`, `road`, `county`, `type`, `image`, `total_available`, `total_occupied`, `vacancies`) VALUES
-(1, 'Mock Hostel', 'Test Hostel', 'Madaraka', 'Ole Sangale Rd', 'Nairobi', 'Mixed', 'mock-hostel-two.jpg', 42, 0, 42),
+(1, 'Mock Hostel', 'Test Hostel', 'Madaraka', 'Ole Sangale Rd', 'Nairobi', 'Female', 'mock-hostel-two.jpg', 42, 2, 40),
+(781554491, 'Test2', 'test', 'Nairobi west', 'Test', 'Nairobi', 'Mixed', 'rc-two.jpg', 9, 0, 9),
 (1229930077, 'Yale Kids', 'A quiet serene environment for college going students', 'Nairobi West', 'Lang\'ata Road', 'Nairobi', 'Mixed', 'rc-one.jpg', 34, 0, 34),
 (1349612707, 'Travelers Oasis', 'Located in Nairobi, within 8 km of Kenyatta International Conference Centre and 10 km of Nairobi National Museum, Travelers oasis offers accommodation with a shared lounge. Located around 1.8 km from Century Cinemax Junction, the hostel is also 1.8 km awa', 'Westlands ', 'Westlands Rd.', 'Nairobi', 'Mixed', 'travelers-oasis.jpg', 30, 1, 29),
 (1505066674, 'John\'s Hostel', 'A quiet riverside hostel dedicated to giving premium accommodation to students.', 'Eastleigh', 'First Avenue', 'Nairobi', 'Mixed', 'john\'s-hostel-two.jpg', 50, 0, 50),
@@ -140,9 +142,11 @@ CREATE TABLE `rooms` (
 
 INSERT INTO `rooms` (`hostel_no`, `no_sharing`, `monthly_rent`, `room_limit`, `current_capacity`, `total_capacity`) VALUES
 (1, 1, 10000, 2, 0, 2),
-(1, 2, 8000, 4, 1, 8),
+(1, 2, 8000, 4, 2, 8),
 (1, 4, 7000, 4, 0, 16),
 (1, 8, 2000, 2, 0, 16),
+(781554491, 1, 4000, 3, 0, 3),
+(781554491, 2, 2000, 3, 0, 6),
 (1229930077, 3, 11500, 3, 0, 9),
 (1229930077, 5, 10000, 5, 0, 25),
 (1349612707, 1, 15000, 10, 0, 10),
@@ -184,7 +188,8 @@ INSERT INTO `rules` (`rule_no`, `hostel_no`, `rule`) VALUES
 (10, 1229930077, 'No drugs'),
 (11, 1229930077, 'No alcohol'),
 (12, 1781712626, 'Test'),
-(13, 1763611811, 'tset');
+(13, 1763611811, 'tset'),
+(14, 781554491, 'No drugs');
 
 -- --------------------------------------------------------
 
@@ -204,12 +209,15 @@ CREATE TABLE `tenant_history` (
 
 INSERT INTO `tenant_history` (`record_id`, `date_checked_in`, `date_checked_out`) VALUES
 (1, '2018-09-26 17:23:28', NULL),
+(159377486, '2018-10-01 17:30:01', '2018-10-01 17:30:06'),
 (187766512, '2018-09-27 23:37:10', NULL),
 (208773575, '2018-09-29 10:26:06', NULL),
 (266698867, '2018-09-27 13:38:24', NULL),
 (268900153, '2018-09-27 22:33:05', NULL),
 (438110659, '2018-09-29 11:35:11', NULL),
 (484999262, '2018-09-27 23:29:06', NULL),
+(548720501, '2018-10-01 21:31:20', '2018-10-01 21:31:33'),
+(559318830, '2018-10-01 21:16:04', '2018-10-01 21:16:16'),
 (582997242, '2018-09-28 17:42:13', NULL),
 (597923601, '2018-09-27 17:00:21', NULL),
 (626098705, '2018-09-30 21:21:17', '2018-09-30 21:38:22'),
@@ -218,15 +226,28 @@ INSERT INTO `tenant_history` (`record_id`, `date_checked_in`, `date_checked_out`
 (857594706, '2018-09-27 22:38:30', NULL),
 (863297174, '2018-09-27 23:40:56', NULL),
 (870244375, '2018-09-27 22:37:00', NULL),
+(960922424, '2018-09-30 23:06:29', '2018-09-30 23:06:35'),
+(989746998, '2018-10-01 21:11:29', '2018-10-01 21:11:36'),
 (990228593, '2018-09-30 22:07:32', '2018-09-30 22:31:24'),
 (1059311267, '2018-09-28 22:56:05', NULL),
 (1083994886, '2018-09-28 17:16:47', NULL),
+(1100600628, '2018-10-02 19:48:11', NULL),
 (1156523424, '2018-09-27 23:36:09', NULL),
+(1222074768, '2018-10-01 17:30:11', '2018-10-01 17:34:25'),
+(1330754083, '2018-10-01 21:37:57', '2018-10-01 21:42:20'),
+(1356074096, '2018-10-02 18:09:14', '2018-10-08 11:21:53'),
+(1369068793, '2018-10-02 17:51:47', '2018-10-02 17:53:43'),
 (1460160311, '2018-09-27 16:19:14', NULL),
 (1463526430, '2018-09-27 22:02:56', NULL),
+(1471323107, '2018-10-01 21:37:12', '2018-10-01 21:37:38'),
+(1524505227, '2018-10-01 08:01:10', '2018-10-01 08:01:30'),
 (1551244114, '2018-09-30 20:25:21', '2018-09-30 20:39:29'),
+(1558173989, '2018-10-01 11:44:50', '2018-10-01 11:45:31'),
 (1694503176, '2018-09-27 22:36:38', NULL),
+(1731253546, '2018-09-30 23:03:01', '2018-09-30 23:03:14'),
 (1740495010, '2018-09-30 19:18:25', NULL),
+(1912040399, '2018-10-08 11:22:34', NULL),
+(2030244242, '2018-10-02 17:48:03', '2018-10-02 17:57:42'),
 (2053066018, '2018-09-27 23:37:43', NULL),
 (2135142079, '2018-09-27 16:47:52', NULL);
 
@@ -248,14 +269,30 @@ CREATE TABLE `tenant_history_bridge` (
 
 INSERT INTO `tenant_history_bridge` (`user_id`, `hostel_no`, `record_id`) VALUES
 (5, 1, 582997242),
+(7, 1, 159377486),
+(7, 1, 559318830),
+(7, 1, 960922424),
 (7, 1, 1083994886),
+(7, 1, 1100600628),
+(7, 1, 1222074768),
+(7, 1, 1471323107),
+(7, 1, 1731253546),
+(7, 1, 2030244242),
 (9, 1349612707, 266698867),
 (10, 1, 208773575),
 (10, 1, 438110659),
+(10, 1, 548720501),
 (10, 1, 626098705),
 (10, 1, 804120260),
+(10, 1, 989746998),
+(10, 1, 1330754083),
+(10, 1, 1356074096),
+(10, 1, 1369068793),
+(10, 1, 1524505227),
 (10, 1, 1551244114),
+(10, 1, 1558173989),
 (10, 1, 1740495010),
+(10, 1, 1912040399),
 (10, 1763611811, 990228593);
 
 -- --------------------------------------------------------
@@ -270,6 +307,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `pwd` varchar(255) NOT NULL,
+  `country_code` varchar(11) NOT NULL,
   `phone_no` varchar(255) NOT NULL,
   `gender` varchar(255) NOT NULL,
   `user_type` varchar(255) NOT NULL,
@@ -283,15 +321,15 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `pwd`, `phone_no`, `gender`, `user_type`, `user_status`, `room_assigned`, `no_sharing`, `total_paid`) VALUES
-(2, 'Jerry', 'Auvagha', 'jerrybenjamin007@gmail.com', '$2y$10$xkyZ0K2sjoHeljV3qVu9hOCA9FBXO5v9hDNTNhHRqXdUrkW3OLeme', '254722309497', 'Male', 'Student', NULL, '', NULL, NULL),
-(3, 'Jerry', 'Auvagha', 'jerry.auvagha@strathmore.edu', '$2y$10$uSjIcP2.1ueDeWLu3OJmN.GCxgRAS6xOsDI7FftI9CPxXTxuqXP92', '+254722309497', 'Male', 'Hostel Owner', 'NULL', '', NULL, NULL),
-(4, 'John ', 'Doe', 'john.doe@strathmore.edu', '$2y$10$o1x0Fh561Cckc/lu5sSGFeCrhillF9RqFi.V4uMnjCAb8GnGq4R2C', '+254722319498', 'Male', 'Hostel Owner', NULL, '', NULL, NULL),
-(5, 'Jane', 'Doe', 'jane.doe@strathmore.edu', '$2y$10$jSF8k.4raXnCOZeagqD/rOlhLUrk1ZSR8pXZR9QX55308WcFWpySu', '+254722319498', 'Female', 'Hostel Owner', 'NULL', 'NULL', NULL, NULL),
-(6, 'Jane', 'Does', 'jane.does@strathmore.edu', '$2y$10$3Cf4lM4z66fDDwsSD5IiY.1wo9Uahs0pnBgBTWfgpUfy9PrtfHNJq', '+254722319498', 'Female', 'Hostel Owner', NULL, '', NULL, NULL),
-(7, 'Jane', 'Does', 'jane.does2@strathmore.edu', '$2y$10$ejmRYOyNqg1lGnhubYdSAuOhDsTcUOjBkQx.ZlXiUvQF27exjtSpG', '+254722319898', 'Female', 'Student', NULL, NULL, NULL, NULL),
-(9, 'Rose', 'Njeri', 'rnjeri@kenindia.com', '$2y$10$iNJ5dyYb4dGFKYsWStxFQ.AsySRo/9d.3R6LoYLa0cwXAcMVSXuD2', '+254721266332', 'Female', 'Student', 'Tenant', '1', '2', NULL),
-(10, 'Mizzy', 'Bee', 'mizzy.bee@gmail.com', '$2y$10$j9CGxquS266NcA/oG/vKe.8/16WkBCaOug.8cXWosbCUhpYWMlmga', '+254722319490', 'Female', 'Student', NULL, NULL, NULL, NULL);
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `pwd`, `country_code`, `phone_no`, `gender`, `user_type`, `user_status`, `room_assigned`, `no_sharing`, `total_paid`) VALUES
+(2, 'Jerry', 'Auvagha', 'jerrybenjamin007@gmail.com', '$2y$10$xkyZ0K2sjoHeljV3qVu9hOCA9FBXO5v9hDNTNhHRqXdUrkW3OLeme', '254', '722309497', 'Male', 'Student', NULL, '', NULL, NULL),
+(3, 'Jerry', 'Auvagha', 'jerry.auvagha@strathmore.edu', '$2y$10$uSjIcP2.1ueDeWLu3OJmN.GCxgRAS6xOsDI7FftI9CPxXTxuqXP92', '254', '722309497', 'Male', 'Hostel Owner', 'NULL', '', NULL, NULL),
+(4, 'John ', 'Doe', 'john.doe@strathmore.edu', '$2y$10$o1x0Fh561Cckc/lu5sSGFeCrhillF9RqFi.V4uMnjCAb8GnGq4R2C', '254', '722319498', 'Male', 'Student', NULL, '', NULL, NULL),
+(5, 'Jane', 'Doe', 'jane.doe@strathmore.edu', '$2y$10$jSF8k.4raXnCOZeagqD/rOlhLUrk1ZSR8pXZR9QX55308WcFWpySu', '254', '722319498', 'Female', 'Hostel Owner', 'NULL', 'NULL', NULL, NULL),
+(6, 'Jane', 'Does', 'jane.does@strathmore.edu', '$2y$10$3Cf4lM4z66fDDwsSD5IiY.1wo9Uahs0pnBgBTWfgpUfy9PrtfHNJq', '254', '722319498', 'Female', 'Hostel Owner', NULL, '', NULL, NULL),
+(7, 'Jane', 'Does', 'jane.does2@strathmore.edu', '$2y$10$ejmRYOyNqg1lGnhubYdSAuOhDsTcUOjBkQx.ZlXiUvQF27exjtSpG', '254', '722319898', 'Female', 'Student', 'Tenant', '1', '2', NULL),
+(9, 'Rose', 'Njeri', 'rnjeri@kenindia.com', '$2y$10$iNJ5dyYb4dGFKYsWStxFQ.AsySRo/9d.3R6LoYLa0cwXAcMVSXuD2', '254', '721266332', 'Female', 'Student', 'Tenant', '1', '2', NULL),
+(10, 'Mizzy', 'Bee', 'mizzy.bee@gmail.com', '$2y$10$j9CGxquS266NcA/oG/vKe.8/16WkBCaOug.8cXWosbCUhpYWMlmga', '254', '722319490', 'Female', 'Student', 'Tenant', '2', '2', NULL);
 
 -- --------------------------------------------------------
 
@@ -311,6 +349,7 @@ CREATE TABLE `user_hostel_bridge` (
 
 INSERT INTO `user_hostel_bridge` (`user_id`, `hostel_no`, `record_id`) VALUES
 (3, 1, NULL),
+(3, 781554491, NULL),
 (3, 1229930077, NULL),
 (3, 1719975542, NULL),
 (3, 1763611811, NULL),
@@ -318,7 +357,9 @@ INSERT INTO `user_hostel_bridge` (`user_id`, `hostel_no`, `record_id`) VALUES
 (4, 1349612707, NULL),
 (4, 1505066674, NULL),
 (5, 1, NULL),
-(9, 1349612707, NULL);
+(7, 1, 1100600628),
+(9, 1349612707, NULL),
+(10, 1, 1912040399);
 
 -- --------------------------------------------------------
 
@@ -423,13 +464,13 @@ ALTER TABLE `user_payment_bridge`
 -- AUTO_INCREMENT for table `amenities`
 --
 ALTER TABLE `amenities`
-  MODIFY `amenity_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `amenity_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `booking_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `booking_no` int(255) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `hostels`
@@ -447,7 +488,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `rules`
 --
 ALTER TABLE `rules`
-  MODIFY `rule_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `rule_no` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `tenant_history`

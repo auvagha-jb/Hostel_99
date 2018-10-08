@@ -1,0 +1,60 @@
+function insert_td(form_data){
+        
+        $.ajax({
+           url: "php-owner/owner-add-hostel-action.php",
+           method: "post",
+           data: form_data,
+           success:function(data){
+               if(data === 'ok'){
+                   $("#item_table").find("thead").remove(); 
+               
+                    //Display success message
+                    var feedback = '<div class="alert alert-success">Room details saved</div>';
+
+                    $("#feedback").html(feedback);
+               }
+           }
+           
+        });
+    }
+
+
+ $("#add-hostel-form").submit(function(e){
+       
+       //prevent the default action which in this case is sending the form data  
+        e.preventDefault();
+        
+        var form_data = $(this).serialize();
+        insert_td(form_data);
+    });
+
+
+function addImage(){
+       //Hide warning message if it had been displayed
+        $("#add-image-feedback").hide();
+        
+        var html="";
+        
+        html+="<tr>";
+        html+='<td><input type="file" name="image" id="image" onchange="readURL(this);" class="form-control"/>';
+        html+='<img src="#" alt="Choose an image to see the preview" id="image_display">';
+        html+='</td>';
+        html+='<td><button type="button" class="btn btn-success btn-sm add-image"><i class="fa fa-plus"></i></button></td>';
+        html+='<td><button type="button" class="btn btn-danger btn-sm remove-image"><i class="fa fa-minus"></i></button></td>';
+        html+="</tr>";
+       
+        $("#add-image-tbl").append(html);
+        
+        var rows = $("#add-image-tbl >tbody >tr").length;
+        console.log(rows);  
+   }
+
+
+//       html+='<td><input type="number" name="total_occupants[]" id="total_occupants" class="form-control" required></td>';
+//       html+='<td><input type="number" name="no_rooms_occupied[]" id="no_rooms_occupied" class="form-control" required></td>';
+
+
+//images 
+    $(document).on("click", ".add-image", function(){
+       addImage(); 
+    });
