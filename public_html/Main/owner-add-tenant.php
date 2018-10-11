@@ -53,9 +53,9 @@ function insertQueries($con, $user_id, $hostel_no, &$error){
     date_default_timezone_set('Africa/Nairobi');
     $date_checked_in = date('Y-m-d H:i:s');
     
-    $insert_1 = "INSERT INTO `tenant_history`(`record_id`, `date_checked_in`) VALUES (?,?)";
+    $insert_1 = "INSERT INTO `tenant_history`(`record_id`, `hostel_no`, `date_checked_in`) VALUES (?,?,?)";
     $stmt_1 = $con->prepare($insert_1);
-    $stmt_1->bind_param("ss", $record_id, $date_checked_in);
+    $stmt_1->bind_param("sss", $record_id, $hostel_no, $date_checked_in);
     $bool_1 = $stmt_1->execute();
     
     if($bool_1 == false){
@@ -67,9 +67,9 @@ function insertQueries($con, $user_id, $hostel_no, &$error){
      * INSERT user_id, hostel_no AND record_id  
      */
     
-    $insert_2 = "INSERT INTO tenant_history_bridge (hostel_no, user_id, record_id) VALUES(?,?,?)";
+    $insert_2 = "INSERT INTO tenant_history_bridge (user_id, record_id) VALUES(?,?)";
     $stmt_2 = $con->prepare($insert_2);
-    $stmt_2->bind_param("sss", $hostel_no, $user_id, $record_id);
+    $stmt_2->bind_param("ss", $user_id,$record_id);
     $bool_2 = $stmt_2->execute();
    
     if($bool_2 == false){

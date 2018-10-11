@@ -53,10 +53,13 @@ function showTableRows($con){
                 <td>'.$gender.'</td>
                 <td>'.$room_assigned.'</td>
                 <td>'.$no_sharing.'</td>
-                <td><a href="#" class="btn btn-danger btn-sm remove-room" id="remove_tenant"><i class="fa fa-minus-circle"></i></a></td>
+                <td>
+                    <button href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDelModal" id="show_modal">
+                        <i class="fa fa-minus-circle"></i>
+                    </button>
+                </td>
             </tr>  
-            ';
-            
+            ';       
         }
         
         echo $data;

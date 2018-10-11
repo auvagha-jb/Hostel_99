@@ -22,17 +22,31 @@ $(document).ready(function(){
       verifyUser(email,room_assigned,no_sharing);
    });
 
-    $(document).on("click","#remove_tenant", function(){
+    $(document).on("click","#show_modal", function(){
         
         var user_id = $(this).closest("tr").children().eq(0).text();
         var name = $(this).closest("tr").children().eq(1).text();
         var no_sharing = $(this).closest("tr").children().eq(6).text();
         
-    
-        if(deleteConfirmed(name)){
-            removeTenant(user_id,name,no_sharing);
-        } 
+        var msg = '';
+        msg += '<form id="modal_form">';
+        msg += '<input type="hidden" id="user_id" value="'+user_id+'">';
+        msg += '<input type="hidden" id="name" value="'+name+'">';
+        msg += '<input type="hidden" id="no_sharing" value="'+no_sharing+'">';
+        msg += '</form>';
+        
+        msg += '<span>Remove '+name+' as a tenant?</span>';
+        $("#delete_dialog").html(msg);
+
     });
+    
+    $(document).on("click","#remove_tenant", function(){
+        var user_id = $("#modal_form #user_id").val();
+        var name = $("#modal_form #name").val();
+        var no_sharing = $("#modal_form #no_sharing").val();
+        removeTenant(user_id,name,no_sharing); 
+    });
+    
     
     $("#no_sharing").change(function(){ 
         var no_sharing = $("#no_sharing").val();
@@ -43,7 +57,7 @@ $(document).ready(function(){
        
        $.post("owner-verify-user.php", {email:email, room_assigned:room_assigned, no_sharing:no_sharing}, function(data, status){
           
-          if(data != ""){
+          if(data !== ""){
               //Display error message
               $("#feedback").addClass("alert alert-danger");
               $("#feedback").html(data);
@@ -148,7 +162,5 @@ $(document).ready(function(){
             $("#bookings").html(data);
        }); 
    }
-   
-   
-   
+     
 });

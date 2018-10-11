@@ -33,9 +33,10 @@
             $query = 'SELECT hostels.hostel_no, hostels.hostel_name, hostels.image, hostels.description, hostels.location, '
                     . 'hostels.road, hostels.vacancies, MIN(rooms.monthly_rent)AS monthly_rent, MAX(rooms.no_sharing) AS no_sharing '
                     . 'FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no '
-                    . 'WHERE location = ? AND monthly_rent <= ? AND type = ? '
-                    . 'OR county = ? AND monthly_rent <= ? AND type = ? '
-                    . 'OR road = ? AND monthly_rent <= ? AND type = ? GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent';
+                    . 'WHERE location = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
+                    . 'OR county = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
+                    . 'OR road = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
+                    . 'GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent';
             
             $stmt = $con->prepare($query);
             $stmt->bind_param("sssssssss", $location_home, $max_price, $hostel_type,$location_home, $max_price, $hostel_type,$location_home, $max_price, $hostel_type);

@@ -31,7 +31,6 @@
         <select class="form-control mx-2" name="no_sharing" id="no_sharing" required="">
             <option value="">No. sharing</option>
         </select>
-        <input class="form-control mx-2" id="monthly_rent" placeholder="Monthly rent" required="" readonly="">
         <div class="input-group mx-2">
             <input class="form-control" name="room_assigned" id="room_assigned" placeholder="Room assigned" required="">
             <div class="input-group-append">
@@ -40,7 +39,7 @@
                 </button>
             </div>
         </div>
-        
+        <input class="form-control mx-2" id="monthly_rent" placeholder="Monthly rent" required="" readonly="">
     </form>
     
         <center id="feedback"></center>
@@ -80,6 +79,28 @@
     </div> 
         
 </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirm delete</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="delete_dialog">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" id="blacklist_tenant" data-dismiss="modal">Remove and blacklist</button>
+            <button type="button" class="btn btn-danger" id="remove_tenant" data-dismiss="modal">Remove</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
     
 </body>
 </html>
