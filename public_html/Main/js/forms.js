@@ -87,7 +87,7 @@ $(document).ready(function(){
    
    
    //On keyup; ensures that the email address does not exist  
-   $(".sign-up #email").keyup(function(){
+   $(".sign-up #email").change(function(){
         validEmail();
    });
    

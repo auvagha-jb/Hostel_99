@@ -22,6 +22,9 @@ if(isset($_POST['submit'])){
     }
     echo $msg;
 }
+
+
+
 ?>
 <!DOCTYPE HTML>
 <html>

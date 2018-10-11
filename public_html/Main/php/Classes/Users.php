@@ -18,9 +18,9 @@ class Users{
                 . "WHERE users.user_id = ? AND hostel_no = ? AND user_status = 'Tenant'";
         $stmt= $con->prepare($query);
         $stmt->bind_param("ss", $data['user_id'],$data['hostel_no']);
-$       $stmt->execute();
+        $stmt->execute();
 
-$       $result = $stmt->get_result();
+       $result = $stmt->get_result();
         if(mysqli_num_rows($result)>0){
             return true;
         }
@@ -35,12 +35,24 @@ $       $result = $stmt->get_result();
                 . "WHERE users.user_id = ? AND tenant_history.blacklist = 0";
         $stmt= $con->prepare($query);
         $stmt->bind_param("s",$user_id);
+        $stmt->execute();
         
         $result = $stmt->get_result();
         if(mysqli_num_rows($result)>0){
             return true;
         }
         return false;
+    }
+    
+    
+    function updateDetails($con, $data){
+        $query = 'UPDATE `users` SET `first_name`= ?,`last_name`= ?,`email`= ? , `country_code`= ? ,'
+                . '`phone_no`= ?  WHERE user_id = ?';
+        $stmt= $con->prepare($query);
+        $stmt->bind_param("ssssss", $data['first_name'],$data['last_name'], $data['email'],$data['country_code'],
+                $data['phone_no'],$data['user_id']);
+        $stmt->execute();
+        
     }
     
 }

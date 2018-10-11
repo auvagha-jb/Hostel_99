@@ -26,9 +26,7 @@
         
         <div class="col-md-6 col-sm-12">
             <div class="form-data">                       
-                <form action="#" method="post" class="sign-up">
-                    <h4 class="lead">Sign up</h4>
-                    
+                <form action="php/update_details.php" method="post" class="sign-up">
                     <div class="row">
                         <div class="col-md-6"> 
                         <div class="form-group">
@@ -57,12 +55,12 @@
                             <div class="input-group">
                                 <?php include './php/country-codes.php';?>
                                 <div class="input-group-append">
-                                    <input type="number" name="no" id="no" class="form-control" required>
+                                    <input type="number" name="phone_no" id="phone_no" class="form-control" required>
                                 </div>
                             </div>
                         <small class="form-small-text">e.g 0722 123 456 will be +254 722 123 456</small>    
                     </div>
-                     <button type="submit" name="s-u-submit" id="s-u-submit" class="btn btn-primary">Save Changes</button>
+                     <button type="submit" name="update_submit" id="s-u-submit" class="btn btn-primary">Save Changes</button>
                 </form>
             </div>
             
@@ -79,7 +77,7 @@
        
        function setPhoneNo(country_code,no){
            $("#country_code").val(country_code);
-           $("#no").val(no);
+           $("#phone_no").val(no);
        }
        
     });

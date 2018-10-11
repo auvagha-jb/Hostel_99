@@ -30,13 +30,13 @@ form.sign-in input{
 
 
 form.sign-up{
-    border: #000000;
+    border-color: #000000;
     position: absolute;
     width: 90%;
     height: 100%;
 /*    top: 30%;*/
     left: 10%;
-    background: gray;
+    background: white;
     color: black;
     padding: 10% 10%;
 }
