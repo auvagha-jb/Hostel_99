@@ -8,129 +8,11 @@
     <?php include './links.php';?>
     <!--Generic-->
     <script src="./js/main.js"></script>
-    <style>
-        /**hostel title**/
-        .hostel-title h4 {
-            margin-top: 100px;
-            margin-left: 580px;
-            font-family: "Helvetica Neue";
-            font-size: 25px;
-            text-transform: uppercase;
-            font-weight: bold;
-            color: #F4A460;
-        }
-
-        /*********Booking Page Carousel********/
-        #slides {
-            margin-left: 150px;
-            width: 80%;
-            height: 200px;
-        }
-
-        #slides .carousel-indicators {
-            top: 700px;
-            margin-left: 180px;
-        }
-
-        #slides .carousel-item img {
-            height: 900px;
-        }
-
-        #slides .carousel-control-prev {
-            top: 420px;
-        }
-
-        #slides .carousel-control-next {
-            top: 420px;
-            right: 50px;
-        }
-
-        /**hostel description**/
-        .hostel-description {
-            margin-top: 800px;
-            margin-left: 150px;
-        }
-
-        .hostel-description #about h4 {
-            font-size: 18px;
-            font-family: "Helvetica Neue";
-        }
-
-        .hostel-description p {
-            margin-left: 20px;
-            font-family: "Helvetica Neue";
-            font-size: 16px;
-        }
-
-        /**hr**/
-        hr {
-            margin-left: 0px;
-            height: 5px;
-            color: black;
-            width: 60%;
-        }
-
-        .hostel-data li {
-            list-style: none;
-            font-family: "Helvetica Neue";
-            font-size: 16px;
-            line-height: 30px;
-            margin-left: 20px;
-            display: block;
-        }
-
-        .hostel-ammenities {
-            margin-left: 150px;
-        }
-
-        .hostel-rules {
-            margin-left: 150px;
-        }
-
-        .hostel-pricing {
-            margin-left: 150px;
-        }
-
-        .pricing-list li {
-            margin-left: 25px;
-            display: list-item;
-            text-align: -webkit-match-parent;
-            list-style-type: disc;
-            font-size: 16px;
-            font-family: "Helvetica Neue";
-        }
-
-        .book-panel-bar hr {
-            margin-left: 100px;
-            width: 60%;
-        }
-
-        .book-panel {
-            border: 1px solid #dce0e0;
-            padding: 20px;
-            margin-top: 0px;
-            font-family: "Helvetica Neue";
-            font-size: 14px;
-            color: #333333;
-            background-color: #F4A460 ;
-            width: 40%;
-            margin-left: 300px;
-        }
-
-        .book-panel .col-sm-3 {
-            float: left;
-            position: relative;
-            min-height: 1px;
-            display: block;
-        }
-
-        .book-panel button {
-            margin-left: 200px;
-            border-radius: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/">
 </head>
 <body>
+<!--Navigation-->
+<?php include './nav-bar.php';?>
 <?php include './php/connection.php';?>
 <?php include_once './php-owner/owner-get-hostel-details.php';?>
 
@@ -254,6 +136,7 @@
                             <a href="cartAction.php?action=addToCart&id=<?php echo $row['hostel_id']?>" style="margin-left:350px;margin-bottom:5px;" class="btn btn-success"><i class="fas fa-bookmark"></i> Book this hostel</a>
                         </li>
                     <?php } }else { ?>
+                        
                     <p>Product(s) not found.....</p>
                 <?php }
                 ?>
