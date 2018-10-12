@@ -5,6 +5,11 @@ include './Classes/Users.php';//Class containing functions that modify the users
 include './Classes/Helpers.php';//Class containing alert function
 session_start();
 
+//Object of class Users and Helpers 
+$user = new Users();
+$help = new Helpers();
+
+//If the update button is clicked ...
 if(isset($_POST['update_submit'])){
     
     $data = array(
@@ -16,12 +21,19 @@ if(isset($_POST['update_submit'])){
       'user_id'=>$_SESSION['user_id']  
     );
     
-    $user = new Users();
     $user->updateDetails($con, $data);
     
-    $help = new Helpers();
     $help->alert("Update succesful");
     header("refresh:0.1; url=../student-view-details.php");
 }
 
-
+//Triggered on #email .change()
+if(isset($_POST['email'])){
+    
+    $data = array( 
+      'email'=>$_POST['email'],   
+      'user_id'=>$_SESSION['user_id']  
+    );
+    
+    $user->emailAvailable($con,$data);
+}

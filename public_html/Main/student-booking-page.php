@@ -21,18 +21,8 @@
 
 <!--Image Slider-->
 <div id="slides" class="carousel slide" data-ride="carousel">
-
-    <!-- Indicators -->
-    <ul class="carousel-indicators">
-        <li data-target="#booking-page-slides" data-slide-to="0" class="active"></li>
-        <li data-target="#booking-page-slides" data-slide-to="1"></li>
-        <li data-target="#booking-page-slides" data-slide-to="2"></li>
-        <li data-target="#booking-page-slides" data-slide-to="3"></li>
-    </ul>
-
     <!-- The slideshow -->
     <?php include './php/carousel.php';?>
-
     <!-- Left and right controls -->
     <a class="carousel-control-prev" href="#slides" data-slide="prev">
         <span class="carousel-control-prev-icon"></span>

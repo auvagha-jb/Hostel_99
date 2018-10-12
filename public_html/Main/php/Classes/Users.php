@@ -44,6 +44,23 @@ class Users{
         return false;
     }
     
+    /*
+     * User update details functions
+     */
+     //Ensures the updated email address is not taken by someone else -->Student-update-details
+    function emailAvailable($con,$data){
+        $query = "SELECT * FROM users WHERE email = ? AND NOT user_id = ?";
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("ss", $data['email'],$data['user_id']);
+        $stmt->execute();
+
+       $result = $stmt->get_result();
+        if(mysqli_num_rows($result)>0){
+            echo 'email-exists';
+            return true;
+        }
+        return false;
+    }
     
     function updateDetails($con, $data){
         $query = 'UPDATE `users` SET `first_name`= ?,`last_name`= ?,`email`= ? , `country_code`= ? ,'

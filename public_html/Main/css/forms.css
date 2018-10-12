@@ -29,7 +29,7 @@ form.sign-in input{
 }
 
 
-form.sign-up{
+form.sign-up, form.update{
     border-color: #000000;
     position: absolute;
     width: 90%;
@@ -65,7 +65,7 @@ button#s-u-submit:hover{
         display: none;
     }
     
-    form.sign-up{
+    form.sign-up, form.update{
 /*        background: gray;*/
         height: 1100px;
         width: 100%;

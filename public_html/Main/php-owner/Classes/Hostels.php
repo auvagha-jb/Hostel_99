@@ -48,9 +48,14 @@
     
     
     public function notRated($con, $data){
+        
+        //array data;
+        $user_id = $data['user_id'];
+        $hostel_no = $data['hostel_no'];
+        
         $query = "SELECT * FROM ratings WHERE user_id = ? AND hostel_no = ?";
         $stmt = $con->prepare($query);
-        $stmt->bind_param("ss", $data['user_id'],$data['hostel_no']);
+        $stmt->bind_param("ss", $user_id,$hostel_no);
         $stmt->execute();
         
         $result = $stmt->get_result();
@@ -64,7 +69,7 @@
     }
     
     
-    public function countRated($con,$hostel_no){
+    public function ratingCount($con,$hostel_no){
         $query = "SELECT COUNT(*) AS no_ratings FROM `ratings` WHERE hostel_no = ?";
         $stmt = $con->prepare($query);
         $stmt->bind_param("s", $hostel_no);
@@ -75,5 +80,40 @@
         
         return $row['no_ratings'];
     }
-
+    
+    
+    public function updateRatings($con, $data){
+        
+        //Array data
+        $rating = $data['rating'];
+        $review = $data['review'];
+        $hostel_no = $data['hostel_no'];
+        $user_id = $data['user_id'];
+                
+        //INSERT the rating to the ratings table 
+        $insert = "INSERT INTO `ratings`(`rating`, `review`, `hostel_no`, `user_id`) VALUES (?,?,?,?)";
+        $stmt_1 = $con->prepare($insert);
+        $stmt_1->bind_param("ssss", $rating, $review, $hostel_no, $user_id);
+        $stmt_1->execute();
+        
+        /*
+         * Do the calculations
+         */
+        //Get the db data
+        $row = $this->getHostelInfo($con,$hostel_no);
+        $total_rating = $row['total_rating'];
+        $no_rated = $this->ratingCount($con,$hostel_no);
+        
+        
+        $total_rating += $rating; //Add the user rating to the total_rating
+        $avg_rating = $total_rating/$no_rated; //Get the avaerage rating 
+       
+        //UPDATE the TOTAL_RATING and AVG_RATING in HOSTELS table 
+        $update = "UPDATE hostels SET total_rating = ?, avg_rating = ? WHERE hostel_no = ?";
+        $stmt_2 = $con->prepare($update);
+        $stmt_2->bind_param("sss", $total_rating, $avg_rating, $hostel_no);
+        $stmt_2->execute();
+        
+    }
+    
  }

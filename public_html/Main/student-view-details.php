@@ -26,7 +26,7 @@
         
         <div class="col-md-6 col-sm-12">
             <div class="form-data">                       
-                <form action="php/update_details.php" method="post" class="sign-up">
+                <form action="php/update_details.php" method="post" class="update">
                     <div class="row">
                         <div class="col-md-6"> 
                         <div class="form-group">

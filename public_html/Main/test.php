@@ -3,6 +3,13 @@ include './php/connection.php';
 include './php-owner/Classes/Hostels.php';
 
 
-$g = new Hostels();
+$test = new Hostels();
+        
+        $data = array(
+          'rating' => 4,
+           'review' =>'Quite good',
+           'hostel_no' => '1',
+            'user_id' => '10'
+        );
 
-$g->getRooms($con, "1");
+        $test->notRated($con, $data);

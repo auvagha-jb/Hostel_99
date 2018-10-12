@@ -1,18 +1,36 @@
 $(document).ready(function(){
 
+    getDefaults();
+   
+   //On keyup; ensures that the email address does not exist  
+   $(".sign-up #email").change(function(){
+        validEmail();
+   });
+   
+   $(".update #email").change(function(){
+        availableEmail();
+   });
+   
+   $(".sign-up").submit(function(event){
+       //On submit...ensures that the passwords match and are long enough and the email address does not exist in DB  
+       if(!validPwd() || !validEmail()){
+            event.preventDefault();
+        }
+   });
+   
+   $(".update").submit(function(event){
+       //On submit...ensures that the passwords match and are long enough and the email address does not exist in DB  
+       if(!availableEmail()){
+            event.preventDefault();
+        }
+   });
     
-    //Preliminaries
-     //Prevent resubmission on refresh or back
-    if(window.history.replaceState){
-       window.history.replaceState(null, null, window.location.href); 
-    }
-    
-    //turn off auto-complete
-    $("#add-hostel-form").attr("autocomplete", "off");
-    
-    
-   //Default value for the country code list 
-   $("#country_code").val(254);
+    $(".sign-in").submit(function(event){
+        if(!validSignIn()){
+           event.preventDefault();
+       } 
+    });
+   
    
    var valid = false;
    function validEmail(){
@@ -32,6 +50,26 @@ $(document).ready(function(){
         console.log("Email: "+valid);
         return valid;
    }
+   
+   function availableEmail(){
+       var email = $("#email").val();
+       
+       $.post("php/update_details.php", {email: email}, function(data){
+            console.log(data);
+            if(data === "email-exists"){               
+                $("#email").addClass("is-invalid");
+                valid = false;
+            }else{
+                $("#email").removeClass("is-invalid");
+                valid = true;
+            }
+        });
+        
+        console.log("Email: "+valid);
+        return valid;
+   }
+   
+   
    
  
    function validPwd(){
@@ -85,25 +123,18 @@ $(document).ready(function(){
         return  valid_sign_in;
    }
    
+   function getDefaults(){
+       //Preliminaries
+        //Prevent resubmission on refresh or back
+       if(window.history.replaceState){
+          window.history.replaceState(null, null, window.location.href); 
+       }
+       //turn off auto-complete
+       $("#add-hostel-form").attr("autocomplete", "off");
+
+      //Default value for the country code list 
+      $("#country_code").val(254);
+   }
    
-   //On keyup; ensures that the email address does not exist  
-   $(".sign-up #email").change(function(){
-        validEmail();
-   });
-   
-   
-   $(".sign-up").submit(function(event){
-       //On submit...ensures that the passwords match and are long enough and the email address does not exist in DB  
-       if(!validPwd() || !validEmail()){
-            event.preventDefault();
-        }
-        
-   });
-    
-    $(".sign-in").submit(function(event){
-        if(!validSignIn()){
-           event.preventDefault();
-       } 
-    });
     
 });
