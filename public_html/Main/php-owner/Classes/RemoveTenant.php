@@ -1,7 +1,4 @@
 <?php
-include 'php-owner/Classes/Hostels.php'; //Gets hostel details
-include './php-owner/Classes/Rooms.php';//Gets room details
-
 //Class containing functions that are exexuted when a tenant is removed
 class RemoveTenant{
     
@@ -68,27 +65,23 @@ function deleteFromBridge($con, $user_id, &$error){
 }
 
 
-function updateVacancies($con, $hostel_no, $no_sharing, &$error){
-    
-    /*
-     * Get the current hostel details -->methods from class: owner_get_vacancy_details()
-     */
-    
-    $hostels = new Hostels();
-    $rooms = new Rooms();
-    
-    $hostel = $hostels->getHostelDetails($con, $hostel_no, $error);
-    $room = $rooms->getRoomDetails($con, $hostel_no, $no_sharing, $error);
-    
+function updateVacancies($con, &$hostel, &$room, &$user, &$error){
+    //User data
+    $gender = $user['gender'];
+
     //Hostels table
+    $hostel_no = $hostel['hostel_no'];
     $total_occupied = $hostel['total_occupied'];
     $total_available = $hostel['total_available'];
     
     //Rooms table
+    $no_sharing = $room['no_sharing'];
     $current_capacity = $room['current_capacity'];
+    $gender_count = $room[$gender.'_count'];//Reinitialization done due to calculation
+    
     
     /*
-     * Do the decrement
+     * Do the increment on total occupied and current capacity
      */
     
     //Hostels table
@@ -97,6 +90,8 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
     
     //Rooms table
     $current_capacity -= 1;
+    $gender_count -= 1;
+    $block_gender = ceil($gender_count/$no_sharing)*$no_sharing;
     
     /*
      * UPDATE tables
@@ -108,23 +103,22 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
     $stmt_1->bind_param("sss", $total_occupied, $vacancies,$hostel_no);
     $bool_1 = $stmt_1->execute();
 
-    
     if($bool_1 == false){
         array_push($error, $con->error);
     }
-    
+   
     
     //Rooms
-    $query_2 = "UPDATE rooms SET current_capacity = ? WHERE hostel_no = ? AND no_sharing = ?";
+    $query_2 = 'UPDATE rooms SET current_capacity = ?, '.$gender.'_count = ?, blocked_'.$gender.' = ? '
+            . 'WHERE hostel_no = ? AND no_sharing = ?';
     $stmt_2 = $con->prepare($query_2);
-    $stmt_2->bind_param("sss", $current_capacity, $hostel_no, $no_sharing);
+    $stmt_2->bind_param("sssss", $current_capacity, $gender_count, $block_gender,$hostel_no, $no_sharing);
     $bool_2 = $stmt_2->execute();
 
     if($bool_2 == false){
         array_push($error, $con->error);
     }
-    
-    }
+}
     
     
 }

@@ -55,8 +55,8 @@ $(document).ready(function(){
     
     function verifyUser(email, room_assigned,no_sharing){
        
-       $.post("owner-verify-user.php", {email:email, room_assigned:room_assigned, no_sharing:no_sharing}, function(data, status){
-          
+       $.post("owner-verify-user.php", {email:email, room_assigned:room_assigned, no_sharing:no_sharing,action:"add_tenant"},
+        function(data, status){  
           if(data !== ""){
               //Display error message
               $("#feedback").addClass("alert alert-danger");
@@ -83,10 +83,7 @@ $(document).ready(function(){
               $("#feedback").html(data);
               
               $("#no-tenants-msg").hide();//Remove no-tenants message
-              clearTable();//To avoid duplicate rows
-              showTable();//Display the updated table
-              getVacancies();//Update vacancies
-              getBookings();//Update no-booked
+                refreshTable();
           }else{
               alert("Not executed");
           }
@@ -113,25 +110,11 @@ $(document).ready(function(){
    }//End of function
    
    
-   function deleteConfirmed(name){   
-    var del = confirm("Remove "+name+" as a tenant?");
-        
-        if(!del){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-    
     function removeTenant(user_id,name,no_sharing){
        $.post("owner-remove-tenant.php", {user_id:user_id, name:name, no_sharing:no_sharing}, function(data){
             $("#feedback").addClass("alert alert-success");
             $("#feedback").html(data);
-            clearTable();
-            showTable();
-            getVacancies();//Update vacancies
-            getBookings();//Update no-booked
+            refreshTable();
        });
        
     }//End of function
@@ -161,6 +144,13 @@ $(document).ready(function(){
       $.post("php-owner/owner-get-no-booked.php",function(data){
             $("#bookings").html(data);
        }); 
+   }
+   
+   function refreshTable(){
+      clearTable();//To avoid duplicate rows
+      showTable();//Display the updated table
+      getVacancies();//Update vacancies
+      getBookings();//Update no-booked
    }
      
 });

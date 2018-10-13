@@ -1,9 +1,25 @@
 <?php
 
 include './php/connection.php';
+include './php/Classes/Users.php';
 require './php-owner/Classes/Hostels.php';//My generic class
 require './php-owner/Classes/Rooms.php';//My generic class
 require './php-owner/Classes/Bookings.php';//My generic class
+
+
+$users = new Users();
+$hostels = new Hostels();
+$rooms = new Rooms();
+
+$form_valid = false;
+//Form validation
+if(empty($_POST['email']) || empty($_POST['no_sharing']) || empty($_POST['room_assigned'])){
+    echo 'Fill all fields!';
+    exit();
+}else{
+    $form_valid = true;
+}
+
 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
@@ -16,51 +32,47 @@ $type = $_SESSION['type'];
 $con->autocommit(false);
 $error = array();//Array to store error messages
 
-if(isset($_POST['email'])){
+if($form_valid){
     
     $email = $_POST['email'];
     $room_assigned = $_POST['room_assigned'];
     $no_sharing = $_POST['no_sharing'];
     
+    /*
+     * Get the current hostel details -->methods from classes: Hostels and Rooms
+     */
+    $hostel = $hostels->getHostelDetails($con, $hostel_no, $error);
+    $room = $rooms->getRoomDetails($con, $hostel_no, $no_sharing, $error);
+   
     
     /*
      * TABLES AFFECTED: users table, tenant_history table and user_hostel_bridge table 
-     */
+     */    
     
-    
-    /*
-    * USERS table 
-    */
-    
-    $select = "SELECT * FROM users WHERE email = ?";
-    
-    $select_stmt = $con->prepare($select); 
-    $select_stmt->bind_param("s", $email);
-    $select_stmt->execute();
-    
-    $select_rst  = $select_stmt->get_result();
+    //1. USERS table 
+    $user = $users->getData($con, $email);
     
     //If the user is found ...
-    if(mysqli_num_rows($select_rst)>0){
-    
-        $get = $select_rst->fetch_array();
-           
-        $status = $get['user_status'];
-        $user_id = $get['user_id'];
-        $name = $get['first_name']." ".$get['last_name'];
-        $user_type = $get['user_type'];
-        $gender = $get['gender'];
-
-        
-        /*Check status and user_hostel_bridge table to ensure they are not already a tenant in the current  
-        nor in another hostel and that they are of "student" type */
-       
-        $row = checkIfTenant($con, $user_id); 
-        
+    if(isset($user)){  
+        $status = $user['user_status'];
+        $user_id = $user['user_id'];
+        $name = $user['first_name']." ".$user['last_name'];
+        $user_type = $user['user_type'];
+        $gender = $user['gender'];
+  
+        /*
+         * Check status and user_hostel_bridge table to ensure they are not already a tenant in the current  
+         * nor in another hostel and that they are of "student" type 
+         */       
+        $row = tenantResidence($con, $user_id);         
         $hostel_reg = $row['hostel_no'];
         $hostel_name = $row['hostel_name'];        
         
-        //To ensure the user was not already a tenant either in another hostel or your hostel
+        /*
+         * if 1-To ensure the user was not already a tenant either in another hostel or your hostel
+         * if-2 to ensure the user is registered as a student
+         * if 3 - to ensure the user is of the right gender
+         */
         if($status == "Tenant"){
             if($hostel_no != $hostel_reg && $hostel_reg !=""){
                 echo $name." is still registered as a tenant in ".$hostel_name;
@@ -79,26 +91,36 @@ if(isset($_POST['email'])){
             exit();
         }
         
-        //If they had made a booking -->remove them
-        if(userBooked($con, $user_id, $error)){
-            
-            $get = new Bookings();
-            $get->delBooking($con, $user_id, $error);
-            //echo 'Deleted from booking table';
-        }else{
-            //check whether vacncy is present
-            $vacant = vacancyPresent($con, $hostel_no, $no_sharing, $error);
-            
-            if(!$vacant){
-                echo 'No more vacancies available for '.$no_sharing.' sharing';
-            }else{
-                //Reduce the number of available slots in the hostel
-                updateVacancies($con, $hostel_no, $no_sharing, $error);
-           
-                echo '';//Cleared for insert into database
-            }
+        /*
+         * Actions to take if they had made a booking 
+         * if 1 -->when adding a tenant
+         * if 2 -->when tenant is making a booking
+         */
+        $booked = false;
+        $booking_row = userBooked($con, $user_id, $error);
+        if(isset($booking_row)){
+            $booked = true;
         }
         
+        if($booked && $_POST['action']=="add_tenant"){
+            $book = new Bookings();
+            $book->delBooking($con, $user_id, $error);
+        }else if($booked && $_POST['action']=="booking"){
+            echo 'You have already made a booking in '.$booking_row['hostel_name'];
+            exit();
+        }
+        
+        //check whether vacancy is present
+        $vacant = vacancyPresent($room, $user, $error);
+
+        if(!$vacant){
+            echo 'No more vacancies available for '.$no_sharing.' sharing';
+        }else{
+            //Reduce the number of available slots in the hostel
+            updateVacancies($con, $hostel, $room, $user, $error);
+            echo '';//Cleared for insert into database
+        }
+
     }else{
         echo "User email does not exist";
         exit();
@@ -114,7 +136,7 @@ if(isset($_POST['email'])){
     
 }
 
-function checkIfTenant($con, $user_id){
+function tenantResidence($con, $user_id){
     
     $query = 'SELECT * FROM user_hostel_bridge JOIN hostels ON user_hostel_bridge.hostel_no = hostels.hostel_no '
             . 'WHERE user_hostel_bridge.user_id = ?';
@@ -130,7 +152,7 @@ function checkIfTenant($con, $user_id){
 
 function userBooked($con, $user_id, &$error){
     
-    $query = 'SELECT * FROM bookings WHERE user_id = ?';
+    $query = 'SELECT * FROM bookings JOIN hostels ON bookings.hostel_no = hostels.hostel_no WHERE bookings.user_id = ?';
     $stmt = $con->prepare($query);
     $stmt->bind_param("s", $user_id);
     $bool = $stmt->execute();
@@ -140,56 +162,52 @@ function userBooked($con, $user_id, &$error){
     }
     
     $result = $stmt->get_result();
-    if(mysqli_num_rows($result)>0){
-        return true;
-    }
-    
-    return false;
-    
-}
-
-function vacancyPresent($con, $hostel_no, $no_sharing, &$error){
-    $query = 'SELECT * FROM rooms WHERE hostel_no = ? AND no_sharing = ?';
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("ss", $hostel_no, $no_sharing);
-    $bool = $stmt->execute();
-    
-    if(!$bool){
-        array_push($error, $con->error);
-    }
-    
-    $result = $stmt->get_result();
     $row = $result->fetch_array();
     
-    $current_capacity = $row['current_capacity'];
-    $total_capacity  = $row['total_capacity'];
+    return $row;
+}
+
+
+function vacancyPresent(&$room, &$user, &$error){
+    //User data
+    $gender = $user['gender'];
+
+    //Rooms table
+    $no_sharing = $room['no_sharing'];
+    $gender_count = $room[$gender.'_count'];
+    $total = $room['total_capacity'];
+    $blocked_m = $room['blocked_male'];
+    $blocked_f = $room['blocked_female'];
     
-    if($current_capacity == $total_capacity){
+    $spaces = $total - ($blocked_m + $blocked_f);
+    
+    /*
+     * if condition 1 - Check if there are any rooms left to spare
+     * if condition 2 - Check that there is space in the last room for that particular gender
+     */
+    if($spaces==0 && ($gender_count % $no_sharing) == 0){
         return false;
     }
+    
     
     return true;
 }
 
 
+function updateVacancies($con, &$hostel, &$room, &$user, &$error){
+    //User data
+    $gender = $user['gender'];
 
-function updateVacancies($con, $hostel_no, $no_sharing, &$error){
-    
-    /*
-     * Get the current hostel details -->methods from class: owner_get_vacancy_details()
-     */
-    $hostels = new Hostels();
-    $rooms = new Rooms();
-    
-    $hostel = $hostels->getHostelDetails($con, $hostel_no, $error);
-    $room = $rooms->getRoomDetails($con, $hostel_no, $no_sharing, $error);
-    
     //Hostels table
+    $hostel_no = $hostel['hostel_no'];
     $total_occupied = $hostel['total_occupied'];
     $total_available = $hostel['total_available'];
     
     //Rooms table
+    $no_sharing = $room['no_sharing'];
     $current_capacity = $room['current_capacity'];
+    $gender_count = $room[$gender.'_count'];//Reinitialization done due to calculation
+    
     
     /*
      * Do the increment on total occupied and current capacity
@@ -201,8 +219,8 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
     
     //Rooms table
     $current_capacity += 1;
-//    echo $total_available." ".$total_occupied." ".$vacancies;
-//    array_push($error, "Stop");
+    $gender_count += 1;
+    $block_gender = ceil($gender_count/$no_sharing)*$no_sharing;
     
     /*
      * UPDATE tables
@@ -217,12 +235,13 @@ function updateVacancies($con, $hostel_no, $no_sharing, &$error){
     if($bool_1 == false){
         array_push($error, $con->error);
     }
-    
+   
     
     //Rooms
-    $query_2 = "UPDATE rooms SET current_capacity = ? WHERE hostel_no = ? AND no_sharing = ?";
+    $query_2 = 'UPDATE rooms SET current_capacity = ?, '.$gender.'_count = ?, blocked_'.$gender.' = ? '
+            . 'WHERE hostel_no = ? AND no_sharing = ?';
     $stmt_2 = $con->prepare($query_2);
-    $stmt_2->bind_param("sss", $current_capacity, $hostel_no, $no_sharing);
+    $stmt_2->bind_param("sssss", $current_capacity, $gender_count, $block_gender,$hostel_no, $no_sharing);
     $bool_2 = $stmt_2->execute();
 
     if($bool_2 == false){

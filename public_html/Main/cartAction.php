@@ -11,35 +11,35 @@ include './php/connection.php';
 if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
     
     if($_REQUEST['action'] == 'addToCart' && !empty($_REQUEST['id'])){
-        $hostel_no = $_REQUEST['id'];
-        // get product details
-        //$query = $con->query("SELECT * FROM hostel WHERE hostel_no = ".$productID);
-        //$row = $query->fetch_assoc();
         
-        // get product details
-        $result = $hostel->getHostelInfo($con,$hostel_no);
-        $result;
+        $hostel_no = $_REQUEST['id'];
+        $row = $hostel->getRoomDetails($con,$hostel_no);
+        
         $itemData = array(
-            'id' => $row['hostel_no'],
+            'hostel_no' => $row['hostel_no'],
             'name' => $row['hostel_name'],
-            'price' => $row['unitprice'],
+            'price' => $row['monthly_rent'],
             'qty' => 1
         );
         
         $insertItem = $cart->insert($itemData);
-        $redirectLoc = $insertItem?'./viewCart.php':'./booking-page.php';
+        $redirectLoc = $insertItem?'./viewCart.php':'./student-booking-page.php?';
         header("Location: ".$redirectLoc);
-    }elseif($_REQUEST['action'] == 'updateCartItem' && !empty($_REQUEST['id'])){
+    }else if($_REQUEST['action'] == 'updateCartItem' && !empty($_REQUEST['id'])){
+        
         $itemData = array(
             'rowid' => $_REQUEST['id'],
             'qty' => $_REQUEST['qty']
         );
         $updateItem = $cart->update($itemData);
         echo $updateItem?'ok':'err';die;
-    }elseif($_REQUEST['action'] == 'removeCartItem' && !empty($_REQUEST['id'])){
+        
+    }else if($_REQUEST['action'] == 'removeCartItem' && !empty($_REQUEST['id'])){
+        
         $deleteItem = $cart->remove($_REQUEST['id']);
         header("Location: ./viewCart.php");
-    }elseif($_REQUEST['action'] == 'placeOrder' && $cart->total_items() > 0 && !empty($_SESSION['sessCustomerID'])){
+   
+    }else if($_REQUEST['action'] == 'placeOrder' && $cart->total_items() > 0 && !empty($_SESSION['user_id'])){
         // insert order details into database
         $insertOrder = $con->query("INSERT INTO orders (customer_id, total_price, created, modified) VALUES ('".$_SESSION['sessCustomerID']."', '".$cart->total()."', '".date("Y-m-d H:i:s")."', '".date("Y-m-d H:i:s")."')");
         
@@ -64,8 +64,8 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
             header("Location: ./checkout.php");
         }
     }else{
-        header("Location: ./booking-page.php");
+        header('Location: ./student-booking-page.php?id='.$row['id'].'&hostel_name='.$row['hostel_name']);
     }
 }else{
-    header("Location: ./booking-page.php"); 
+    header('Location: ./student-booking-page.php?id='.$row['id'].'&hostel_name='.$row['hostel_name']); 
 }

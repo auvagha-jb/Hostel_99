@@ -1,7 +1,11 @@
 <?php
 // initializE shopping cart class 
-include './Cart.php';
+include './php/Classes/Cart.php';
 $cart = new Cart;
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,8 +100,13 @@ $cart = new Cart;
         <?php } ?>
     </tbody>
     <tfoot>
+        <?php
+            $hostel_no = $_SESSION['hostel_no'];
+            $hostel_name = $_SESSION['hostel_name'];
+            
+        ?>
         <tr>
-            <td><a href="student-booking-page.php" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Booking</a></td>
+            <?= '<td><a href="student-booking-page.php?id='.$hostel_no.'&hostel_name='.$hostel_name.'" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Booking</a></td>'; ?> 
             <td colspan="2"></td>
             <?php if($cart->total_items() > 0){ ?>
             <td class="text-center"><strong>Total <?php echo 'Ksh'.$cart->total(); ?></strong></td>

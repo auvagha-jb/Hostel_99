@@ -2,7 +2,7 @@
 // include database configuration file
 include './php/connection.php';
 // initialize shopping cart class
-include './Cart.php';
+include './php/Classes/Cart.php';
 $cart = new Cart;
 
 // redirect to home if cart is empty

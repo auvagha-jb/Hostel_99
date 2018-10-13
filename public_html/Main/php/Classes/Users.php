@@ -1,10 +1,10 @@
 <?php
 
 class Users{
-    function getData($con,$user_id){
-        $query = "SELECT * FROM users WHERE user_id = ?";
+    function getData($con,$param){
+        $query = "SELECT * FROM users WHERE user_id = ? OR email = ?";
         $stmt = $con->prepare($query);
-        $stmt->bind_param("s",$user_id);
+        $stmt->bind_param("ss",$param,$param);
         $stmt->execute();
 
         $result = $stmt->get_result();

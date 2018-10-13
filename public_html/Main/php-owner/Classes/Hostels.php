@@ -1,6 +1,7 @@
 <?php
  class Hostels{
      
+    //Gets all the details about a particular hostel **FROM tbl hostels 
     public function getHostelDetails($con, $hostel_no, &$error){
         $query = "SELECT * FROM hostels WHERE hostel_no = ?";
 
@@ -18,6 +19,7 @@
         return $row;
     }
     
+    //Gets the information about a particular hostel; **RETURNS just the trow with the lowest price
     public function getHostelInfo($con,$hostel_no){
        $query = "SELECT * FROM hostels JOIN rooms on hostels.hostel_no = rooms.hostel_no "
         . "JOIN rules ON rooms.hostel_no = rules.hostel_no "
@@ -34,7 +36,10 @@
         return $row;
     }
     
-    
+    /*
+     * Gets ALL the rooms for a particular hostel
+     * e.g Hostel 1: returns 1 sharing + price; returns 2 sharing + price e.t.c. 
+     */
     public function getRooms($con, $hostel_no){
         $query = "SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no WHERE hostels.hostel_no = ?";
         $stmt = $con->prepare($query);
@@ -46,6 +51,24 @@
         return $result;
     }
     
+    /*
+     * Gets the details about a particular room in a hostel 
+     */
+    public function getRoomDetails($con,$data){
+        $hostel_no = $data['hostel_no']; $no_sharing = $data['no_sharing'];
+        
+        $query = "SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no "
+                . "WHERE hostels.hostel_no = ? AND no_sharing = ?";
+        
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("ss", $hostel_no,$no_sharing);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_array();
+        
+        return $row;
+    }
     
     public function notRated($con, $data){
         
@@ -113,7 +136,6 @@
         $stmt_2 = $con->prepare($update);
         $stmt_2->bind_param("sss", $total_rating, $avg_rating, $hostel_no);
         $stmt_2->execute();
-        
     }
     
  }

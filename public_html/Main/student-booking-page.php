@@ -10,7 +10,15 @@
     <!--Generic-->
 </head>
 <body>
-<!--Navigation-->
+    <?php
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        $_SESSION['hostel_no'] = $_GET['id']; 
+        $_SESSION['hostel_name'] = $_GET['hostel_name'];
+    ?>
+    
+<!--Navigation bar-->
 <?php include './nav-bar.php';?>
 <?php include './php/connection.php';?>
 <?php include_once './php-owner/owner-get-hostel-details.php';?>
@@ -32,14 +40,16 @@
     </a>
 </div>
 
+<!--==Hostel Amenities==-->
 <div class="hostel-description">
     <hr>
     <div id="about">
-        <h4>About this hostel</h4>
+        <h4 class="text-muted">About this hostel</h4>
     </div>
     <p><?php echo $description; ?></p>
 </div>
 
+<!--==Hostel Amenities==-->
 <div class="hostel-ammenities">
     <hr>
     <div class="col-sm-3">
@@ -48,57 +58,42 @@
       Amenities
     </span>
     </div>
-
     <div class="col-sm-9">
         <div>
             <ul class="hostel-data">
                 <?php include './php/get-amenities.php'?>
-                <!--        <li>Wifi</li>
-                        <li>Shower</li>
-                        <li>TV Room</li>
-                        <li>24 Hours Security</li>
-                        <li>Clean and constant water supply</li>
-                        <li>Customer friendly and caring staff</li>
-                        <li>Lunch (Weekend and Public Holidays)</li>
-                        <li>Dining area</li>
-                        <li>Laundry area</li>
-                        <li>Breakfast and dinner</li>-->
             </ul>
         </div>
     </div>
 </div>
 
+<!--==Hostel Rules==-->
 <div class="hostel-rules">
     <hr>
     <div class="col-sm-3">
-    <span class="text-muted">
-      <i class="fas fa-check" aria-expanded="true"></i>
-      House Rules
-    </span>
+        <span class="text-muted">
+          <i class="fas fa-check" aria-expanded="true"></i>
+          House Rules
+        </span>
     </div>
-
     <div class="col-sm-9">
         <div>
             <ul class="hostel-data">
-                <!--        <li>No drugs</li>
-                        <li>Any act of culminate in breach of peace and order, damage of property are prohibited</li>
-                        <li>Visitors are not allowed in the compound after 6:00p.m</li>
-                        <li>Gates closed at 10 pm on weekdays and 11 pm on weekends</li>-->
                 <?php include_once './php/get-rules.php';?>
             </ul>
         </div>
     </div>
 </div>
 
+<!--==Hostel Room pricing==-->
 <div class="hostel-pricing">
     <hr>
     <div class="col-sm-3">
-    <span class="text-muted">
-      <i class="fas fa-money-bill-alt" aria-expanded="true"></i>
-      Pricing
-    </span>
+        <span class="text-muted">
+          <i class="fas fa-money-bill-alt" aria-expanded="true"></i>
+          Pricing
+        </span>
     </div>
-
     <div class="col-sm-9">
         <div>
             <ul class="pricing-list">
@@ -107,7 +102,9 @@
                     $result = $room->getRooms($con, $hostel_no);    
                     while($row = $result->fetch_array()){
                         echo '<li><strong>'.$row['no_sharing'].' Sharing </strong> Kshs. '.$row['monthly_rent'].' per month
-                                <a href="cartAction.php?action=addToCart&id='.$row['hostel_no'].' style="margin-left:350px;margin-bottom:5px;" class="btn btn-success"><i class="fas fa-bookmark"></i> Book this hostel</a>
+                                <a href="cartAction.php?action=addToCart&id='.$row['hostel_no'].'&no='.$row['no_sharing'].'" style="margin-left:350px;margin-bottom:5px;" class="btn btn-success">
+                                    <i class="fas fa-bookmark"></i>Book this room
+                                </a>
                             </li>';
                     }
                 ?>

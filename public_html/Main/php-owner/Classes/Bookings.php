@@ -2,6 +2,20 @@
 
 class Bookings{
     
+    
+    function insertBooking(){
+        
+        /*
+         * Validations:
+         * 
+         * 1: The user is not 
+         */
+        
+        
+        
+    }
+    
+    
     function getBookingsTable($con, $hostel_no){
         $query = "SELECT * FROM users JOIN bookings ON users.user_id = bookings.user_id WHERE hostel_no = ?";
 
