@@ -12,18 +12,21 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
     
     if($_REQUEST['action'] == 'addToCart' && !empty($_REQUEST['id'])){
         
-        $hostel_no = $_REQUEST['id'];
-        $row = $hostel->getRoomDetails($con,$hostel_no);
+        $data =array( 
+            'hostel_no' => $_REQUEST['id'],
+            'no_sharing' => $_REQUEST['no']
+        );
+        $row = $hostel->getRoomDetails($con,$data);
         
         $itemData = array(
-            'hostel_no' => $row['hostel_no'],
-            'name' => $row['hostel_name'],
+            'id' => $row['no_sharing'],
+            'name' => $row['no_sharing']." Sharing",
             'price' => $row['monthly_rent'],
             'qty' => 1
         );
         
         $insertItem = $cart->insert($itemData);
-        $redirectLoc = $insertItem?'./viewCart.php':'./student-booking-page.php?';
+        $redirectLoc = $insertItem?'./viewCart.php':'./student-booking-page.php';
         header("Location: ".$redirectLoc);
     }else if($_REQUEST['action'] == 'updateCartItem' && !empty($_REQUEST['id'])){
         
