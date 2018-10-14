@@ -117,3 +117,43 @@
             margin-left: 200px;
             border-radius: 20px;
         }
+        
+        
+        .checkout_h {
+            color: black;
+            font-family: Helvetica;
+        }
+
+        .checkout tr {
+            color: black;
+            font-size: 20px;
+            font-family: Arial;
+        }
+
+        .checkout_container{
+            padding: 50px;
+            background-image:url("./img/fruit2.jpg");
+            min-width: 100%;
+            height:900px;
+
+            .topnav a:hover:before {
+                visibility: visible;
+                -webkit-transform:scaleX(1);
+                transform: scaleX(1);
+            }
+        }
+
+        .checkout_tbl {
+            width: 65%;
+            float: left;
+            color:black;
+        }
+
+        .footBtn {
+            width: 95%;
+            float: left;
+        }
+
+        .orderBtn {
+            float: right;
+        }

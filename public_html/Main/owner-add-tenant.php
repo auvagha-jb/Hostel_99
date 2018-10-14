@@ -1,6 +1,8 @@
 <?php
-
 include './php/connection.php';
+include './php/Classes/Users.php';
+
+$user = new Users();
 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
@@ -21,7 +23,7 @@ if(isset($_POST['email'])){
     $no_sharing = $_POST['no_sharing'];
     
     //Get the user data from the db
-    $get = getUser_id($con, $email); 
+    $get = $user->getData($con,$email); 
     $user_id = $get['user_id'];
     $name = $get['first_name']." ".$get['last_name'];
     
@@ -122,18 +124,4 @@ function get_id($con){
     }while($row_count>0);
     
     return $record_id;
-}
-
-
-function getUser_id($con, $email){
-    $select = "SELECT * FROM users WHERE email = ?";
-    
-    $select_stmt = $con->prepare($select); 
-    $select_stmt->bind_param("s", $email);
-    $select_stmt->execute();
-    
-    $select_rst  = $select_stmt->get_result();
-    $result_array = $select_rst->fetch_array();
-    
-    return $result_array;
 }

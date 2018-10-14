@@ -1,81 +1,43 @@
 <?php 
-// include database configuration file
-include './php/connection.php';
-// initialize shopping cart class
-include './php/Classes/Cart.php';
+include './php/connection.php';// include database configuration file
+include './php/Classes/Cart.php';// initialize shopping cart class
+session_start();
+$id = $_SESSION['hostel_no'];
+$hostel_name = $_SESSION['hostel_name'];
+
 $cart = new Cart;
 
 // redirect to home if cart is empty
 if($cart->total_items() <= 0){
-    header("Location: ./student-booking-page.php");
+    header('Location: ./student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name);
 }
 
-$query = $con->query("SELECT * FROM customers WHERE id=(SELECT MAX(id) FROM customers)");
-$sql = mysqli_fetch_assoc($query);
-//echo $sql['id'];
-// set customer ID in session
-$_SESSION['sessCustomerID'] = $sql['id'];
-
-// get customer details by session customer ID
-$query = $con->query("SELECT * FROM customers WHERE id = ".$_SESSION['sessCustomerID']);
-$custRow = $query->fetch_assoc();
+//$query = $con->query("SELECT * FROM customers WHERE id=(SELECT MAX(id) FROM customers)");
+//$sql = mysqli_fetch_assoc($query);
+////echo $sql['id'];
+//// set customer ID in session
+//$_SESSION['sessCustomerID'] = $sql['id'];
+//
+//// get customer details by session customer ID
+//$query = $con->query("SELECT * FROM customers WHERE id = ".$_SESSION['sessCustomerID']);
+//$custRow = $query->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Hostel99 - Check out</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <style>
-        h1 {
-            color: black;
-            font-family: Helvetica;
-        }
-
-        tr {
-            color: black;
-            font-size: 20px;
-            font-family: Arial;
-        }
-
-        .container {
-            padding: 50px;
-            background-image:url("./img/fruit2.jpg");
-            min-width: 100%;
-            height:900px;
-
-            .topnav a:hover:before {
-                visibility: visible;
-                -webkit-transform:scaleX(1);
-                transform: scaleX(1);
-            }
-        }
-
-        .table {
-            width: 65%;
-            float: left;
-        }
-
-        .footBtn {
-            width: 95%;
-            float: left;
-        }
-
-        .orderBtn {
-            float: right;
-        }
-    </style>
+    <?php include './bootstrap3.php';?>
+    <link rel="stylesheet" href="css/booking-page.css">
 </head>
 <body>
-<div class="container">
+<div class="container checkout_container">
 <br>
 <br>
 
-    <h1>Hostel Booking Preview</h1>
+<h1 class="checkout_h">Hostel Booking Preview</h1>
 	<form name="frmconfirm" action="payment_confirm.php" method="post">
-    <table class="table" style="color:black;">
+    <table class="table checkout_tbl">
     <thead>
         <tr>
             <th>Product</th>

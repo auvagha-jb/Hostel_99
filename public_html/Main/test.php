@@ -5,7 +5,7 @@ include './php/Classes/Users.php';
 
 
 $hostel = new Hostels();
-$user = new Users();
+//$user = new Users();
         
         $data = array(
           'rating' => 4,
@@ -14,6 +14,12 @@ $user = new Users();
             'user_id' => '10'
         );
         
-        echo ceil(0.5);
+?>
+
+<form method="post" action="php/get-gender.php">
+    <input type="hidden" value="jerrybenjamin007@gmail.com" name="email">
+    <input type="hidden" value="get_gender" name="action">
+    <button type="submit">Test</button>
+</form>
 
         

@@ -12,10 +12,7 @@ if(session_status() == PHP_SESSION_NONE){
 <head>
     <title>Hostel99 - Bookings</title>
     <meta charset="utf-8">
-<!--    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <?php include './links.php';?>
+    <?php include './bootstrap3.php';?>
     <style>
         h1 {
             color: white;
@@ -93,7 +90,7 @@ if(session_status() == PHP_SESSION_NONE){
             <td><?php echo 'Ksh'.$item["subtotal"]; ?></td>
             <td>
                 <!--<a href="cartAction.php?action=updateCartItem&id=" class="btn btn-info"><i class="glyphicon glyphicon-refresh"></i></a>-->
-                <a href="cartAction.php?action=removeCartItem&id=<?php echo $item["rowid"]; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
+                <a href="cartAction.php?action=removeCartItem&id=<?php echo $item["rowid"]; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="glyphicon glyphicon-trash"></i></a>
             </td>
         </tr>
         <?php } }else{ ?>
@@ -110,7 +107,7 @@ if(session_status() == PHP_SESSION_NONE){
             <td colspan="2"></td>
             <?php if($cart->total_items() > 0){ ?>
             <td class="text-center"><strong>Total <?php echo 'Ksh'.$cart->total(); ?></strong></td>
-            <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="fa fa-arrow-right"></i></a></td>
+            <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="glyphicon glyphicon-menu-right"></i></a></td>
             <?php } ?>
         </tr>
     </tfoot>

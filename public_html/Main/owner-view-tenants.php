@@ -28,13 +28,14 @@
         
     <form class="form-inline justify-content-center" method="post" id="add-tenant-form">
         <input class="form-control mx-2" name="email" id="email" placeholder="Email address" required="">
+        <input type="hidden" name="gender" id="gender" value="">
         <select class="form-control mx-2" name="no_sharing" id="no_sharing" required="">
             <option value="">No. sharing</option>
         </select>
         <div class="input-group mx-2">
-            <input class="form-control" name="room_assigned" id="room_assigned" placeholder="Room assigned" required="">
+            <input class="form-control" name="room_assigned" id="room_assigned" placeholder="Room assigned" required="" readonly="">
             <div class="input-group-append">
-                <button type="button" class="btn btn-success form-control" name="search_submit" id="add_tenant">
+                <button type="submit" class="btn btn-success form-control" name="search_submit" id="add_tenant">
                     <i class="fa fa-plus-circle"></i>
                 </button>
             </div>
@@ -43,7 +44,6 @@
     </form>
     
         <center id="feedback"></center>
-        
         <!--NOTE: Margin styling added in manage-tenants.js-->
         <div class="mt-3 ml-3">
             <span class="lead inline-text">
@@ -80,8 +80,8 @@
         
 </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="confirmDelModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Confirm delete Modal -->
+    <div class="modal fade" id="confirmDelModal" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -101,6 +101,29 @@
         </div>
       </div>
     </div>
+    
+    <!--Assign room modal-->
+    <div class="modal fade" id="assignRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Choose a room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+          </div>
+          <div class="modal-body" id="assign-rm-dialog">
+              <div class="row">
+                  
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     
 </body>
 </html>

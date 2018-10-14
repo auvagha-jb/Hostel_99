@@ -54,7 +54,7 @@ function showTableRows($con){
                 <td>'.$room_assigned.'</td>
                 <td>'.$no_sharing.'</td>
                 <td>
-                    <button href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDelModal" id="show_modal">
+                    <button href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#confirmDelModal" id="confirm_del">
                         <i class="fa fa-minus-circle"></i>
                     </button>
                 </td>

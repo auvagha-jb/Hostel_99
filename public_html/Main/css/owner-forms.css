@@ -48,3 +48,8 @@ form.add-hostel-form{
 #no-bookings-msg{
     display:none;
 }
+
+.modal-body .card:hover{
+    cursor:pointer;
+    border-color: #5cb85c;
+}

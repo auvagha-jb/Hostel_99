@@ -1,18 +1,13 @@
 <?php
 
 class Bookings{
-    
-    
-    function insertBooking(){
+    function insertBooking($con, $data){
+        $user_id =$data['user_id']; $hostel_no = $data['hostel_no']; $no_sharing = $data['no_sharing'];
         
-        /*
-         * Validations:
-         * 
-         * 1: The user is not 
-         */
-        
-        
-        
+        $query = "INSERT INTO `bookings`(`user_id`, `hostel_no`, `no_sharing`) VALUES (?,?,?)";
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("s", $hostel_no);
+        $stmt->execute();
     }
     
     
@@ -43,6 +38,21 @@ class Bookings{
         return $row;
     }
     
+    function userBooked($con, $user_id, &$error){
+        $query = 'SELECT * FROM bookings JOIN hostels ON bookings.hostel_no = hostels.hostel_no WHERE bookings.user_id = ?';
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("s", $user_id);
+        $bool = $stmt->execute();
+
+        if(!$bool){
+            array_push($error, $con->error);
+        }
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_array();
+
+        return $row;
+    }
     
     function delBooking($con, $user_id, &$error){
         $query = 'DELETE FROM `bookings` WHERE user_id = ?';

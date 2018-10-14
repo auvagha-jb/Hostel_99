@@ -6,19 +6,10 @@ require './php-owner/Classes/Hostels.php';//My generic class
 require './php-owner/Classes/Rooms.php';//My generic class
 require './php-owner/Classes/Bookings.php';//My generic class
 
-
 $users = new Users();
 $hostels = new Hostels();
 $rooms = new Rooms();
-
-$form_valid = false;
-//Form validation
-if(empty($_POST['email']) || empty($_POST['no_sharing']) || empty($_POST['room_assigned'])){
-    echo 'Fill all fields!';
-    exit();
-}else{
-    $form_valid = true;
-}
+$book = new Bookings();
 
 
 if(session_status() == PHP_SESSION_NONE){
@@ -32,18 +23,24 @@ $type = $_SESSION['type'];
 $con->autocommit(false);
 $error = array();//Array to store error messages
 
-if($form_valid){
+if(isset($_POST['email'])){
     
     $email = $_POST['email'];
     $room_assigned = $_POST['room_assigned'];
     $no_sharing = $_POST['no_sharing'];
+    
+    $data = array(
+      'email'=> $email,
+      'room_assigned' => $room_assigned,
+      'no_sharing' => $no_sharing
+    );
     
     /*
      * Get the current hostel details -->methods from classes: Hostels and Rooms
      */
     $hostel = $hostels->getHostelDetails($con, $hostel_no, $error);
     $room = $rooms->getRoomDetails($con, $hostel_no, $no_sharing, $error);
-   
+    $this_room = $rooms->thisRoomDetails($con, $hostel_no, $room_assigned, $error);
     
     /*
      * TABLES AFFECTED: users table, tenant_history table and user_hostel_bridge table 
@@ -97,13 +94,12 @@ if($form_valid){
          * if 2 -->when tenant is making a booking
          */
         $booked = false;
-        $booking_row = userBooked($con, $user_id, $error);
+        $booking_row = $book->userBooked($con, $user_id, $error);
         if(isset($booking_row)){
             $booked = true;
         }
         
         if($booked && $_POST['action']=="add_tenant"){
-            $book = new Bookings();
             $book->delBooking($con, $user_id, $error);
         }else if($booked && $_POST['action']=="booking"){
             echo 'You have already made a booking in '.$booking_row['hostel_name'];
@@ -118,6 +114,10 @@ if($form_valid){
         }else{
             //Reduce the number of available slots in the hostel
             updateVacancies($con, $hostel, $room, $user, $error);
+            
+            //Allocate rooms
+            updateRooms($con, $this_room, $hostel, $data,$error);
+            
             echo '';//Cleared for insert into database
         }
 
@@ -136,6 +136,14 @@ if($form_valid){
     
 }
 
+if(isset($_POST['action']) && $_POST['action'] == "check_booked"){
+    $booked = false;
+    $booking_row = $book->userBooked($con, $user_id, $error);
+    if(isset($booking_row)){
+        $booked = true;
+    }
+}
+
 function tenantResidence($con, $user_id){
     
     $query = 'SELECT * FROM user_hostel_bridge JOIN hostels ON user_hostel_bridge.hostel_no = hostels.hostel_no '
@@ -143,23 +151,6 @@ function tenantResidence($con, $user_id){
     $stmt = $con->prepare($query);
     $stmt->bind_param("s", $user_id);
     $stmt->execute();
-    
-    $result = $stmt->get_result();
-    $row = $result->fetch_array();
-    
-    return $row;
-}
-
-function userBooked($con, $user_id, &$error){
-    
-    $query = 'SELECT * FROM bookings JOIN hostels ON bookings.hostel_no = hostels.hostel_no WHERE bookings.user_id = ?';
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $user_id);
-    $bool = $stmt->execute();
-    
-    if(!$bool){
-        array_push($error, $con->error);
-    }
     
     $result = $stmt->get_result();
     $row = $result->fetch_array();
@@ -188,7 +179,6 @@ function vacancyPresent(&$room, &$user, &$error){
     if($spaces==0 && ($gender_count % $no_sharing) == 0){
         return false;
     }
-    
     
     return true;
 }
@@ -247,4 +237,44 @@ function updateVacancies($con, &$hostel, &$room, &$user, &$error){
     if($bool_2 == false){
         array_push($error, $con->error);
     }
+}
+
+
+function updateRooms($con, $this_room, $hostel, $data, &$error){
+    //Get the current details for this room 
+    $no_sharing = $data['no_sharing'];
+    $hostel_no = $hostel['hostel_no'];
+    
+    $no_sharing_db = $this_room['no_sharing'];
+    $no_occupied = $this_room['no_occupied'];//Is incremented
+    $room_no = $this_room['room_no'];
+    
+    /*
+     * The math
+     */
+    $no_occupied += 1;
+    
+    $query="";
+    $stmt="";
+    
+    if($no_sharing_db == 0){
+        $spaces = $no_sharing -$no_occupied;
+        $query = 'UPDATE `room_allocation` SET `no_sharing`= ?, `no_occupied`= ? ,`spaces`= ? '
+            . 'WHERE room_no = ? AND hostel_no = ? ';
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("sssss", $no_sharing, $no_occupied, $spaces, $room_no, $hostel_no);
+    }else{
+        $spaces = $no_sharing_db - $no_occupied; //No of spaces left in that room
+        $query = 'UPDATE `room_allocation` SET `no_occupied`= ? ,`spaces`= ? '
+            . 'WHERE room_no = ? AND hostel_no = ? ';
+        $stmt = $con->prepare($query);
+        $stmt->bind_param("ssss", $no_occupied, $spaces, $room_no, $hostel_no);
+    }
+     
+    $bool = $stmt->execute();
+
+    if($bool == false){
+        array_push($error, $con->error);
+    }
+    
 }

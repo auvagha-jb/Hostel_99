@@ -34,15 +34,13 @@
                     <button type="button" class="btn btn-primary btn-lg" onclick='location.href="home.php#search-box"'>Get Started</button>
                     </div>
                 </div>
-            </div>
-            
+            </div>            
             <div class="carousel-item">
                 <img src="img/students.jpg" alt="" class="img-responsive">
                 <div class="carousel-caption">
                     <h1 class="display-3">Made for students</h1>
                 </div>
             </div>
-
             <div class="carousel-item">
                 <img src="img/students-reading.jpeg" alt="">
                 <div class="carousel-caption">
@@ -72,10 +70,7 @@
         </div>
     </div>
   
-            
-
-
-
+           
 <!--- Three Column Section -->
 <div class="container-fluid padding">
     <div class="partners">

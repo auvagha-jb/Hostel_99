@@ -10,6 +10,8 @@ require './php-owner/Classes/Bookings.php';//My generic class
 $users = new Users();
 $hostels = new Hostels();
 $rooms = new Rooms();
+$remove = new RemoveTenant();
+$error = array();//Array to store any errors in query execution
 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
@@ -22,17 +24,21 @@ $hostel_no = $_SESSION['hostel_no'];
 if(isset($_POST['user_id'])){
     
     $no_sharing = $_POST['no_sharing'];
+    $room_assigned = $_POST['room_assigned'];
     $user_id = $_POST['user_id'];
+    $name = $_POST['name'];
+    
+     $data = array(
+      'user_id'=> $user_id,
+      'room_assigned' => $room_assigned,
+      'no_sharing' => $no_sharing
+    );
     
     //Get data from different tables
     $hostel = $hostels->getHostelDetails($con, $hostel_no, $error);
     $room = $rooms->getRoomDetails($con, $hostel_no, $no_sharing, $error);
+    $this_room = $rooms->thisRoomDetails($con, $hostel_no, $room_assigned, $error);
     $user = $users->getData($con, $user_id);
-    
-    $user_id = $_POST['user_id'];
-    $name = $_POST['name'];
-    $no_sharing = $_POST['no_sharing'];
-    $remove = new RemoveTenant();
     
     //Get the record id 
     $record_id = $remove->getRecordID($con, $user_id, $error);
@@ -51,8 +57,11 @@ if(isset($_POST['user_id'])){
     //Delete user_id from user_tenant_bridge
     $remove->deleteFromBridge($con, $user_id, $error);
     
-    //Free up one slot the database
+    //Free up one slot on the database
     $remove->updateVacancies($con, $hostel, $room, $user, $error);
+    
+    //Update the room_allocation
+    $remove->updateRooms($con, $this_room, $hostel, $data, $error);
     
     if(count($error)==0){
         $con->commit();

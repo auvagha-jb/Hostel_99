@@ -27,19 +27,7 @@ $(document).ready(function(){
     $("#hostel_name").click(function(){
        $("#hostel_name_feedback").show(); //To inform them that the hostel owner to contact admin to change name 
     });
- 
-    
-    $("#hostel_type").change(function(){
-        var type = $("#hostel_type").val();
-        var feedback = "Mixed hostel type can only have one type of no sharing. Enter the maximimum number that can be in a room";
-        
-        if(type === "Mixed"){
-            clearRows();
-            showWarning("#rooms-feedback",feedback);
-        }
-        
-    });
-    
+     
     //Dynamic input fields
     
     //Add room table
@@ -141,18 +129,7 @@ $(document).ready(function(){
        $(selector).hide();
    }
    
-   function hostelTypeOK(){
-        var hostel_type = $("#hostel_type").val();
-        var msg="";
-        
-        if(hostel_type ==="Mixed"){
-            msg = "This feature is only available for single gender hostels at the moment";
-        }else if(hostel_type === ""){
-            msg = "Choose a hostel type first";
-        }
-        return msg;
-    }
-    
+   
     function clearRows(){
         $("#add-room-tbl tr.body").remove();
     }
@@ -204,13 +181,7 @@ $(document).ready(function(){
        html+='<td><button type="button" class="btn btn-danger btn-sm remove-room"><i class="fa fa-minus"></i></button></td>';
        html+='</tr>';
        
-       var msg = hostelTypeOK();
-        if(msg!==""){
-            showWarning("#rooms-feedback",msg);
-        }else{
-            hideWarning("#rooms-feedback");
-            $("#add-room-tbl").append(html);
-        }
+       $("#add-room-tbl").append(html);
    }
     
     $("#hostel_name").keyup(function(){
