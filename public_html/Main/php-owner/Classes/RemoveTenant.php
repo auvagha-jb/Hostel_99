@@ -132,17 +132,13 @@ function updateRooms($con, $this_room, $hostel, $data, &$error){
      * The math
      */
     $no_occupied -= 1;
-    $spaces = $no_sharing - $no_occupied; //No of spaces left in that room
+    $spaces = $no_sharing - $no_occupied;
     
-    //If the room is empty reset the no_sharing to zero
-    if($no_occupied == 0){
-        $no_sharing = 0;
-    }
-     
-    $query = 'UPDATE `room_allocation` SET `no_sharing`= ?, `no_occupied`= ? ,`spaces`= ? '
-            . 'WHERE room_no = ? AND hostel_no = ? ';
+    $query = 'UPDATE `room_allocation` SET `no_occupied`= ? ,`spaces`= ? '
+        . 'WHERE room_no = ? AND hostel_no = ? ';
     $stmt = $con->prepare($query);
-    $stmt->bind_param("sssss", $no_sharing, $no_occupied, $spaces, $room_no, $hostel_no);
+    $stmt->bind_param("ssss", $no_occupied, $spaces, $room_no, $hostel_no);
+    
     $bool = $stmt->execute();
 
     if($bool == false){
@@ -150,6 +146,5 @@ function updateRooms($con, $this_room, $hostel, $data, &$error){
     }
     
 }
-    
     
 }

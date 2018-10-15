@@ -245,7 +245,6 @@ function updateRooms($con, $this_room, $hostel, $data, &$error){
     $no_sharing = $data['no_sharing'];
     $hostel_no = $hostel['hostel_no'];
     
-    $no_sharing_db = $this_room['no_sharing'];
     $no_occupied = $this_room['no_occupied'];//Is incremented
     $room_no = $this_room['room_no'];
     
@@ -253,24 +252,13 @@ function updateRooms($con, $this_room, $hostel, $data, &$error){
      * The math
      */
     $no_occupied += 1;
+    $spaces = $no_sharing - $no_occupied;
     
-    $query="";
-    $stmt="";
+    $query = 'UPDATE `room_allocation` SET `no_occupied`= ? ,`spaces`= ? '
+        . 'WHERE room_no = ? AND hostel_no = ? ';
+    $stmt = $con->prepare($query);
+    $stmt->bind_param("ssss", $no_occupied, $spaces, $room_no, $hostel_no);
     
-    if($no_sharing_db == 0){
-        $spaces = $no_sharing -$no_occupied;
-        $query = 'UPDATE `room_allocation` SET `no_sharing`= ?, `no_occupied`= ? ,`spaces`= ? '
-            . 'WHERE room_no = ? AND hostel_no = ? ';
-        $stmt = $con->prepare($query);
-        $stmt->bind_param("sssss", $no_sharing, $no_occupied, $spaces, $room_no, $hostel_no);
-    }else{
-        $spaces = $no_sharing_db - $no_occupied; //No of spaces left in that room
-        $query = 'UPDATE `room_allocation` SET `no_occupied`= ? ,`spaces`= ? '
-            . 'WHERE room_no = ? AND hostel_no = ? ';
-        $stmt = $con->prepare($query);
-        $stmt->bind_param("ssss", $no_occupied, $spaces, $room_no, $hostel_no);
-    }
-     
     $bool = $stmt->execute();
 
     if($bool == false){

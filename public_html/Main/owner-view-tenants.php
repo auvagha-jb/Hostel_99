@@ -13,6 +13,7 @@
         <?php include_once './links.php';?>
         <link rel="stylesheet" href="css/owner-forms.css">
         <script src="js/manage-tenants.js"></script>
+        <script src="js/manage-tenants-extended.js"></script>
     </head>
 <body>
 
@@ -45,15 +46,20 @@
     
         <center id="feedback"></center>
         <!--NOTE: Margin styling added in manage-tenants.js-->
-        <div class="mt-3 ml-3">
-            <span class="lead inline-text">
+        <div class="mt-3 ml-3" >
+            <span class="lead inline-text mx-3">
             Vacancies:
             <span class="border px-2" id="vacancies"></span>
             </span>
-            <span class="lead inline-text">
+            <span class="lead inline-text mx-3">
                 Pending Bookings:
                 <span class="border px-2" id="bookings"></span>
             </span>
+            <div class="my-3">
+                <div id="hostel_overview">
+                
+                </div>
+            </div>
         </div>
         
         

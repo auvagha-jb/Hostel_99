@@ -23,12 +23,18 @@ $(document).ready(function(){
        var no_sharing = $(form+" #no_sharing").val();
         
         if(email !== "" && no_sharing !==""){
-            getGender(email);      
+            getGender(email);
+            removeInvalid();
         }else{
             showInvalid("Enter the email address and no_sharing");
         }
     });
    
+   
+   function removeInvalid(){
+       $("#feedback").removeClass("alert alert-invalid");
+       $("#feedback").html("");
+   }
    
     function getGender(email){
         var action = "get_gender";
@@ -39,12 +45,8 @@ $(document).ready(function(){
                 var form = "#add-tenant-form";
                 var gender = $(form+" #gender").val();
                 var no_sharing = $(form+" #no_sharing").val();
-                if(email!==""){
-                    getAvailableRooms(gender, no_sharing);
-                }else{
-                     showInvalid("Enter an email address");
-                }
                 
+                getAvailableRooms(gender, no_sharing);             
             }else{
                 showInvalid("User email does not exist!");
             }

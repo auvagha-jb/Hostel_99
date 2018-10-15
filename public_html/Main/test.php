@@ -22,4 +22,10 @@ $hostel = new Hostels();
     <button type="submit">Test</button>
 </form>
 
+<form method="post" action="php-owner/owner-get-room-details.php">
+    <input type="hidden" value="jerrybenjamin007@gmail.com" name="email">
+    <input type="hidden" value="show_rooms" name="action">
+    <button type="submit">Test</button>
+</form>
+
         
