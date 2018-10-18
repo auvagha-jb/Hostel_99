@@ -5,7 +5,9 @@
         <group>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/viewCart.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/cartAction.php</file>
-            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/Classes/Bookings.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/php-owner/Classes/Hostels.php</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/js/manage-tenants.js</file>
+            <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/js/student-booking.js</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/checkout.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/student-booking-page.php</file>
             <file>file:/C:/xampp/htdocs/Hostel%2099/public_html/Main/owner-verify-user.php</file>

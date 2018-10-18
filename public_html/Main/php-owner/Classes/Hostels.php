@@ -41,7 +41,8 @@
      * e.g Hostel 1: returns 1 sharing + price; returns 2 sharing + price e.t.c. 
      */
     public function getRooms($con, $hostel_no){
-        $query = "SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no WHERE hostels.hostel_no = ?";
+        $query = "SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no WHERE hostels.hostel_no = ? "
+                . "AND rooms.no_sharing > rooms.current_capacity ";
         $stmt = $con->prepare($query);
         $stmt->bind_param("s", $hostel_no);
         $stmt->execute();

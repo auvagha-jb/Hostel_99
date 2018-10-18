@@ -12,7 +12,9 @@ if(session_status() == PHP_SESSION_NONE){
 <head>
     <title>Booking</title>
     <meta charset="utf-8">
-    <?php include './bootstrap3.php';?>
+    <?php 
+    include './links.php';
+    ?>
     <style>
         h1 {
             color: white;
@@ -73,6 +75,9 @@ if(session_status() == PHP_SESSION_NONE){
         //get cart items from session
         $cartItems = $cart->contents();
         foreach($cartItems as $item){?>
+        <?php
+            $_SESSION['no_sharing'] = $item["no_sharing"]; 
+        ?>
         <tr>
             <td><?php echo $item["hostel_name"]; ?></td>
             <td><?php echo $item["no_sharing"]; ?></td>
@@ -81,7 +86,7 @@ if(session_status() == PHP_SESSION_NONE){
             <td><?php echo 'Ksh'.$item["subtotal"]; ?></td>
             <td>
                 <!--<a href="cartAction.php?action=updateCartItem&id=" class="btn btn-info"><i class="glyphicon glyphicon-refresh"></i></a>-->
-                <a href="cartAction.php?action=removeCartItem&id=<?php echo $item["rowid"]; ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="glyphicon glyphicon-trash"></i></a>
+                <a href="cartAction.php?action=removeCartItem&id=<?php echo $item["rowid"];?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
             </td>
         </tr>
         <?php } }else{ ?>
@@ -96,13 +101,48 @@ if(session_status() == PHP_SESSION_NONE){
         ?>
         <tr>
             <?= '<td><a href="student-booking-page.php?id='.$hostel_no.'&hostel_name='.$hostel_name.'&type='.$type.'"'
-                . 'class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Booking</a></td>'; ?> 
+                . 'class="btn btn-warning"><i class="fa fa-arrow-left"></i> Continue Booking</a></td>'; ?> 
             <td colspan="3"></td>
-            <td><button id="pick_room" class="btn btn-success">Pick room <i class="glyphicon glyphicon-home"></i></button></td>
+            <td><button id="pick_room" class="btn btn-success">Pick room <i class="fa fa-bed"></i></button></td>
         </tr>
     </tfoot>
     </table>
-    <a href="checkout.php" class="btn btn-success">Checkout <i class="glyphicon glyphicon-menu-right"></i></a>
+    <a href="checkout.php" class="btn btn-success">Checkout <i class="fa fa-arrow-right"></i></a>
+
+<!--Assign room modal-->
+    <div class="modal fade" id="pickRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Choose a room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+          </div>
+          <div class="modal-body" id="pick-rm-dialog">
+              <div class="row">
+                  
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="hidden" id="no_sharing">
+    <input type="hidden" id="gender">
 </div>
+   
+    <script>
+    $(document).ready(function(){
+       //Onload... 
+       var no_sharing = "<?php echo $_SESSION['no_sharing'];?>";
+       var gender = "<?php echo $_SESSION['gender'];?>";
+       
+       $("#no_sharing").val(no_sharing);
+       $("#gender").val(gender);
+    });
+    </script>
 </body>
 </html>
