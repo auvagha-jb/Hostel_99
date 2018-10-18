@@ -22,8 +22,7 @@
         </div>
         
         <div class="col-md-6 col-sm-12">
-            <div class="form-data">
-                       
+            <div class="form-data">              
                 <form action="php/sign-up-action.php" method="post" class="sign-up">
                      <h4 class="lead">Sign up</h4>
                     
@@ -92,7 +91,6 @@
                      <button type="submit" name="s-u-submit" id="s-u-submit" class="btn btn-primary">Join H99</button>
                 </form>
             </div>
-            
         </div>
     </div>
     </div>

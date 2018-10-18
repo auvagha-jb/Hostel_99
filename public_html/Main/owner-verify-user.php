@@ -23,7 +23,7 @@ $type = $_SESSION['type'];
 $con->autocommit(false);
 $error = array();//Array to store error messages
 
-if(isset($_POST['email'])){
+if(isset($_POST['email']) || isset($_POST['action'])){
     
     $email = $_POST['email'];
     $room_assigned = $_POST['room_assigned'];
@@ -61,7 +61,7 @@ if(isset($_POST['email'])){
          * Check status and user_hostel_bridge table to ensure they are not already a tenant in the current  
          * nor in another hostel and that they are of "student" type 
          */       
-        $row = tenantResidence($con, $user_id);         
+        $row = $book->tenantResidence($con, $user_id);         
         $hostel_reg = $row['hostel_no'];
         $hostel_name = $row['hostel_name'];        
         
@@ -104,23 +104,23 @@ if(isset($_POST['email'])){
         }else if($booked && $_POST['action']=="booking"){
             echo 'You have already made a booking in '.$booking_row['hostel_name'];
             exit();
+        }else{//If they hadn't booked...
+            //check whether vacancy is present
+            $vacant = $book->vacancyPresent($room, $user, $error);
+
+            if(!$vacant){
+                echo 'No more vacancies available for '.$no_sharing.' sharing';
+            }else{
+                //Reduce the number of available slots in the hostel
+                $book->updateVacancies($con, $hostel, $room, $user, $error);
+
+                //Allocate rooms
+                $book->updateRooms($con, $this_room, $hostel, $data,$error);
+
+                echo '';//Cleared for insert into database
+            }
         }
         
-        //check whether vacancy is present
-        $vacant = vacancyPresent($room, $user, $error);
-
-        if(!$vacant){
-            echo 'No more vacancies available for '.$no_sharing.' sharing';
-        }else{
-            //Reduce the number of available slots in the hostel
-            updateVacancies($con, $hostel, $room, $user, $error);
-            
-            //Allocate rooms
-            updateRooms($con, $this_room, $hostel, $data,$error);
-            
-            echo '';//Cleared for insert into database
-        }
-
     }else{
         echo "User email does not exist";
         exit();
@@ -144,125 +144,9 @@ if(isset($_POST['action']) && $_POST['action'] == "check_booked"){
     }
 }
 
-function tenantResidence($con, $user_id){
-    
-    $query = 'SELECT * FROM user_hostel_bridge JOIN hostels ON user_hostel_bridge.hostel_no = hostels.hostel_no '
-            . 'WHERE user_hostel_bridge.user_id = ?';
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("s", $user_id);
-    $stmt->execute();
-    
-    $result = $stmt->get_result();
-    $row = $result->fetch_array();
-    
-    return $row;
-}
 
 
-function vacancyPresent(&$room, &$user, &$error){
-    //User data
-    $gender = $user['gender'];
-
-    //Rooms table
-    $no_sharing = $room['no_sharing'];
-    $gender_count = $room[$gender.'_count'];
-    $total = $room['total_capacity'];
-    $blocked_m = $room['blocked_male'];
-    $blocked_f = $room['blocked_female'];
-    
-    $spaces = $total - ($blocked_m + $blocked_f);
-    
-    /*
-     * if condition 1 - Check if there are any rooms left to spare
-     * if condition 2 - Check that there is space in the last room for that particular gender
-     */
-    if($spaces==0 && ($gender_count % $no_sharing) == 0){
-        return false;
-    }
-    
-    return true;
-}
 
 
-function updateVacancies($con, &$hostel, &$room, &$user, &$error){
-    //User data
-    $gender = $user['gender'];
-
-    //Hostels table
-    $hostel_no = $hostel['hostel_no'];
-    $total_occupied = $hostel['total_occupied'];
-    $total_available = $hostel['total_available'];
-    
-    //Rooms table
-    $no_sharing = $room['no_sharing'];
-    $current_capacity = $room['current_capacity'];
-    $gender_count = $room[$gender.'_count'];//Reinitialization done due to calculation
-    
-    
-    /*
-     * Do the increment on total occupied and current capacity
-     */
-    
-    //Hostels table
-    $total_occupied += 1;
-    $vacancies = $total_available - $total_occupied; 
-    
-    //Rooms table
-    $current_capacity += 1;
-    $gender_count += 1;
-    $block_gender = ceil($gender_count/$no_sharing)*$no_sharing;
-    
-    /*
-     * UPDATE tables
-     */
-    
-    //Hostels
-    $query_1 = "UPDATE hostels SET total_occupied = ?, vacancies = ? WHERE hostel_no = ?";
-    $stmt_1 = $con->prepare($query_1);
-    $stmt_1->bind_param("sss", $total_occupied, $vacancies,$hostel_no);
-    $bool_1 = $stmt_1->execute();
-
-    if($bool_1 == false){
-        array_push($error, $con->error);
-    }
-   
-    
-    //Rooms
-    $query_2 = 'UPDATE rooms SET current_capacity = ?, '.$gender.'_count = ?, blocked_'.$gender.' = ? '
-            . 'WHERE hostel_no = ? AND no_sharing = ?';
-    $stmt_2 = $con->prepare($query_2);
-    $stmt_2->bind_param("sssss", $current_capacity, $gender_count, $block_gender,$hostel_no, $no_sharing);
-    $bool_2 = $stmt_2->execute();
-
-    if($bool_2 == false){
-        array_push($error, $con->error);
-    }
-}
 
 
-function updateRooms($con, $this_room, $hostel, $data, &$error){
-    //Get the current details for this room 
-    $no_sharing = $data['no_sharing'];
-    $hostel_no = $hostel['hostel_no'];
-    
-    $no_occupied = $this_room['no_occupied'];//Is incremented
-    $room_no = $this_room['room_no'];
-    
-    /*
-     * The math
-     */
-    $no_occupied += 1;
-    $spaces = $no_sharing - $no_occupied;
-    
-    $query = 'UPDATE `room_allocation` SET `no_occupied`= ? ,`spaces`= ? '
-        . 'WHERE room_no = ? AND hostel_no = ? ';
-    $stmt = $con->prepare($query);
-    $stmt->bind_param("ssss", $no_occupied, $spaces, $room_no, $hostel_no);
-    
-    $bool = $stmt->execute();
-
-    if($bool == false){
-        array_push($error, $con->error);
-    }
-    
-}

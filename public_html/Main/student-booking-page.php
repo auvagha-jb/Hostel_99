@@ -16,6 +16,7 @@
         }
         $_SESSION['hostel_no'] = $_GET['id']; 
         $_SESSION['hostel_name'] = $_GET['hostel_name'];
+        $_SESSION['type'] = $_GET['type'];
     ?>
     
 <!--Navigation bar-->
@@ -101,9 +102,12 @@
                     $room = new Hostels();
                     $result = $room->getRooms($con, $hostel_no);    
                     while($row = $result->fetch_array()){
-                        echo '<li><strong>'.$row['no_sharing'].' Sharing </strong> Kshs. '.$row['monthly_rent'].' per month
-                                <a href="cartAction.php?action=addToCart&id='.$row['hostel_no'].'&no='.$row['no_sharing'].'" style="margin-left:350px;margin-bottom:5px;" class="btn btn-success">
-                                    <i class="fas fa-bookmark"></i>Book this room
+                        echo '<li>'
+                                . '<span>'
+                                    . '<strong>'.$row['no_sharing'].' Sharing </strong> Kshs. '.$row['monthly_rent'].' per month
+                                </span>
+                                <a href="cartAction.php?action=addToCart&id='.$row['hostel_no'].'&no='.$row['no_sharing'].'" class="btn btn-success">
+                                    <i class="fas fa-bookmark"></i> Book this room
                                 </a>
                             </li>';
                     }
@@ -112,5 +116,4 @@
         </div>
     </div>
 </div>
-
 <?php include './footer.php';?>

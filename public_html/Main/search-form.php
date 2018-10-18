@@ -3,9 +3,9 @@
             <input class="form-control mx-2" name="location_home" id="location_home" placeholder="Where would you like to stay?" required="">
             <select class="form-control mx-2" name="hostel_type" id="hostel_type" required="">
                 <option value="">What Type?</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Mixed">Unspecified</option>
+                <option value="Male">Admits only Male</option>
+                <option value="Female">Admits only Female</option>
+                <option value="Mixed">Admits both</option>
             </select>
 
             <div class="input-group mx-2">

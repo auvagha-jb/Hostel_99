@@ -11,7 +11,7 @@
         <title>Bookings</title>
         <?php include_once './links.php';?>
         <link rel="stylesheet" href="css/owner-forms.css">
-        <script src="js/bookings.js"></script>
+        <script src="js/show-bookings.js"></script>
     </head>
 <body>
 

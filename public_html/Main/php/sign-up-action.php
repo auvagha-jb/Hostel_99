@@ -27,13 +27,13 @@ if(isset($_POST['s-u-submit'])){
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
-    //***************
+    //*******************************
     $pwd = $_POST['pwd'];
     $pwd_hash = password_hash($pwd, PASSWORD_DEFAULT); 
-    //***************
+    //*******************************
     $country_code = $_POST['country_code'];
     $no = $_POST['no'];
-    //***************
+    //*******************************
     $gender = $_POST['gender'];
     $user_type = $_POST['user_type'];
     
@@ -42,15 +42,18 @@ if(isset($_POST['s-u-submit'])){
         $add_user = $con->prepare("INSERT INTO `users`(`first_name`, `last_name`, `email`, `pwd`,`country_code` ,`phone_no`, `gender`, `user_type`)"
                 . "VALUES (?,?,?,?,?,?,?,?)");
 
-        $add_user->bind_param("ssssssss", $first_name, $last_name, $email, $pwd_hash, $country_code,$phone_no, $gender, $user_type);
-        $add_user->execute();
+        $add_user->bind_param("ssssssss", $first_name, $last_name, $email, $pwd_hash, $country_code,$no, $gender, $user_type);
+        $bool = $add_user->execute();
 
+        if(!$bool){
+            echo $con->error;
+        }
         
         //Session variables        
         $_SESSION['first_name'] = $first_name;        
         $_SESSION['last_name'] = $last_name;  
         $_SESSION['email'] = $email;
-        $_SESSION['phone_no'] = $phone_no;
+        $_SESSION['phone_no'] = $no;
         $_SESSION['gender'] =  $gender;
         $_SESSION['user_type'] = $user_type; 
         

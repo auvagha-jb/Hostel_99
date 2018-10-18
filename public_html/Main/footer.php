@@ -27,7 +27,7 @@
         <div class="copyright">
                 <div class="row text-center">
                     <div class="col-md-12">
-                            © IS Project I - Jerry Auvagha and Afandi Indiatsi  
+                        &copy; IS Project I - Jerry Auvagha and Afandi Indiatsi  
                     </div>
                 </div>
             </div>

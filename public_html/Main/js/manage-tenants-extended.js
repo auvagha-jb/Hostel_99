@@ -26,6 +26,7 @@ $(document).ready(function(){
         var action = "show_rooms";
         $.post("php-owner/owner-get-room-details.php", {gender:gender,action:action}, function(data){
             $("#hostel_overview").html(data);
+            $("#hostel_overview").slideDown();
         });
     }
    
@@ -38,6 +39,5 @@ $(document).ready(function(){
        $("#feedback").removeClass("alert alert-invalid");
        $("#feedback").html("");
    }
-   
     
 });

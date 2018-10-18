@@ -31,7 +31,8 @@
 
             //First query
             $query = 'SELECT hostels.hostel_no, hostels.hostel_name, hostels.image, hostels.description, hostels.location, '
-                    . 'hostels.road, hostels.vacancies, MIN(rooms.monthly_rent)AS monthly_rent, MAX(rooms.no_sharing) AS no_sharing '
+                    . 'hostels.road, hostels.vacancies, MIN(rooms.monthly_rent)AS monthly_rent, MAX(rooms.no_sharing) AS no_sharing, '
+                    . 'hostels.type '
                     . 'FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no '
                     . 'WHERE location = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
                     . 'OR county = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
@@ -80,6 +81,7 @@
                 $location = $row['location']; 
                 $road = $row['road'];
                 $monthly_rent = $row['monthly_rent'];
+                $type = $row['type'];
 //                $no_sharing = $row['no_sharing'];
                 $vacancies = $row['vacancies'];
                 $vacancy_msg;
@@ -98,7 +100,7 @@
                             <p class="card-text">'.$road.', '.$location.'</p>
                             <p class="card-text">Rent from: Kshs '.$monthly_rent.' Per Month</p>
                             <p class="card-text">'.$vacancy_msg.'</p>
-                            <a href="student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name.'" class="btn btn-outline-primary">Book Now</a>
+                            <a href="student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name.'&type='.$type.'" class="btn btn-outline-primary">Book Now</a>
                         </div>
                     </div>
                 </div>

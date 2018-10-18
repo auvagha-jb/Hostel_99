@@ -78,7 +78,12 @@ $(document).ready(function(){
       var email = $("#email").val();
       var room_assigned = $("#room_assigned").val();
       var no_sharing = $("#no_sharing").val();
-      verifyUser(email,room_assigned,no_sharing);
+      
+      if(room_assigned !== "" && email !== "" && no_sharing !== ""){
+          verifyUser(email,room_assigned,no_sharing);
+      }else{
+            showInvalid("Fill all fields!")
+      }
    });
  
     /*
@@ -146,9 +151,7 @@ $(document).ready(function(){
    }//End of function
    
    function showTable(){
-      
       $.post("owner-get-tenants-table.php", function(data, status){
-          
           if(data != ""){
               $("no-tenants-msg").hide();
               $("#tenants-table tbody").append(data);
@@ -156,7 +159,6 @@ $(document).ready(function(){
               $("#no-tenants-msg").show();
           }
        });
-       
    }//End of function
    
    function showModal(user_id, name, room_assigned,no_sharing){
@@ -216,7 +218,8 @@ $(document).ready(function(){
    }
    
    function refreshTable(){
-      clearTable();//To avoid duplicate rows
+      $("#hostel_overview").slideUp();
+      clearTable();
       showTable();//Display the updated table
       getVacancies();//Update vacancies
       getBookings();//Update no-booked
@@ -237,5 +240,6 @@ $(document).ready(function(){
         }
         return false;
    }
+   
      
 });

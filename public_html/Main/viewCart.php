@@ -10,7 +10,7 @@ if(session_status() == PHP_SESSION_NONE){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Hostel99 - Bookings</title>
+    <title>Booking</title>
     <meta charset="utf-8">
     <?php include './bootstrap3.php';?>
     <style>
@@ -46,17 +46,7 @@ if(session_status() == PHP_SESSION_NONE){
             width: 20%;
         }
     </style>
-    <script>
-    function updateCartItem(obj,id){
-        $.get("./cartAction.php", {action:"updateCartItem", id:id, qty:obj.value}, function(data){
-            if(data == 'ok'){
-                location.reload();
-            }else{
-                alert('Cart update failed, please try again.');
-            }
-        });
-    }
-    </script>
+    <script src="js/student-booking.js"></script>
 </head>
 
 <body>
@@ -69,7 +59,8 @@ if(session_status() == PHP_SESSION_NONE){
     <table class="table" style="color:black;">
     <thead>
         <tr>
-            <th>Hostel Type</th>
+            <th>Hostel</th>
+            <th>No sharing</th>
             <th>Rent Price</th>
             <th>No. of units</th>
             <th>Subtotal</th>
@@ -79,14 +70,14 @@ if(session_status() == PHP_SESSION_NONE){
     <tbody>
         <?php
         if($cart->total_items() > 0){
-            //get cart items from session
-            $cartItems = $cart->contents();
-            foreach($cartItems as $item){
-        ?>
+        //get cart items from session
+        $cartItems = $cart->contents();
+        foreach($cartItems as $item){?>
         <tr>
-            <td><?php echo $item["name"]; ?></td>
+            <td><?php echo $item["hostel_name"]; ?></td>
+            <td><?php echo $item["no_sharing"]; ?></td>
             <td><?php echo 'Ksh'.$item["price"]; ?></td>
-            <td><input type="number" class="form-control text-center" value="<?php echo $item["qty"]; ?>" onchange="updateCartItem(this, '<?php echo $item["rowid"]; ?>')"></td>
+            <td><input type="number" class="form-control text-center" value="<?php echo $item["qty"]; ?>" readonly="" onchange="updateCartItem(this, '<?php echo $item["rowid"]; ?>')"></td>
             <td><?php echo 'Ksh'.$item["subtotal"]; ?></td>
             <td>
                 <!--<a href="cartAction.php?action=updateCartItem&id=" class="btn btn-info"><i class="glyphicon glyphicon-refresh"></i></a>-->
@@ -101,17 +92,17 @@ if(session_status() == PHP_SESSION_NONE){
         <?php
             $hostel_no = $_SESSION['hostel_no'];
             $hostel_name = $_SESSION['hostel_name'];    
+            $type= $_SESSION['type'];    
         ?>
         <tr>
-            <?= '<td><a href="student-booking-page.php?id='.$hostel_no.'&hostel_name='.$hostel_name.'" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Booking</a></td>'; ?> 
-            <td colspan="2"></td>
-            <?php if($cart->total_items() > 0){ ?>
-            <td class="text-center"><strong>Total <?php echo 'Ksh'.$cart->total(); ?></strong></td>
-            <td><a href="checkout.php" class="btn btn-success btn-block">Checkout <i class="glyphicon glyphicon-menu-right"></i></a></td>
-            <?php } ?>
+            <?= '<td><a href="student-booking-page.php?id='.$hostel_no.'&hostel_name='.$hostel_name.'&type='.$type.'"'
+                . 'class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continue Booking</a></td>'; ?> 
+            <td colspan="3"></td>
+            <td><button id="pick_room" class="btn btn-success">Pick room <i class="glyphicon glyphicon-home"></i></button></td>
         </tr>
     </tfoot>
     </table>
+    <a href="checkout.php" class="btn btn-success">Checkout <i class="glyphicon glyphicon-menu-right"></i></a>
 </div>
 </body>
 </html>
