@@ -11,6 +11,7 @@ $users = new Users();
 $hostels = new Hostels();
 $rooms = new Rooms();
 $remove = new RemoveTenant();
+$book = new Bookings();
 $error = array();//Array to store any errors in query execution
 
 if(session_status() == PHP_SESSION_NONE){
@@ -62,6 +63,9 @@ if(isset($_POST['user_id'])){
     
     //Update the room_allocation
     $remove->updateRooms($con, $this_room, $hostel, $data, $error);
+    
+    //Remove them from 
+    $book->delBooking($con, $user_id, $error);
     
     if(count($error)==0){
         $con->commit();

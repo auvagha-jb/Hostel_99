@@ -18,10 +18,11 @@ if(isset($_SESSION['hostel_no'])){
         $user_id = $row['user_id'];
         $name = $row['first_name']." ".$row['last_name'];
         $gender = $row['gender']; 
-        $phone_no = $row['country_code'].$row['phone_no'];
+        $phone_no = '+'.$row['country_code'].' '.$row['phone_no'];
         $email = $row['email'];
+        $room_chosen = $row['room_chosen'];  
         $no_sharing = $row['no_sharing'];  
-        $check_in_date = $row['check_in_date'];
+        //$check_in_date = $row['check_in_date'];
 
         $data.='
         <tr>
@@ -30,14 +31,12 @@ if(isset($_SESSION['hostel_no'])){
             <td>'.$gender.'</td>
             <td>'.$phone_no.'</td>
             <td>'.$email.'</td>
+            <td>'.$room_chosen.'</td>
             <td>'.$no_sharing.'</td>
-            <td>'.$check_in_date.'</td>
-            <td><a href="#" class="btn btn-danger btn-sm remove-room" id="remove_booking"><i class="fa fa-minus-circle"></i></a></td>
+            <td><a href="#" class="btn btn-success btn-sm add-tenant" id="add-tenant"><i class="fa fa-plus-circle"></i></a></td>
+            <td><a href="#" class="btn btn-danger btn-sm remove-booking" id="remove_booking"><i class="fa fa-minus-circle"></i></a></td>
         </tr>  
         ';
     }
-    
-    
     echo $data;
-   
 }

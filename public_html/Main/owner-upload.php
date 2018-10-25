@@ -1,3 +1,8 @@
+<?php
+if(session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,10 +17,6 @@
     
 <?php
 include_once 'php/connection.php';
-if(session_status() == PHP_SESSION_NONE){
-    session_start();
-}
-
 $folder_name = 'uploads/';
 $hostel_name = $_SESSION['hostel_name']."/";
 

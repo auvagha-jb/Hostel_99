@@ -8,6 +8,7 @@ if(session_status() == PHP_SESSION_NONE){
 $id = $_SESSION['hostel_no'];
 $hostel_name = $_SESSION['hostel_name'];
 $type = $_SESSION['type'];
+$_SESSION['room'] = $_GET['room'];
 $cart = new Cart;
 
 // redirect to home if cart is empty
@@ -34,6 +35,7 @@ if($cart->total_items() < 1){
         <tr>
             <th>Hostel</th>
             <th>No sharing</th>
+            <th>Room No</th>
             <th>Price</th>
             <th>Quantity</th>
             <th>Subtotal</th>
@@ -49,6 +51,7 @@ if($cart->total_items() < 1){
         <tr>
             <td><?php echo $item["hostel_name"]; ?></td>
             <td><?php echo $item["no_sharing"]; ?></td>
+            <td><?php echo $_GET['room']; ?></td>
             <td><?php echo 'Ksh'.$item["price"]; ?></td>
             <td><?php echo $item["qty"]; ?></td>
             <td><?php echo 'Ksh'.$item["subtotal"]; ?></td>

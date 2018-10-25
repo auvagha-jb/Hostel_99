@@ -40,9 +40,12 @@
      * Gets ALL the rooms for a particular hostel
      * e.g Hostel 1: returns 1 sharing + price; returns 2 sharing + price e.t.c. 
      */
-    public function getRooms($con, $hostel_no){
-        $query = "SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no WHERE hostels.hostel_no = ? "
-                . "AND rooms.no_sharing > rooms.current_capacity ";
+    public function getRooms($con, $data){
+        //Data array contents
+        $hostel_no = $data['hostel_no']; $gender = $data['gender'];
+        
+        $query = 'SELECT * FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no WHERE hostels.hostel_no = ? '
+                . 'AND rooms.blocked_'.$gender.' > rooms.'.$gender.'_count OR blocked_'.$gender.'= 0';
         $stmt = $con->prepare($query);
         $stmt->bind_param("s", $hostel_no);
         $stmt->execute();

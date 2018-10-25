@@ -98,12 +98,16 @@ if(isset($_POST['email']) || isset($_POST['action'])){
         if(isset($booking_row)){
             $booked = true;
         }
-        
-        if($booked && $_POST['action']=="add_tenant"){
-            $book->delBooking($con, $user_id, $error);
-        }else if($booked && $_POST['action']=="booking"){
+
+        /* IGNORE ME
+         * }else if($booked && $_POST['action']=="booking"){
             echo 'You have already made a booking in '.$booking_row['hostel_name'];
             exit();
+         */
+        
+        if($booked && $_POST['action']=="add_tenant"){
+            //Change status from booked to tenant
+            $book->updateBooking($con, $user_id, $error);
         }else{//If they hadn't booked...
             //check whether vacancy is present
             $vacant = $book->vacancyPresent($room, $user, $error);
@@ -143,10 +147,3 @@ if(isset($_POST['action']) && $_POST['action'] == "check_booked"){
         $booked = true;
     }
 }
-
-
-
-
-
-
-

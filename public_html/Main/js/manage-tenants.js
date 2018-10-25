@@ -127,8 +127,7 @@ $(document).ready(function(){
    }//End of function
    
    
-   function addTenant(){
-       
+   function addTenant(){  
       var email = $("#email").val();
       var room_assigned = $("#room_assigned").val();
       var no_sharing = $("#no_sharing").val();
@@ -155,9 +154,11 @@ $(document).ready(function(){
           if(data != ""){
               $("no-tenants-msg").hide();
               $("#tenants-table tbody").append(data);
+              $('#table-content').html("Tenants");
           }else{
               $("#no-tenants-msg").show();
           }
+          $('#tenants-table').DataTable();
        });
    }//End of function
    
@@ -213,7 +214,7 @@ $(document).ready(function(){
    
    function getBookings(){
       $.post("php-owner/owner-get-no-booked.php",function(data){
-            $("#bookings").html(data);
+            $("#pending_bookings").html(data);
        }); 
    }
    

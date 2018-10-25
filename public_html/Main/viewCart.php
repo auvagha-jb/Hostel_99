@@ -47,6 +47,10 @@ if(session_status() == PHP_SESSION_NONE){
         input[type="number"] {
             width: 20%;
         }
+        
+        #checkout{
+            display: none;
+        }
     </style>
     <script src="js/student-booking.js"></script>
 </head>
@@ -107,7 +111,7 @@ if(session_status() == PHP_SESSION_NONE){
         </tr>
     </tfoot>
     </table>
-    <a href="checkout.php" class="btn btn-success">Checkout <i class="fa fa-arrow-right"></i></a>
+    <a class="btn btn-success" id="checkout">Checkout <i class="fa fa-arrow-right"></i></a>
 
 <!--Assign room modal-->
     <div class="modal fade" id="pickRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

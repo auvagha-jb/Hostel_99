@@ -17,10 +17,16 @@
 
     <!--Navigation bar-->
     <?php include './nav-bar.php'; ?>
-    
+    <?php include './sidebar.php'; ?>
     <!--The session was started at the very start-->
-        
-    <center class="lead my-3" id="no-bookings-msg">
+    
+<div id="wrapper" class="toggled">        
+        <?php include './sidebar.php'; ?>
+        <!-- Page Content -->
+<div id="page-content-wrapper">
+<div class="container-fluid">
+                <?php include './php-owner/menu-toggle.php'; ?>
+  <center class="lead my-3" id="no-bookings-msg">
         No bookings at the moment.
     </center>
         
@@ -36,9 +42,10 @@
                     <th>Gender</th>
                     <th>Phone number</th>
                     <th>Email</th>
+                    <th>Room Chosen</th>
                     <th>No sharing</th>
-                    <th>Check-in date</th>
-                    <th>Remove</th>
+                    <th>Add</th>
+                    <th>Cancel</th>
                 </tr>
             </thead>
             <tbody>
@@ -46,6 +53,31 @@
             </tbody>
         </table>
     </div> 
+    <!-- Confirm delete Modal -->
+    <div class="modal fade" id="confirmAddModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add new tenant</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="add_dialog">
+            
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="confirm_add" data-dismiss="modal">Add</button>
+            <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>        <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
+        
     
 </body>
 </html>

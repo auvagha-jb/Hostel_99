@@ -1,11 +1,21 @@
 $(document).ready(function(){
     
+    $("#checkout").hid
+    
     $("#pick_room").click(function(){
         var gender = $("#gender").val();
         var no_sharing = $("#no_sharing").val();
         getAvailableRooms(gender, no_sharing);  
     });
     
+    $(document).on("click",".modal-body .card", function(){
+        var room = $(this).attr("id");
+        $("#room_chosen").val(room);
+        //Set the link dynamically
+        var a = document.getElementById('checkout');
+        a.href="checkout.php?room="+room;
+        $("#checkout").show();
+    });
     
      function getAvailableRooms(gender, no_sharing){
         var action = "get_available";

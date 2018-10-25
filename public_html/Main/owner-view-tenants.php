@@ -19,6 +19,13 @@
 
     <!--Navigation bar-->
     <?php include './nav-bar.php'; ?>
+     <div id="wrapper" class="toggled">
+        
+        <?php include './sidebar.php'; ?>
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><i class="fas fa-bars"></i></a>
     
     <!--The session was started at the very start-->
     <div class="add-tenant-form">
@@ -52,8 +59,8 @@
             <span class="border px-2" id="vacancies"></span>
             </span>
             <span class="lead inline-text mx-3">
-                Pending Bookings:
-                <span class="border px-2" id="bookings"></span>
+                <?= '<a href="owner-view-bookings.php?id='.$_GET['id'].'">Pending Bookings:</a>' ?>
+                <span class="border px-2" id="pending_bookings"></span>
             </span>
             <div class="my-3">
                 <div id="hostel_overview">
@@ -64,25 +71,48 @@
         
         
        <!--User show tenants table-->
-       <div class="table-responsive mx-3 my-3">
-        <table class="table table-bordered" id="tenants-table">
-            <thead>
-                <tr>
+       <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+              <i class="fas fa-table"></i>
+              <span id="table-content"></span>
+            </div>
+            <div class="card-body">
+                
+              <div class="table-responsive">
+                <table class="table table-sm table-hover" id="tenants-table" width="100%" cellspacing="0">
+                  <thead>
+                      <tr>
                     <th>User ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone Number</th>
                     <th>Gender</th>
-                    <th>Room Assigned</th>
+                    <th>Room No</th>
                     <th>No sharing</th>
                     <th>Remove</th>
                 </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
-    </div> 
+                  </thead>
+                  <tfoot>
+                    <tr>
+                    <th>User ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Gender</th>
+                    <th>Room No</th>
+                    <th>No sharing</th>
+                    <th>Remove</th>
+                  </tfoot>
+                  <tbody>
+                      <!--Body retrieved from get-tenants-table.php-->
+                      
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+          </div>
         
 </div>
 
@@ -129,7 +159,9 @@
         </div>
       </div>
     </div>
-    
-    
+  </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+     </div>
 </body>
 </html>

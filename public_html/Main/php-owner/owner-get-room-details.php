@@ -125,7 +125,7 @@ if(isset($_POST['action']) && $_POST['action'] == "show_rooms"){
                 echo'
                     <span class="lead inline-text mx-3">
                         '.$no_sharing.' Sharing:
-                        <span class="border border-dark px-2">'.$count.'</span>
+                        <span class="border px-2">'.$count.'</span>
                     </span>
                         ';
             }

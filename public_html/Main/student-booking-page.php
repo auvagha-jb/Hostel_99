@@ -17,6 +17,7 @@
         $_SESSION['hostel_no'] = $_GET['id']; 
         $_SESSION['hostel_name'] = $_GET['hostel_name'];
         $_SESSION['type'] = $_GET['type'];
+        
     ?>
     
 <!--Navigation bar-->
@@ -100,7 +101,12 @@
             <ul class="pricing-list">
                 <?php
                     $room = new Hostels();
-                    $result = $room->getRooms($con, $hostel_no);    
+                    $data = array(
+                        'hostel_no' =>$hostel_no,
+                        'gender' => $_SESSION['gender']
+                    );
+                    
+                    $result = $room->getRooms($con, $data);    
                     while($row = $result->fetch_array()){
                         echo '<li>'
                                 . '<span>'

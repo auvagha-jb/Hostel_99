@@ -67,6 +67,7 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
         $data = array(
             'user_id' => $_SESSION['user_id'],
             'hostel_no' => $_SESSION['hostel_no'],
+            'room_chosen' => $_SESSION['room'],
             'no_sharing' => $_SESSION['no_sharing']
         );
         
@@ -76,7 +77,10 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
         $hostel_no = $data['hostel_no'];
         $no_sharing = $data['no_sharing'];
         $user_id = $data['user_id'];
-        $room_chosen = $_POST['room_chosen'];
+        $room_chosen = $data['room_chosen'];
+        
+        print_r($data);
+        echo $room_chosen;
         
         $hostel = $hostels->getHostelDetails($con, $hostel_no, $error);
         $room = $rooms->getRoomDetails($con, $hostel_no, $no_sharing, $error);
@@ -85,13 +89,18 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
     
         $cartItems = $cart->contents();
         foreach($cartItems as $item){
-            $orderID = $book->insertBooking($con, $data, $error);              
+            $orderID = $book->insertBooking($con, $data, $error);
+            //Reduce the number of available slots in the hostel
+            $book->updateVacancies($con, $hostel, $room, $user, $error);
+
+            //Allocate rooms
+            $book->updateRooms($con, $this_room, $hostel, $data,$error);
         }
 
-        if(isset($orderID)){
+        if(isset($orderID) && count($error)==0){
             $cart->destroy();
-            //header("Location: ./orderSuccess.php?id=$orderID");
-            echo 'Success! Uncomment - header';
+            header("Location: ./orderSuccess.php?id=$orderID");
+            //echo 'Success! Uncomment - header';
         }else{
             echo $con->error;
             header("Location: ./checkout.php");

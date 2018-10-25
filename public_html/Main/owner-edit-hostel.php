@@ -1,10 +1,15 @@
+<?php
+    if(session_status()==PHP_SESSION_NONE){
+        session_start();
+    }
+?>
 <!DOCTYPE HTMl>
 <html>
     <head>
         <title>Edit Hostel</title>
         <?php require './links.php';?>
-        <script src="js/owner-forms.js"></script>
         <link rel="stylesheet" type="text/css" href="css/owner-forms.css">
+        <script src="js/owner-forms.js"></script>
     </head>
 <body>
     <?php include_once './php/connection.php'; ?>
@@ -31,10 +36,6 @@
     
     <div class="container-fluid">
         <div>
-            
-            <?php 
-            echo '<a class="btn btn-primary btn-sm" href="owner-add-images.php?hostel_name='.$hostel_name.'">My Photos</a>';
-            ?>
             <form method="post" class="add-hostel-form" action="php-owner/owner-edit-hostel-action.php" 
                   enctype="multipart/form-data">
                 <center>

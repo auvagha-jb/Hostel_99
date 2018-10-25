@@ -1,3 +1,9 @@
+<?php
+include_once './php/connection.php';
+    if(session_status() == PHP_SESSION_NONE){
+        session_start();
+    }
+?>
 <!DOCTYPE>
 <html>
     <head>
@@ -14,10 +20,7 @@
     <div class="row padding">
         
     <?php
-    include_once './php/connection.php';
-    if(session_status() == PHP_SESSION_NONE){
-        session_start();
-    }
+    
     
         $user_id = $_SESSION['user_id'];
     

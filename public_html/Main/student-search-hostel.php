@@ -22,25 +22,32 @@
             $location_home = $_POST['location_home'];
             $hostel_type = $_POST['hostel_type'];
             $max_price = $_POST['max_price'];
-            $mixed = "Mixed";
+           
+            //reinitialize hostel_type  --->The query will get all hostels that are NOT opposite gender 
+            if($hostel_type == "male"){
+                $opposite = "female";
+            }else {
+               $opposite = "male"; 
+            }
             
-//            SELECT hostels.hostel_no, hostels.hostel_name, hostels.image, hostels.description, hostels.location, hostels.road, 
-//            MIN(rooms.monthly_rent) AS monthly_rent, MAX(rooms.no_sharing) AS no_sharing FROM hostels JOIN rooms 
-//            ON hostels.hostel_no = rooms.hostel_no WHERE location = "Nairobi" AND monthly_rent <= 10000 AND type = "Mixed" 
-//            OR county = "Nairobi" AND monthly_rent <= 10000 AND type = "Mixed" OR road = "Nairobi" AND monthly_rent <= 10000 AND type = "Mixed" GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent 
+            //SELECT hostels.hostel_no, hostels.hostel_name, hostels.image, hostels.description, hostels.location, hostels.road, MIN(rooms.monthly_rent) AS monthly_rent, 
+            //MAX(rooms.no_sharing) AS no_sharing 
+            //FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no WHERE location = "Nairobi" AND monthly_rent <= 10000 AND NOT type = "male" 
+            //OR county = "Nairobi" AND monthly_rent <= 10000 AND NOT type = "male" OR road = "Nairobi" AND monthly_rent <= 10000 AND NOT type = "male" 
+            //GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent 
 
             //First query
             $query = 'SELECT hostels.hostel_no, hostels.hostel_name, hostels.image, hostels.description, hostels.location, '
                     . 'hostels.road, hostels.vacancies, MIN(rooms.monthly_rent)AS monthly_rent, MAX(rooms.no_sharing) AS no_sharing, '
                     . 'hostels.type '
                     . 'FROM hostels JOIN rooms ON hostels.hostel_no = rooms.hostel_no '
-                    . 'WHERE location = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
-                    . 'OR county = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
-                    . 'OR road = ? AND monthly_rent <= ? AND type = ? AND hostels.blacklist = 0 '
+                    . 'WHERE location = ? AND monthly_rent <= ? AND NOT type = ? AND hostels.blacklist = 0 '
+                    . 'OR county = ? AND monthly_rent <= ? AND NOT type = ? AND hostels.blacklist = 0 '
+                    . 'OR road = ? AND monthly_rent <= ? AND NOT type = ? AND hostels.blacklist = 0 '
                     . 'GROUP BY hostels.hostel_no ORDER BY rooms.monthly_rent';
             
             $stmt = $con->prepare($query);
-            $stmt->bind_param("sssssssss", $location_home, $max_price, $hostel_type,$location_home, $max_price, $hostel_type,$location_home, $max_price, $hostel_type);
+            $stmt->bind_param("sssssssss", $location_home, $max_price, $opposite,$location_home, $max_price, $opposite,$location_home, $max_price, $opposite);
             $stmt->execute();
             $result = $stmt->get_result();
             $no_results = mysqli_num_rows($result);

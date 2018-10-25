@@ -1,31 +1,30 @@
-<?php
-include './php/connection.php';
-include './php-owner/Classes/Hostels.php';
-include './php/Classes/Users.php';
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <?php include './links.php'; ?>
+    <title>Mock Hostel</title>
+</head>
 
-$hostel = new Hostels();
-//$user = new Users();
+<body>
+    <?php include './nav-bar.php'; ?>
+    <div id="wrapper" class="toggled">
         
-        $data = array(
-          'rating' => 4,
-           'review' =>'Quite good',
-           'hostel_no' => '1',
-            'user_id' => '10'
-        );
-        
-?>
+        <?php include './sidebar.php'; ?>
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><i class="fas fa-bars"></i></a>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+</div>
+<!-- /#wrapper -->
 
-<form method="post" action="php/get-gender.php">
-    <input type="hidden" value="jerrybenjamin007@gmail.com" name="email">
-    <input type="hidden" value="get_gender" name="action">
-    <button type="submit">Test</button>
-</form>
+</body>
 
-<form method="post" action="php-owner/owner-get-room-details.php">
-    <input type="hidden" value="jerrybenjamin007@gmail.com" name="email">
-    <input type="hidden" value="show_rooms" name="action">
-    <button type="submit">Test</button>
-</form>
-
-        
+</html>

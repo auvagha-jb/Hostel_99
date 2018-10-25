@@ -10,9 +10,7 @@
 </head>
 <body>
 <?php
-    if(session_status()==PHP_SESSION_NONE){
-        session_start();
-    }
+
 
     function toggleNav(){
         //If the user is logged in
@@ -65,7 +63,7 @@
 <!--We're referencing md because that's the breakpoint-->
 <nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
     <div class="container-fluid"> <!--So it takes up 100% of the screen-->
-        <a class="navbar-brand" href="#"><img src="img/hostel-logo.png" style="height: 15%; width: 15%;" alt="">Hostel 99</a>
+        <a class="navbar-brand" href="#"><img src="img/hostel-logo.png" style="height: 60px; width: 60px;" alt="">Hostel 99</a>
         
         <!--Navigation button The id is here is generic-->
         <button type="button" class="navbar-toggler" id="nav-btn" data-toggle="collapse" data-target="#navbarResponsive">
@@ -76,7 +74,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <!--Pushes list items to the right as opposed to the middle at full width-->
             <ul class="navbar-nav ml-auto"> 
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="home.php">Home</a>
                 </li>
                 <li class="nav-item">
