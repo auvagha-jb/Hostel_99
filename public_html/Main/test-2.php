@@ -7,23 +7,23 @@
     <?php include './links.php'; ?>
 <link rel="stylesheet" href="css/owner-table.css">
 <script src="js/owner-table.js"></script>
+<style>
+    #edit-feedback{
+        display: none;
+    }
+</style>
+<script>
+    $(document).ready(function(){
+       updateSuccess();
+       
+       function updateSuccess(){
+           $("#edit-feedback").slideDown().delay(1500).slideUp();
+       }
+       
+    });
+</script>
     </head>
     <body>
-        <?php include './nav-bar.php';?>
-        <div id="wrapper" class="toggled">
-        <!-- Sidebar -->
-        <?php include './sidebar.php'; ?>
-        <!-- /#sidebar-wrapper -->
-
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><i class="fas fa-bars"></i></a>
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-
-    </div>
-    <!-- /#wrapper -->
+        <center id="edit-feedback" class="alert alert-success">Details Updated</center>
     </body>
 </html>

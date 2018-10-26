@@ -3,9 +3,21 @@ $(document).ready(function(){
     /*
      * On load
      */
-    showBookingsTable();
+    showDefaultBookingsTable();//Inclusive of dataTables 
     
     function showBookingsTable(){    
+        $.post("php-owner/owner-get-bookings-table.php", function(data, status){
+          
+          if(data != ""){
+              $("no-bookings-msg").hide();
+              $("#bookings-table tbody").append(data);
+          }else{
+              $("#no-bookings-msg").show();
+          }
+       });
+       
+   }//End of function
+    function showDefaultBookingsTable(){    
         $.post("php-owner/owner-get-bookings-table.php", function(data, status){
           
           if(data != ""){
@@ -25,6 +37,7 @@ $(document).ready(function(){
         var room_assigned = $(this).closest("tr").children().eq(5).text();
         var no_sharing = $(this).closest("tr").children().eq(6).text();
         showModal(email, name, room_assigned,no_sharing);
+        showTenantsTable();
     });
     
     $(document).on("click","#confirm_add", function(){
@@ -55,7 +68,7 @@ $(document).ready(function(){
           if(data != ""){
               $("#no-tenants-msg").hide();//Remove no-tenants message
                 showSuccess(data);
-                refreshTable();
+                updateTenants();
           }else{
               alert("Not executed");
           }
@@ -77,6 +90,25 @@ $(document).ready(function(){
    
    function clearTable(){
        $("#bookings-table").find("tr:not(:first)").remove();
+   }//End of function
+   
+   function updateTenants(){
+      $.post("owner-get-tenants-table.php", function(data, status){
+          if(data != ""){
+              $("no-tenants-msg").hide();
+              $("#tenants-table tbody").html(data);
+          }else{
+              $("#no-tenants-msg").show();
+          }
+          
+       });
+       $.post("php-owner/owner-update-vacancies.php",function(data){
+            $("#vacancies").html(data);
+       });
+       $.post("php-owner/owner-get-no-booked.php",function(data){
+            $("#pending_bookings").html(data);
+       });
+       
    }//End of function
    
 });

@@ -1,10 +1,3 @@
-<?php    
-        include_once './php/connection.php';
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        $_SESSION['hostel_no'] = $_GET['id'];
-    ?>
 <!DOCTYPE HTML>
 <html>
     <head>
@@ -15,24 +8,21 @@
     </head>
 <body>
 
-    <!--Navigation bar-->
-    <?php include './nav-bar.php'; ?>
-    <?php include './sidebar.php'; ?>
-    <!--The session was started at the very start-->
-    
-<div id="wrapper" class="toggled">        
-        <?php include './sidebar.php'; ?>
-        <!-- Page Content -->
-<div id="page-content-wrapper">
-<div class="container-fluid">
-                <?php include './php-owner/menu-toggle.php'; ?>
   <center class="lead my-3" id="no-bookings-msg">
         No bookings at the moment.
     </center>
         
         <center id="feedback"></center>
         
-       <!--User show tenants table-->
+       <!--User show bookings table-->
+       <!-- DataTables Example -->
+          <div class="card mb-3">
+            <div class="card-header bg-dark text-white">
+              <i class="fas fa-table"></i>
+              <span id="table-content">Bookings</span>
+            </div>
+            <div class="card-body">
+       
        <div class="table-responsive mx-3 my-3">
         <table class="table table-bordered" id="bookings-table">
             <thead>
@@ -73,11 +63,9 @@
         </div>
       </div>
     </div>
-</div>
-</div>        <!-- /#page-content-wrapper -->
-</div>
 <!-- /#wrapper -->
-        
+    </div>
+    </div>        
     
 </body>
 </html>

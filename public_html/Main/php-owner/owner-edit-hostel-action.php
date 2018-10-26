@@ -7,16 +7,13 @@ if(session_status() == PHP_SESSION_NONE){
 //kill autocommit
 $con->autocommit(false);
 
-if(isset($_POST['submit'])){
-
-    
     //Previous form data
     $prev_name = $_SESSION['hostel_name'];
     $hostel_no = $_SESSION['hostel_no'];
     $prev_image_name = $_SESSION['prev_image_name'];
     $error = array();
     
-    echo $prev_name."<br>";
+    // $prev_name."<br>";
     
     //Get form data
     $hostel_name = $_POST['hostel_name'];
@@ -25,7 +22,7 @@ if(isset($_POST['submit'])){
     $road = $_POST['road'];
     $county = $_POST['county'];
     $type = $_POST['hostel_type'];
-    $total_rooms = $_POST['total_rooms'];
+    
     
     //Image Upload
     $folder = './../uploads/'.$hostel_name.'/';
@@ -38,7 +35,7 @@ if(isset($_POST['submit'])){
         mkdir($folder);
     }
     
-    echo "File: ".$file_name."<br>".$hostel_no."<br>".$prev_path."<br>Current: ".$path."<br>";
+    // "File: ".$file_name."<br>".$hostel_no."<br>".$prev_path."<br>Current: ".$path."<br>";
     
     //Update the image uploaded -->if an image is chosen
     if(!empty($file_name)){
@@ -54,7 +51,7 @@ if(isset($_POST['submit'])){
         if(move_uploaded_file($file_tmp, $path)){
             $msg = "Image uploaded";
             //Execute this query-->With image
-            echo 'Updating...';
+            // 'Updating...';
              $query ='UPDATE `hostels` SET `hostel_name`= ?,`description`= ?,`location`= ?,`road`= ?,`county`= ?,'
                      . '`type`= ?,`image`= ? WHERE hostel_no = ?';
             $stmt= $con->prepare($query);
@@ -98,7 +95,7 @@ if(isset($_POST['submit'])){
     
     
     
-    echo '<br>Old name: '.$old_name.'<br> New name: '.$new_name.'<br>';
+    //echo '<br>Old name: '.$old_name.'<br> New name: '.$new_name.'<br>';
     
 
     /*NOT FUNCTIONAL AT THE MOMENT
@@ -110,6 +107,5 @@ if(isset($_POST['submit'])){
     
     if(count($error)==0){
         $con->commit();
-        header("location:../owner-edit-hostel.php?id=".$hostel_no."");   
+        echo 'Updated';   
     }
-}

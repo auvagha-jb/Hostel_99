@@ -27,7 +27,8 @@ $(document).ready(function(){
     $("#hostel_name").click(function(){
        $("#hostel_name_feedback").show(); //To inform them that the hostel owner to contact admin to change name 
     });
-     
+
+    
     //Dynamic input fields
     
     //Add room table

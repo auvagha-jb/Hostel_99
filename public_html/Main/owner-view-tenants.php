@@ -1,8 +1,4 @@
-<?php    
-        include_once './php/connection.php';
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
+<?php
         $_SESSION['hostel_no'] = $_GET['id'];
         $_SESSION['type'] = $_GET['type'];
     ?>
@@ -17,17 +13,7 @@
     </head>
 <body>
 
-    <!--Navigation bar-->
-    <?php include './nav-bar.php'; ?>
-     <div id="wrapper" class="toggled">
-        
-        <?php include './sidebar.php'; ?>
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle"><i class="fas fa-bars"></i></a>
-    
-    <!--The session was started at the very start-->
+     <!--The session was started at the very start-->
     <div class="add-tenant-form">
         
     <center class="lead my-3" id="no-tenants-msg">
@@ -75,7 +61,7 @@
           <div class="card mb-3">
             <div class="card-header bg-dark text-white">
               <i class="fas fa-table"></i>
-              <span id="table-content"></span>
+              <span id="table-content">Tenants</span>
             </div>
             <div class="card-body">
                 
@@ -159,9 +145,5 @@
         </div>
       </div>
     </div>
-  </div>
-        </div>
-        <!-- /#page-content-wrapper -->
-     </div>
 </body>
 </html>

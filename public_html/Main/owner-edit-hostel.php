@@ -1,42 +1,15 @@
-<?php
-    if(session_status()==PHP_SESSION_NONE){
-        session_start();
-    }
-?>
 <!DOCTYPE HTMl>
 <html>
     <head>
         <title>Edit Hostel</title>
         <?php require './links.php';?>
         <link rel="stylesheet" type="text/css" href="css/owner-forms.css">
-        <script src="js/owner-forms.js"></script>
     </head>
-<body>
-    <?php include_once './php/connection.php'; ?>
-    
-    <?php include './nav-bar.php';?>
-    
-    <!--Get the details about the hostel to populate the values with-->
-    <?php include_once './php-owner/owner-get-hostel-details.php'; ?>
-    
-    <?php
-        //Store the hostel_name in a session -->It will be needed on the file upload platform
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        //values obtained from owner-get-hostel-details.php
-        $_SESSION['hostel_name'] = $hostel_name;
-        $_SESSION['hostel_no'] = $hostel_no;
-        if(isset($image)){
-            $_SESSION['prev_image_name'] = $image;
-        }else{
-            $_SESSION['prev_image_name'] = "";
-        }
-    ?>
-    
+<body>  
     <div class="container-fluid">
-        <div>
-            <form method="post" class="add-hostel-form" action="php-owner/owner-edit-hostel-action.php" 
+        <div id="edit-feedback" class="alert alert-success text-center sticky-top">Details Updated</div>
+        <div class="my-2">
+            <form method="post" class="add-hostel-form" id="edit-hostel-form" action="php-owner/owner-edit-hostel-action.php" 
                   enctype="multipart/form-data">
                 <center>
                     <i class="fa fa-hotel"></i>
@@ -76,7 +49,7 @@
                             <option value="">Choose One</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
-                            <option value="Mixed">Unspecified</option>
+                            <option value="Mixed">Mixed</option>
                         </select>
                     </div>
                 </div>
@@ -98,6 +71,30 @@
            var type = "<?php echo $type;?>";
            $("#hostel_type").val(type);
            $("#image_display").addClass("display_size"); 
+           
+           $("#edit-hostel-form").submit(function(event){
+                event.preventDefault(); //prevent default action 
+                var post_url = $(this).attr("action"); //get form action url
+                var request_method = $(this).attr("method"); //get form GET/POST method
+                    
+                $.ajax({
+                    url: post_url, // Url to which the request is send
+                    type: request_method,             // Type of request to be send, called as method
+                    data: new FormData(this), // Data sent to server, a set of key/value pairs (i.e. form fields and values)
+                    contentType: false,       // The content type used when sending data to the server.
+                    cache: false,             // To unable request pages to be cached
+                    processData:false,        // To send DOMDocument or non processed data file it is set to false
+                    success: function(data)   // A function to be called if request succeeds
+                    {
+                       updateSuccess();
+                    }
+                });
+            });
+            
+            function updateSuccess(){
+                $("#edit-feedback").slideDown().delay(1500).slideUp();
+            }
+           
         });
     </script>
 </body>

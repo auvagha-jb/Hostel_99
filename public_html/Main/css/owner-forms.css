@@ -7,14 +7,17 @@ label{
     margin-top: 10px;
 }
 
+#edit-feedback{
+    display: none;
+}
 
 form.add-hostel-form{
     position: absolute;
 /*    margin: auto;*/
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -18%);
-    border: solid #000;
+    transform: translate(-50%, -0%);
+    border: solid #7F8C8D;
     border-radius: 5px;
     border-width: thin;
     padding: 1% 5%;

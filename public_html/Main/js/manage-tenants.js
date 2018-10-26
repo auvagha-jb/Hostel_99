@@ -8,7 +8,7 @@ $(document).ready(function(){
     * On load...
     */
    //Display table records
-   showTable();
+   showDefaultTable();
    getNoSharing();
    getVacancies();
    getBookings();
@@ -149,18 +149,30 @@ $(document).ready(function(){
        $("#add-tenant-form #room_assigned").val("");//Clear the room assigned
    }//End of function
    
-   function showTable(){
+   function showDefaultTable(){
       $.post("owner-get-tenants-table.php", function(data, status){
           if(data != ""){
               $("no-tenants-msg").hide();
               $("#tenants-table tbody").append(data);
-              $('#table-content').html("Tenants");
           }else{
               $("#no-tenants-msg").show();
           }
           $('#tenants-table').DataTable();
        });
    }//End of function
+   
+   function showTable(){
+      $.post("owner-get-tenants-table.php", function(data, status){
+          if(data != ""){
+              $("no-tenants-msg").hide();
+              $("#tenants-table tbody").html(data);
+          }else{
+              $("#no-tenants-msg").show();
+          }
+       });
+   }//End of function
+   
+   
    
    function showModal(user_id, name, room_assigned,no_sharing){
        var msg = '';
@@ -220,7 +232,7 @@ $(document).ready(function(){
    
    function refreshTable(){
       $("#hostel_overview").slideUp();
-      clearTable();
+      //clearTable();
       showTable();//Display the updated table
       getVacancies();//Update vacancies
       getBookings();//Update no-booked
