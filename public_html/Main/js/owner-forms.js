@@ -1,16 +1,3 @@
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            var image = document.getElementById("image_display");
-            image.src = e.target.result;
-            image.style.display = "block";  
-        };
-        reader.readAsDataURL(input.files[0]);
-    }
-}
-
 $(document).ready(function(){
     //Onload...
     $("#hostel_name_feedback").hide();
@@ -22,7 +9,7 @@ $(document).ready(function(){
     }
     
     //turn off auto-complete
-    $(".add-hostel-form").attr("autocomplete", "off");
+    $(".add-hostel-form input").attr("autocomplete", "off");
     
     $("#hostel_name").click(function(){
        $("#hostel_name_feedback").show(); //To inform them that the hostel owner to contact admin to change name 
@@ -93,14 +80,28 @@ $(document).ready(function(){
         console.log(rows);
     });
 
+
+
+    $("#edit-photos-tab").click(function(){
+        list_image();
+    });
+    
+    $('#menu-toggle').click(function(){
+       $('#wrapper').toggleClass('toggled'); 
+    });
+    
+    function list_image(){
+        $.ajax({
+         url:"owner-upload.php",
+         success:function(data){
+            $('#preview').html(data);
+         }
+        });
+    }
     
     /*
      * Add hostel-details form
      */
-    //Resize the image preview
-    $("#image").change(function(){
-       $("#image_display").addClass("display_size"); 
-    });
     
     function validName(){
        var hostel_name = $("#hostel_name").val();

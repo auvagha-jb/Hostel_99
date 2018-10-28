@@ -7,11 +7,11 @@ $(document).ready(function(){
     
     function showBookingsTable(){    
         $.post("php-owner/owner-get-bookings-table.php", function(data, status){
-          
           if(data != ""){
               $("no-bookings-msg").hide();
-              $("#bookings-table tbody").append(data);
+              $("#bookings-table tbody").html(data);
           }else{
+              $("#bookings-table tbody").html(data);
               $("#no-bookings-msg").show();
           }
        });
@@ -68,6 +68,7 @@ $(document).ready(function(){
           if(data != ""){
               $("#no-tenants-msg").hide();//Remove no-tenants message
                 showSuccess(data);
+                refreshTable();
                 updateTenants();
           }else{
               alert("Not executed");
@@ -77,14 +78,13 @@ $(document).ready(function(){
    
    function showSuccess(data){
       //Display success message
-      $("#feedback").removeClass("alert alert-danger");
-      $("#feedback").addClass("alert alert-success");
-      $("#feedback").html(data);
+      $("#bookings-feedback").removeClass("alert alert-danger");
+      $("#bookings-feedback").addClass("alert alert-success");
+      $("#bookings-feedback").html(data);
    }
     
    function refreshTable(){
       $("#hostel_overview").slideUp();
-      clearTable();
       showBookingsTable();//Display the updated table
    }
    

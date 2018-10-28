@@ -12,7 +12,7 @@
         No bookings at the moment.
     </center>
         
-        <center id="feedback"></center>
+        <center id="bookings-feedback"></center>
         
        <!--User show bookings table-->
        <!-- DataTables Example -->

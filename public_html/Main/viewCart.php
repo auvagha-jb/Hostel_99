@@ -105,13 +105,13 @@ if(session_status() == PHP_SESSION_NONE){
         ?>
         <tr>
             <?= '<td><a href="student-booking-page.php?id='.$hostel_no.'&hostel_name='.$hostel_name.'&type='.$type.'"'
-                . 'class="btn btn-warning"><i class="fa fa-arrow-left"></i> Continue Booking</a></td>'; ?> 
-            <td colspan="3"></td>
+                . 'class="btn btn-warning"><i class="fa fa-arrow-alt-circle-left"></i> Continue Booking</a></td>'; ?> 
+            <td colspan="4"></td>
             <td><button id="pick_room" class="btn btn-success">Pick room <i class="fa fa-bed"></i></button></td>
         </tr>
     </tfoot>
     </table>
-    <a class="btn btn-success" id="checkout">Checkout <i class="fa fa-arrow-right"></i></a>
+    <a class="btn btn-success" id="checkout">Checkout <i class="fa fa-arrow-alt-circle-right"></i></a>
 
 <!--Assign room modal-->
     <div class="modal fade" id="pickRoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

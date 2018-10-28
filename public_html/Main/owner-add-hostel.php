@@ -9,12 +9,13 @@
         <title>Add Hostel</title>
         <?php require './links.php';?>
         <script src="js/owner-forms.js"></script>
+        <script src="js/owner/owner-add.js"></script>
         <link rel="stylesheet" type="text/css" href="css/owner-forms.css">
     </head>
 <body>
     <?php include './nav-bar.php';?>
+    <div id="add-feedback" class="alert alert-warning fixed-top top"></div>
     <div class="container-fluid">
-
         <div>
             <form method="post" class="add-hostel-form" action="php-owner/owner-add-hostel-action.php" 
                   enctype="multipart/form-data">
@@ -61,8 +62,8 @@
                 </div>
                 <div class="form-group">
                     <label>Image</label>
-                    <input type='file' name="image" id="image" onchange="readURL(this);" class="form-control" />
-                    <img src="#" alt="Choose an image to see the preview" id="image_display">
+                    <input type='file' name="image" id="image" onchange="ValidateSingleInput(this);" class="form-control" required/>
+                    <img src="#" class="display_size" alt="Choose an image to see the preview" id="image_display">
                 </div>
                 
                 <?php include './owner-add-room.php';?>

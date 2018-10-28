@@ -71,10 +71,7 @@ include_once './php/connection.php';
                         <div class="card-body">
                             <h4 class="card-title">'.$hostel_name.'</h4>
                             <p class="card-text">'.$road.', '.$location.'</p>   
-                            <p><a class="btn btn-outline-dark card-btn" href="owner-view-tenants.php?id='.$id.'&type='.$type.'">View tenants</a>
-                            <a class="btn btn-outline-dark card-btn" href="owner-view-bookings.php?id='.$id.'">View bookings</a></p>
-                            <a href="owner-edit-hostel.php?id='.$id.'" class="btn btn-outline-primary card-btn">Edit details</a>
-                            <a href="owner-add-images.php?hostel_name='.$hostel_name.'" class="btn btn-outline-primary card-btn">Edit photos</a>
+                            <a href="owner-dashboard.php?id='.$id.'&type='.$type.'&hostel_name='.$hostel_name.'" class="btn btn-outline-dark">Manage</a>
                         </div>
                     </div>
                 </div>

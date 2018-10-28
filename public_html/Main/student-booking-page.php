@@ -1,3 +1,12 @@
+ <?php
+        if(session_status() == PHP_SESSION_NONE){
+            session_start();
+        }
+        $_SESSION['hostel_no'] = $_GET['id']; 
+        $_SESSION['hostel_name'] = $_GET['hostel_name'];
+        $_SESSION['type'] = $_GET['type'];
+        
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,16 +19,6 @@
     <!--Generic-->
 </head>
 <body>
-    <?php
-        if(session_status() == PHP_SESSION_NONE){
-            session_start();
-        }
-        $_SESSION['hostel_no'] = $_GET['id']; 
-        $_SESSION['hostel_name'] = $_GET['hostel_name'];
-        $_SESSION['type'] = $_GET['type'];
-        
-    ?>
-    
 <!--Navigation bar-->
 <?php include './nav-bar.php';?>
 <?php include './php/connection.php';?>

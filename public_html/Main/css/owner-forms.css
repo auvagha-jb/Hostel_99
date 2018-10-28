@@ -3,6 +3,16 @@
     width: 450px;
 }
 
+#preview_display{
+    display: none;
+}
+
+.top{
+    top: 85px;
+    text-align: center;
+    display: none;
+}
+
 label{
     margin-top: 10px;
 }

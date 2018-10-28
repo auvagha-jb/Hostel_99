@@ -29,7 +29,6 @@ if(isset($_POST['hostel_name'])){
 if(isset($_POST['description'])){
     //Generate a hostel_no randomly -->Then store it in a session variable
     $hostel_no = get_hostel_no($con, $error);
-    $_SESSION['hostel_no'] = $hostel_no;
     
     //Get form data
     $hostel_name = $_POST['hostel_name'];
@@ -39,6 +38,10 @@ if(isset($_POST['description'])){
     $county = $_POST['county'];
     $hostel_type = $_POST['hostel_type'];
     
+    //Set session variables
+    $_SESSION['hostel_no'] = $hostel_no;
+    $_SESSION['hostel_name'] = $hostel_name;
+    $_SESSION['type'] = $hostel_type;
     
     //Image Upload
     $folder = "./../uploads/".$hostel_name."/";

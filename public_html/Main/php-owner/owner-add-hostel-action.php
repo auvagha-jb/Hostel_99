@@ -20,6 +20,8 @@
     //Update the junction table: user_hostel_bridge
     $user_id = $_SESSION['user_id'];
     $hostel_no = $_SESSION['hostel_no'];
+    $hostel_name = $_SESSION['hostel_name'];
+    $type = $_SESSION['type'];
     
     $query = "INSERT INTO `user_hostel_bridge`(`user_id`, `hostel_no`) VALUES(?,?)";
     
@@ -34,7 +36,7 @@
     if(count($error)==0){
         //commit changes to database
         $con->commit();
-        header("location:../owner-add-images.php?hostel_name=".$hostel_name."");
+        header("location:../owner-dashboard.php?id=".$hostel_no."&type=".$type."&hostel_name=".$hostel_name);
     }else{
         echo var_dump($error);
     }

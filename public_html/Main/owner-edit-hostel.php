@@ -4,17 +4,19 @@
         <title>Edit Hostel</title>
         <?php require './links.php';?>
         <link rel="stylesheet" type="text/css" href="css/owner-forms.css">
+        <script src="js/owner/owner-edit.js"></script>
     </head>
 <body>  
     <div class="container-fluid">
-        <div id="edit-feedback" class="alert alert-success text-center sticky-top">Details Updated</div>
         <div class="my-2">
+            <div id="edit-feedback" class="alert alert-success text-center fixed-top" style="top:85px;">Details Updated</div>
             <form method="post" class="add-hostel-form" id="edit-hostel-form" action="php-owner/owner-edit-hostel-action.php" 
                   enctype="multipart/form-data">
                 <center>
                     <i class="fa fa-hotel"></i>
                     <div class="lead">My Hostel</div>
                 </center>
+                
                 <div class="form-group">
                     <label>Hostel Name</label>
                     <input type="text" name="hostel_name" id="hostel_name" class="form-control" value="<?php echo $hostel_name;?>" required="" readonly="">
@@ -55,8 +57,9 @@
                 </div>
                 <div class="form-group">
                     <label>Main Image</label>
-                    <input type="file" name="image" id="image" onchange="readURL(this);" class="form-control" />
-                    <img src="<?php echo $folder.$hostel_name.'/'.$image;?>" alt="Choose an image to see the preview" id="image_display">
+                    <input type="file" name="image" id="image" onchange="ValidateSingleInput(this);" class="form-control" />
+                    <img class="display_size" src="<?php echo $folder.$hostel_name.'/'.$image;?>" alt="Choose an image to see the preview" id="image_display">
+                    <img src="#" class="display_size" alt="Choose an image to see the preview" id="preview_img">
                 </div>
                 
                 <?php // include './owner-add-room.php'; ?>

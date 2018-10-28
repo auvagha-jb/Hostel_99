@@ -21,7 +21,7 @@ if($cart->total_items() < 1){
 <head>
     <title>Check out</title>
     <meta charset="utf-8">
-    <?php include './bootstrap3.php';?>
+    <?php include './links.php';?>
     <link rel="stylesheet" href="css/booking-page.css">
 </head>
 <body>
@@ -30,7 +30,7 @@ if($cart->total_items() < 1){
 <br>
 <h1 class="checkout_h">Hostel Booking Preview</h1>
     <form name="frmconfirm" action="payment_confirm.php" method="post">
-    <table class="table checkout_tbl">
+    <table class="table">
     <thead>
         <tr>
             <th>Hostel</th>
@@ -74,14 +74,14 @@ if($cart->total_items() < 1){
     </table>			        
     </form>
     <div class="footBtn">
-        <?php echo '<a href="student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name.'&type='.$type.'" class="btn btn-info btn-lg">'
-                        . '<i class="glyphicon glyphicon-menu-left"></i>Continue Booking'
+        <?php echo '<a href="viewCart.php" class="btn btn-info">'
+                        . '<i class="fa fa-arrow-alt-circle-left"></i> Edit cart'
                 . '</a>';
         ?>
         <!--Modal content removed-->
         
-    <a href="cartAction.php?action=placeOrder" class="btn btn-success btn-lg orderBtn">Confirm Booking
-        <i class="glyphicon glyphicon-menu-right"></i>
+    <a href="cartAction.php?action=placeOrder" class="btn btn-success orderBtn">Confirm Booking
+         <i class="fa fa-arrow-alt-circle-right"></i>
     </a>    
     </div>
 </div>

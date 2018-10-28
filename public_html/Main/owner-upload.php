@@ -2,20 +2,7 @@
 if(session_status() == PHP_SESSION_NONE){
     session_start();
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php include 'links.php'; ?>       
-    <!--Generic-->
-    <link href="style.css" rel="stylesheet">
-<!--    <script src="js/owner-upload.js"></script>-->
-</head>
-<body>
-    
-<?php
+
 include_once 'php/connection.php';
 $folder_name = 'uploads/';
 $hostel_name = $_SESSION['hostel_name']."/";
@@ -43,7 +30,20 @@ if(isset($_POST["name"]))
 
 $result = array();
 
+$data = array(
+  'folder_name'=>$folder_name,
+   'hostel_name'=>$hostel_name
+);
+
 if(file_exists($folder_name.$hostel_name)){
+    folderContents($data);
+}  
+else {
+    echo '<center class="lead">No photos posted yet! Click or Drag and drop above</center>';
+}
+
+function folderContents($data){
+    $folder_name = $data['folder_name']; $hostel_name = $data['hostel_name'];
     //Scans the named folder and returns file names
     $files = scandir($folder_name.$hostel_name);
 
@@ -67,14 +67,9 @@ if(file_exists($folder_name.$hostel_name)){
     }
     $output .= '</div>';
     echo $output;
-}  
-else {
-    echo '<center class="lead">No photos posted yet! Click or Drag and drop above</center>';
 }
-?>
 
-</body>
-</html>
+?>
 
 
 

@@ -45,7 +45,7 @@
             <span class="border px-2" id="vacancies"></span>
             </span>
             <span class="lead inline-text mx-3">
-                <?= '<a href="owner-view-bookings.php?id='.$_GET['id'].'">Pending Bookings:</a>' ?>
+                Pending Bookings:
                 <span class="border px-2" id="pending_bookings"></span>
             </span>
             <div class="my-3">

@@ -3,9 +3,7 @@ $(function () {
     var path = location.href;
     var page = path.split('/').slice(-1);
     setActive(page);
-    setDefaults();
-
-  
+    
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         $("#wrapper").toggleClass("toggled");
@@ -29,10 +27,5 @@ $(function () {
           }
        });
    }
-   
-   function setDefaults(){
-       
-   }
-   
     
 });
