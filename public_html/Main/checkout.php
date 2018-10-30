@@ -133,10 +133,6 @@ $custRow = $query->fetch_assoc();
 		  <td align="left" align="top"></td>
 		</tr>
     </table>-->
-	
-	
-	
-	
 	</form>
     <div class="footBtn">
         <a href="student-booking-page.php" class="btn btn-info btn-lg"><i class="glyphicon glyphicon-menu-left"></i> Continue Booking</a>

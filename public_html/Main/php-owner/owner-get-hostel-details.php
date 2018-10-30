@@ -2,14 +2,14 @@
 //The connection file is in  ../owner-add-hostel.php 
 if(session_status() == PHP_SESSION_NONE){
     session_start();
-} 
+}
 
 $hostel_no = $_GET['id'];
 
 $query = "SELECT * FROM hostels JOIN rooms on hostels.hostel_no = rooms.hostel_no "
-        . "JOIN rules ON rooms.hostel_no = rules.hostel_no "
-        . "JOIN amenities ON amenities.hostel_no = rules.hostel_no "
-        . "WHERE hostels.hostel_no = ? GROUP BY hostels.hostel_no";
+    . "JOIN rules ON rooms.hostel_no = rules.hostel_no "
+    . "JOIN amenities ON amenities.hostel_no = rules.hostel_no "
+    . "WHERE hostels.hostel_no = ? GROUP BY hostels.hostel_no";
 
 $stmt = $con->prepare($query);
 $stmt->bind_param("s", $hostel_no);
@@ -26,6 +26,6 @@ $road = $row['road'];
 $type = $row['type'];
 $folder = "uploads/";
 $image = $row['image'];
-$total_available = $row['total_available']; 
+$total_available = $row['total_available'];
 $total_occupied = $row['total_occupied'];
 $vacancies = $row['vacancies']; 

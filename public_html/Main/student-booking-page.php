@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>View</title>
+    <title>Hostel-99 Student Booking Page</title>
     <link rel='shortcut icon' type="image/png" href="./img/hostel-logo.png">
     <?php include './links.php';?>
     <!--Generic-->
