@@ -17,4 +17,4 @@ if(empty($_SESSION['user_id'])){
     alert("Logged out");
 }
 
-header("refresh:0.1; url=../home.php");
+header("refresh:0.1; url=../sign-in.php");

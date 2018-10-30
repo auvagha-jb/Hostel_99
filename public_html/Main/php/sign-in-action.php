@@ -39,7 +39,7 @@ if(isset($_POST['email'])){
                 if($user_type == "Student"){
                     header("location: ../home.php");
                 }else if($user_type == "Hostel Owner"){
-                    header("location: ../sign-up.php");
+                    header("location: ../owner-view-hostels.php");
                 }else if($user_type == "Admin"){
                     header("location:../admin-home.php");
                 }

@@ -115,7 +115,6 @@ $(document).ready(function(){
                valid_sign_in = false;
            }else{
                valid_sign_in = true;
-               window.location.replace("home.php");
            }
        });   
        

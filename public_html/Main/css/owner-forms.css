@@ -3,7 +3,7 @@
     width: 450px;
 }
 
-#preview_display{
+.hide{
     display: none;
 }
 
@@ -17,9 +17,6 @@ label{
     margin-top: 10px;
 }
 
-#edit-feedback{
-    display: none;
-}
 
 form.add-hostel-form{
     position: absolute;

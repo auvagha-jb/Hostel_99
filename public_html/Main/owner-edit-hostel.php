@@ -9,7 +9,7 @@
 <body>  
     <div class="container-fluid">
         <div class="my-2">
-            <div id="edit-feedback" class="alert alert-success text-center fixed-top" style="top:85px;">Details Updated</div>
+            <div id="edit-feedback" class="alert alert-success text-center fixed-top hide" style="top:85px;">Details Updated</div>
             <form method="post" class="add-hostel-form" id="edit-hostel-form" action="php-owner/owner-edit-hostel-action.php" 
                   enctype="multipart/form-data">
                 <center>
@@ -59,7 +59,7 @@
                     <label>Main Image</label>
                     <input type="file" name="image" id="image" onchange="ValidateSingleInput(this);" class="form-control" />
                     <img class="display_size" src="<?php echo $folder.$hostel_name.'/'.$image;?>" alt="Choose an image to see the preview" id="image_display">
-                    <img src="#" class="display_size" alt="Choose an image to see the preview" id="preview_img">
+                    <img src="#" class="display_size hide" alt="Choose an image to see the preview" id="preview_img">
                 </div>
                 
                 <?php // include './owner-add-room.php'; ?>

@@ -8,6 +8,10 @@ body {
   overflow-x: hidden;
 }
 
+.sidebar-title{
+  color: #999999;
+}
+
 #wrapper {
   padding-left: 0;
   -webkit-transition: all 0.5s ease;

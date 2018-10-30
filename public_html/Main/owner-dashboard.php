@@ -34,8 +34,8 @@ include_once './php/connection.php';
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
             <ul class="nav flex-column sidebar-nav" id="myTab" role="tablist">
-                <li class="sidebar-brand">
-                    <span id="home-tab" class="text-light"><?= $row['hostel_name'];?></span>
+                <li class="sidebar-brand sidebar-title">
+                    <span id="home-tab" class=""><?= $row['hostel_name'];?></span>
                 </li>
                 <li>
                   <a class="active border-bottom border-dark" id="community-tab" data-toggle="tab" href="#community" role="tab" aria-controls="community" aria-selected="true">

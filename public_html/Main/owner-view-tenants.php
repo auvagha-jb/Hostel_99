@@ -116,7 +116,7 @@
             
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-dark" id="blacklist_tenant" data-dismiss="modal">Remove and blacklist</button>
+            <!--<button type="button" class="btn btn-dark" id="blacklist_tenant" data-dismiss="modal">Remove and blacklist</button>-->
             <button type="button" class="btn btn-danger" id="remove_tenant" data-dismiss="modal">Remove</button>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
           </div>

@@ -24,7 +24,7 @@
             <div class="card-body">
        
        <div class="table-responsive mx-3 my-3">
-        <table class="table table-bordered" id="bookings-table">
+        <table class="table table-sm table-hover" id="bookings-table">
             <thead>
                 <tr>
                     <th>User ID</th>

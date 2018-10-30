@@ -17,8 +17,8 @@
     <div class="row">
         
         <div class="col-md-6 col-sm-12">
-            <img src="img/students.jpg" class="img-responsive sign-up-img" >
-            <div class="top-left display-4"><p>Join the H99 Community! <br>It's free for life</p></div>
+            <img src="img/background2.png" class="img-responsive sign-up-img" >
+            <div class="top-left display-4 text"><p>Join the H99 Community! <br>It's free for life</p></div>
         </div>
         
         <div class="col-md-6 col-sm-12">
@@ -72,9 +72,8 @@
                     </div>
                      
                      <div class="form-group">
-                         <label for="gender">Gender</label>
                          <select name="gender" id="gender" class="form-control" required>
-                             <option value="">Choose One</option>
+                             <option value="">Gender</option>
                              <option value="male">Male</option>
                              <option value="female">Female</option>
                          </select>
@@ -82,7 +81,7 @@
                      
                      <div class="form-group">
                          <select name="user_type" id="user_type" class="form-control" required>
-                             <option value="">I am a...</option>
+                             <option value="">Occupation</option>
                              <option value="Student">Student</option>
                              <option value="Hostel Owner">Hostel Owner</option>
                          </select>
