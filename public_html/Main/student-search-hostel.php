@@ -21,11 +21,11 @@ if(session_status()==PHP_SESSION_NONE){
     <?php
     include './php/connection.php';
     
-        if(isset($_POST['search_submit'])){
+        if(isset($_POST['search_submit']) && isset($_SESSION['user_id'])){
             
             //Get form data
             $location_home = $_POST['location_home'];
-            $hostel_type = $_POST['hostel_type'];
+            $hostel_type = $_SESSION['gender'];
             $max_price = $_POST['max_price'];
            
             //reinitialize hostel_type  --->The query will get all hostels that are NOT opposite gender 
@@ -108,11 +108,12 @@ if(session_status()==PHP_SESSION_NONE){
                     <div class="card">
                         <img class="card-img-top" src="'.$folder.$hostel_name."/".$image.'"> <!--Since the image is at the top-->
                         <div class="card-body">
+                            <p class="card-text float-right text-sm border border-dark p-2">'.$type.'</p>
                             <h4 class="card-title">'.$hostel_name.'</h4>
                             <p class="card-text">'.$road.', '.$location.'</p>
                             <p class="card-text">Rent from: Kshs '.$monthly_rent.' Per Month</p>
                             <p class="card-text">'.$vacancy_msg.'</p>
-                            <a href="student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name.'&type='.$type.'" class="btn btn-outline-primary">Book Now</a>
+                            <a href="student-booking-page.php?id='.$id.'&hostel_name='.$hostel_name.'&type='.$type.'" class="btn btn-outline-primary" id="book_now">Book Now</a>
                         </div>
                     </div>
                 </div>
@@ -128,7 +129,7 @@ if(session_status()==PHP_SESSION_NONE){
             include './search-form.php';
         }
     ?>
-            
+        <input type="hidden" id="user_id" value="<?= $_SESSION['user_id'];?>">     
         </div>
     </div>
 </body>

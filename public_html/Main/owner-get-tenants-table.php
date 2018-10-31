@@ -43,9 +43,15 @@ function showTableRows($con){
             $gender = $row['gender'];
             $room_assigned =$row['room_assigned'];  
             $no_sharing =$row['no_sharing'];  
+            $blocked = $row['blocked'];
+            $bg = "";
+            
+            if($blocked == 1){
+                $bg = "bg-warning";
+            }
             
             $data.='
-            <tr>
+            <tr class="'.$bg.'">
                 <td>'.$user_id.'</td>
                 <td>'.$name.'</td>
                 <td>'.$email.'</td>

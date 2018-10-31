@@ -113,6 +113,10 @@ $(document).ready(function(){
                $("#email").removeClass("is-invalid");
                $("#pwd").addClass("is-invalid");
                valid_sign_in = false;
+           }else if(data == "Account blocked"){
+               $('#email-feedback').html(data);
+                $("#email").addClass("is-invalid");
+                valid_sign_in = false;
            }else{
                valid_sign_in = true;
            }

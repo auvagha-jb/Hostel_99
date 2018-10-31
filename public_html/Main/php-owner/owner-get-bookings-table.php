@@ -34,9 +34,8 @@ if(isset($_SESSION['hostel_no'])){
             <td>'.$room_chosen.'</td>
             <td>'.$no_sharing.'</td>
             <td><a href="#" class="btn btn-success btn-sm add-tenant" id="add-tenant"><i class="fa fa-plus-circle"></i></a></td>
-            <td><a href="#" class="btn btn-danger btn-sm remove-booking" id="remove_booking"><i class="fa fa-minus-circle"></i></a></td>
         </tr>  
         ';
-    }
+    }//<td><a href="#" class="btn btn-danger btn-sm remove-booking" id="remove_booking"><i class="fa fa-minus-circle"></i></a></td>
     echo $data;
 }

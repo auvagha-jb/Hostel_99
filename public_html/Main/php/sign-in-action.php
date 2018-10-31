@@ -20,7 +20,7 @@ if(isset($_POST['email'])){
     if(mysqli_num_rows($result)==1){
         //Check whether password is correct
         $hash = $row->pwd;
-        
+        $blocked = $row->blocked; 
         if(password_verify($pwd, $hash)){
             //Store session variables upon successful login
             $_SESSION['user_id'] = $row->user_id;
@@ -32,19 +32,21 @@ if(isset($_POST['email'])){
 
             $user_type = $row->user_type;
             
-            //Redirect to certain page
-            if(isset($_SESSION['user_id'])){
-                echo 'login-success'; 
-                include '';
-                if($user_type == "Student"){
-                    header("location: ../home.php");
-                }else if($user_type == "Hostel Owner"){
-                    header("location: ../owner-view-hostels.php");
-                }else if($user_type == "Admin"){
-                    header("location:../admin-home.php");
-                }
-               
-            }   
+            if($blocked == 0){
+                //Redirect to certain page
+                if(isset($_SESSION['user_id'])){
+                    echo 'login-success';  
+                    if($user_type == "Student"){
+                        header("location: ../home.php");
+                    }else if($user_type == "Hostel Owner"){
+                        header("location: ../owner-view-hostels.php");
+                    }else if($user_type == "Admin"){
+                        header("location:../admin-home.php");
+                    }
+                } 
+            }else{
+                echo 'Account blocked';
+            }  
         
         }else{
             //return error message

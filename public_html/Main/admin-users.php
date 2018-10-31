@@ -31,6 +31,7 @@
         <a href="admin-home.php" class="w3-bar-item w3-button">Home</a>
         <a href="admin-users.php" class="w3-bar-item w3-button w3-text-teal">Users</a>
         <a href="admin-hostels.php" class="w3-bar-item w3-button">Hostels</a>
+        <a href="php/logout.php" class="w3-bar-item w3-button" style="float: right;">Logout</a>
     </nav>
 </div>
 
@@ -40,8 +41,8 @@
         include 'php/connection.php';
 
         //Display table
-        if ($result = $con->query("SELECT `user_id`, `first_name`, `last_name`, `email`, `user_type`, `room_assigned` FROM `users`"
-                . "WHERE NOT user_type = 'Admin' ORDER BY user_type DESC ")) {
+        if ($result = $con->query("SELECT `user_id`, `first_name`, `last_name`, `email`, `user_type`, `room_assigned`, user_status FROM `users`"
+                . "WHERE NOT user_type = 'Admin' AND blocked = 0 ORDER BY user_type DESC ")) {
             if ($result->num_rows > 0) {
                 echo " <table class='w3-table-all w3-centered w3-hoverable'>";
                 echo "<h2>Registered Users</h2>";
@@ -52,6 +53,7 @@
                 echo "<th>Email Address</th>";
                 echo "<th>User Type</th>";
                 echo "<th>Room Assigned</th>";
+                echo "<th>Delete</th>";
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
@@ -63,8 +65,8 @@
                     echo "<td>" . $row['email'] . "</td>";
                     echo "<td>" . $row['user_type'] . "</td>";
                     echo "<td>" . $row['room_assigned'] . "</td>";
-                    echo '<td><a href="user-delete.php?id=' . $row['user_id'] . '"><i class="far fa-trash-alt"></i></td>';
-                    echo '<td><a href="user-suspend.php?=id1' . $row['user_id'] . '"><i class="fas fa-lock-open"></i></td>';
+//                    echo '<td><a href="user-delete.php?id=' . $row['user_id'] . '"><i class="far fa-trash-alt"></i></td>';
+                    echo '<td><a href="user-suspend.php?id1=' . $row['user_id'] . '"><i class="far fa-trash-alt"></i></td>';
                     echo "</tr>";
                 }
             }
@@ -74,17 +76,17 @@
         ?>
     </div>
 </div>
-
-<!-- Footer -->
-<footer class="w3-container w3-padding-16 w3-light-grey">
-    <h4>FOOTER</h4>
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-</footer>
-</html>
-
 <script>
         $('#suspend').click(function() {
             $('#suspend').toggle('1000');
             $("i", this).toggleClass("fas fa-lock");
         });
 </script>
+<!-- Footer -->
+<!--<footer class="w3-container w3-padding-16 w3-light-grey">
+    <h4>FOOTER</h4>
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>-->
+</html>
+
+

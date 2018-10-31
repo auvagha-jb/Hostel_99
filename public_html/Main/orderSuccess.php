@@ -5,7 +5,7 @@ if(!isset($_REQUEST['id'])){
 include_once('./OAuth.php');
 include_once('./php/connection.php');
 
-$query = $con->query("SELECT * FROM orders WHERE id=(SELECT MAX(id) FROM orders)");
+$query = $con->query("SELECT * FROM bookings WHERE booking_no=(SELECT MAX(booking_no) FROM bookings)");
 $sql = mysqli_fetch_assoc($query);
 //echo $sql['id'];
 //echo $sql['total_price'];

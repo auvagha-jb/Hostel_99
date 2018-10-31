@@ -35,7 +35,7 @@
                     <th>Room Chosen</th>
                     <th>No sharing</th>
                     <th>Add</th>
-                    <th>Cancel</th>
+<!--                    <th>Cancel</th>-->
                 </tr>
             </thead>
             <tbody>

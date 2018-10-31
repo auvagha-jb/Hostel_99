@@ -14,7 +14,7 @@ if (isset($_GET['id1'])) {
     $id = $_GET['id1'];
 
 //deleting the row from table
-    $stmt = $con->prepare("UPDATE users set user_status=0 where user_id = '$id' ");
+    $stmt = $con->prepare("UPDATE users set blocked=1 where user_id = ?");
     $stmt->bind_param("s", $id);
     $stmt->execute();
 

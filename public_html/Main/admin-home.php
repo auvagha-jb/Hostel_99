@@ -21,18 +21,23 @@
         margin-right: 30px;
         padding-left: 30px;
     }
+    .links{
+        text-decoration: none;
+    }
+    
 </style>
-
+<body>
 <!-- Navbar -->
 <div class="w3-bar w3-border w3-black" style="height: 60px">
     <nav>
         <a href="admin-home.php" class="w3-bar-item w3-button w3-text-teal">Home</a>
         <a href="admin-users.php" class="w3-bar-item w3-button">Users</a>
         <a href="admin-hostels.php" class="w3-bar-item w3-button">Hostels</a>
+        <a href="php/logout.php" class="w3-bar-item w3-button" style="float: right;">Logout</a>
     </nav>
 </div>
 
-<body>
+
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:200px;margin-top:43px;">
 
@@ -42,7 +47,7 @@
     </header>
 
     <div class="w3-row-padding w3-margin-bottom">
-        <div class="w3-quarter">
+        <a class="w3-quarter links" href="admin-hostels.php">
             <div class="w3-container w3-blue w3-padding-16">
                 <div class="w3-left"><i class="fa fa-bed w3-xxxlarge"></i></div>
                 <div class="w3-right">
@@ -57,8 +62,8 @@
                 <div class="w3-clear"></div>
                 <h4>Hostels</h4>
             </div>
-        </div>
-        <div class="w3-quarter">
+        </a>
+        <a class="w3-quarter links" href="admin-users.php">
             <div class="w3-container w3-orange w3-text-white w3-padding-16">
                 <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
                 <div class="w3-right">
@@ -73,7 +78,7 @@
                 <div class="w3-clear"></div>
                 <h4>Users</h4>
             </div>
-        </div>
+        </a>
     </div>
 
     <br>
@@ -83,7 +88,7 @@
                 <?php
                 include 'php/connection.php';
 
-                $data=mysqli_query($con,"SELECT `hostel_name`, `total_available` FROM `hostels` ");
+                $data_1=mysqli_query($con,"SELECT `hostel_name`, `vacancies` FROM `hostels` ");
                 ?>
             </div>
         </div>
@@ -91,25 +96,18 @@
 
     <!-- End page content -->
 </div>
-</body>
-<!-- Footer -->
-<footer class="w3-container w3-padding-16 w3-light-grey">
-    <h4>FOOTER</h4>
-    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-</footer>
-
 <script>
     var myData=[<?php
-        while($info=mysqli_fetch_array($data))
-            echo $info['total_available'].','; /* We use the concatenation operator '.' to add comma delimiters after each data value. */
-        ?>];
+        while($info=mysqli_fetch_array($data_1)){
+            echo $info['vacancies'].','; /* We use the concatenation operator '.' to add comma delimiters after each data value. */
+        }?>];
     <?php
-    $data=mysqli_query($con,"SELECT `hostel_name`, `total_available` FROM `hostels`");
+    $data=mysqli_query($con,"SELECT `hostel_name`, `vacancies` FROM `hostels` WHERE blacklist = 0");
     ?>
     var myLabels=[<?php
-        while($info=mysqli_fetch_array($data))
-            echo '"'.$info['hostel_name'].'",'; /* The concatenation operator '.' is used here to create string values from our database names. */
-        ?>];
+        while($info_2=mysqli_fetch_array($data)){
+            echo '"'.$info_2['hostel_name'].'",'; /* The concatenation operator '.' is used here to create string values from our database names. */
+        }?>];
 
     window.onload=function(){
         zingchart.render({
@@ -133,5 +131,13 @@
         });
     };
 </script>
+</body>
+<!-- Footer -->
+<!--<footer class="w3-container w3-padding-16 w3-light-grey">
+    <h4>FOOTER</h4>
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+</footer>-->
+
+
 </html>
 

@@ -48,4 +48,27 @@ $(document).ready(function(){
         }
     });
     
+    $(document).on('click', '#book_now', function(event){
+       event.preventDefault();
+        var user_id = $('#user_id').val();
+        var href = $(this).attr('href');
+        
+        $.post('php/student-verify.php',{user_id:user_id},function(data){
+            if(data == ""){        
+                location.replace(href);
+            }else{
+                alert(data);
+            }
+        }); 
+    });
+    
+    $('#location_home').click(function(){
+       var id =  $('#user_id').val();
+       if(id ==""){
+           alert('Please log in first');
+           location.replace('sign-in.php');
+       }
+
+    });
+    
 });

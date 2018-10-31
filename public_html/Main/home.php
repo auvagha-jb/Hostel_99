@@ -71,7 +71,17 @@
                     The perfect hostel for you is just a few clicks away.
                 </p>
             </div>
-            <?php include './search-form.php';?> 
+            <?php include './search-form.php';
+            
+            $user_id;
+            if(isset($_SESSION['user_id'])){
+                $user_id = $_SESSION['user_id']; 
+            }else{
+                $user_id = "";
+            }    
+            ?>
+            <input type="hidden" id="user_id" value="<?= $user_id;?>">
+            
         </div>
     </div>
   

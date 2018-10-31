@@ -10,11 +10,6 @@
 </head>
 <body>
 <?php
-
-if(session_status()==PHP_SESSION_NONE){
-    session_start();
-}
-
 function toggleNav(){
     //If the user is logged in
     if(isset($_SESSION['user_id'])){

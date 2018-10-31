@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label>Email Address</label>
                 <input type="text" name="email" id="email" class="form-control" required="">
-                <div class="invalid-feedback">Invalid email address</div>
+                <div class="invalid-feedback" id="email-feedback">Invalid email address</div>
             </div>
             <div class="form-group">
                 <label>Password</label>

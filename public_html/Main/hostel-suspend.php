@@ -14,10 +14,10 @@ if (isset($_GET['id1'])) {
     $id = $_GET['id1'];
 
 //deleting the row from table
-    $stmt = $con->prepare("UPDATE hostels set blacklist=1 where hostel_no = '$id' ");
+    $stmt = $con->prepare("UPDATE hostels SET blacklist = 1 where hostel_no = ? ");
     $stmt->bind_param("s", $id);
     $stmt->execute();
 
 //redirect
-    header("location:admin-hostels.php");
+    //header("location:admin-hostels.php");
 }

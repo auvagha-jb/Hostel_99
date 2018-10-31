@@ -28,7 +28,7 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
         $cart->destroy();
         $hostel_no = $_REQUEST['id'];
         $no_sharing = $_REQUEST['no'];
-        $_SESSION['no_sharing'] = $no_sharing;
+        
         $data = array( 
             'hostel_no' => $hostel_no,
             'no_sharing' => $no_sharing
@@ -44,6 +44,8 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
             'price' => $row['monthly_rent'],
             'qty' => 1
         );
+        $_SESSION['no_sharing'] = $no_sharing;
+        $_SESSION['total_price'] = $row['monthly_rent'];
         
         $insertItem = $cart->insert($itemData);
         $redirectLoc = $insertItem?'./viewCart.php':'./student-booking-page.php';
@@ -68,7 +70,8 @@ if(isset($_REQUEST['action']) && !empty($_REQUEST['action'])){
             'user_id' => $_SESSION['user_id'],
             'hostel_no' => $_SESSION['hostel_no'],
             'room_chosen' => $_SESSION['room'],
-            'no_sharing' => $_SESSION['no_sharing']
+            'no_sharing' => $_SESSION['no_sharing'],
+            'total_price'=>$_SESSION['total_price']
         );
         
         /*

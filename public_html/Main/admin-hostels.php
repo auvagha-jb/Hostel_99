@@ -31,6 +31,7 @@
         <a href="admin-home.php" class="w3-bar-item w3-button">Home</a>
         <a href="admin-users.php" class="w3-bar-item w3-button">Users</a>
         <a href="admin-hostels.php" class="w3-bar-item w3-button w3-text-teal">Hostels</a>
+        <a href="php/logout.php" class="w3-bar-item w3-button" style="float: right;">Logout</a>
     </nav>
 </div>
 
@@ -40,16 +41,17 @@
         include 'php/connection.php';
 
         //Display table
-        if ($result = $con->query("SELECT `hostel_name`, `description`, `location`, `type` FROM `hostels`")) {
+        if ($result = $con->query("SELECT `hostel_name`, `description`, `location`, hostel_no, `type` FROM `hostels` WHERE blacklist = 0")) {
             if ($result->num_rows > 0) {
                 echo " <table class='w3-table-all w3-centered w3-hoverable'>";
                 echo "<h2>Registered Hostels</h2>";
                 echo "<thead>";
                 echo "<tr>";
-                echo "<th>Hostel Number</th>";
                 echo "<th>Hostel Name</th>";
                 echo "<th>Hostel Location</th>";
                 echo "<th>Hostel Type</th>";
+//                echo "<th>Remove</th>";
+                echo "<th>Remove</th>";
                 echo "</tr>";
                 echo "</thead>";
                 echo "<tbody>";
@@ -59,8 +61,8 @@
                     echo "<td>" . $row['hostel_name'] ."</td>";
                     echo "<td>" . $row['location'] . "</td>";
                     echo "<td>" . $row['type'] . "</td>";
-                    echo '<td><a href="hostel-delete.php?=id' . $row['hostel_name'] . '"><i class="far fa-trash-alt"></i></td>';
-                    echo '<td><a href="hostel-suspend.php?=id1' . $row['hostel_name'] . '"><i class="fas fa-lock-open"></i></td>';
+//                    echo '<td><a href="hostel-delete.php?id=' . $row['hostel_no'] . '"><i class="far fa-trash-alt"></i></td>';
+                    echo '<td><a href="hostel-suspend.php?id1=' . $row['hostel_no'] . '"><i class="fas fa-lock-open"></i></td>';
                     echo "</tr>";
                 }
             }
@@ -71,9 +73,9 @@
     </div>
 </div>
 
-<!-- Footer -->
+<!-- Footer 
 <footer class="w3-container w3-padding-16 w3-light-grey">
     <h4>FOOTER</h4>
     <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-</footer>
+</footer>-->
 

@@ -4,11 +4,11 @@ class Bookings{
     function insertBooking($con, &$data, &$error){
         $user_id =$data['user_id']; $hostel_no = $data['hostel_no']; 
         $room_chosen = $data['room_chosen']; $no_sharing = $data['no_sharing'];//Set to id cause of the 
-        
-        $query = "INSERT INTO `bookings`(`user_id`, `hostel_no`, `room_chosen`, `no_sharing`) "
-                . "VALUES (?,?,?,?)";
+        $total_price = $data['total_price'];
+        $query = "INSERT INTO `bookings`(`user_id`, `hostel_no`, `room_chosen`, `no_sharing`, total_price) "
+                . "VALUES (?,?,?,?,?)";
         $stmt = $con->prepare($query);
-        $stmt->bind_param("ssss", $user_id, $hostel_no, $room_chosen,$no_sharing);
+        $stmt->bind_param("sssss", $user_id, $hostel_no, $room_chosen,$no_sharing,$total_price);
         $bool = $stmt->execute();
         
         if(!$bool){
@@ -21,7 +21,7 @@ class Bookings{
     
     
     function getBookingsTable($con, $hostel_no){
-        $query = "SELECT * FROM users JOIN bookings ON users.user_id = bookings.user_id WHERE hostel_no = ? AND users.user_status IS NULL ";
+        $query = "SELECT * FROM users JOIN bookings ON users.user_id = bookings.user_id WHERE hostel_no = ? AND users.user_status IS NULL AND blocked = 0";
 
         $stmt = $con->prepare($query);
         $stmt->bind_param("s", $hostel_no);
@@ -48,7 +48,7 @@ class Bookings{
     }
     
     function userBooked($con, $user_id, &$error){
-        $query = 'SELECT * FROM bookings JOIN hostels ON bookings.hostel_no = hostels.hostel_no WHERE bookings.user_id = ?';
+        $query = 'SELECT * FROM `bookings` WHERE user_id = ?';
         $stmt = $con->prepare($query);
         $stmt->bind_param("s", $user_id);
         $bool = $stmt->execute();
